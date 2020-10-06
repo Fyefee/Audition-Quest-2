@@ -20,9 +20,12 @@ import javax.swing.*;
 public class Window implements ActionListener, MouseListener{
     
     private JButton b1;
-    private JPanel top_panel, bottom_panel, card_bottom_panel, bottom_panel_2;
-    private CardLayout c1 = new CardLayout();
+    private JPanel top_panel, bottom_panel, card_bottom_panel, bottom_panel_2, menu_panel, in_game_panel, all_card_panel;
+    private CardLayout c1 = new CardLayout(), c_frame = new CardLayout();
     private boolean in_audition = false;
+    
+    final static String MENU = "MENU";
+    final static String IN_GAME = "IN_GAME";
             
     public Window(int width, int height, String title, Run run) throws IOException {
         
@@ -31,7 +34,15 @@ public class Window implements ActionListener, MouseListener{
         frame.setPreferredSize(new Dimension(width, height));
         frame.setMaximumSize(new Dimension(width, height));
         frame.setMinimumSize(new Dimension(width, height));
-        frame.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        
+        all_card_panel = new JPanel();
+        all_card_panel.setLayout(c_frame);
+        
+        menu_panel = new JPanel();
+        menu_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        
+        in_game_panel = new JPanel();
+        in_game_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         
         top_panel = new JPanel();
         bottom_panel = new JPanel();
@@ -90,13 +101,21 @@ public class Window implements ActionListener, MouseListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+        
         top_panel.add(run);
         top_panel.setBorder( BorderFactory.createEmptyBorder(-5, -5, -5, 0) );
-        frame.add(top_panel);
+        in_game_panel.add(top_panel);
         card_bottom_panel.add("a", bottom_panel);
         card_bottom_panel.add("b", bottom_panel_2);
         c1.show(card_bottom_panel, "a");
-        frame.add(card_bottom_panel);
+        in_game_panel.add(card_bottom_panel);
+        
+        all_card_panel.add(in_game_panel, IN_GAME);
+        all_card_panel.add(menu_panel, MENU);
+        c_frame.show(all_card_panel, IN_GAME);
+        
+        frame.add(all_card_panel);
+        
         frame.setVisible(true);
         run.start();
     }

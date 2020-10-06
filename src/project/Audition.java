@@ -56,10 +56,9 @@ public class Audition extends JPanel{
             System.out.println(Arrays.toString(random));
         }
         
-        if (random[state] == is_ran[1] && time_run){
+        if (time_run && random[state] == is_ran[1]){
             random[state] = 0;
-            is_ran[1] = 0;
-            if (state < 9){
+            if (state <= 9){
                 state++;
             }
             else{
@@ -67,12 +66,16 @@ public class Audition extends JPanel{
             }
             System.out.println(Arrays.toString(random));
         }
-        else if ((random[state] != is_ran[1] && is_ran[1] != 0) && time_run){
+        else if (time_run && (random[state] != is_ran[1] && is_ran[1] != 0)){
             random[state] = 5;
             is_ran[1] = 0;
-            if (state < 9){
+            if (state <= 9){
                 state++;
             }
+        }
+        
+        if (state > 9){
+            time_run = false;            
         }
         
         if (is_show){
@@ -83,6 +86,9 @@ public class Audition extends JPanel{
             if (now_time >= max_time){
                 time_run = false;
                 width = 0;
+            }
+            else if(!time_run){
+                width = width;
             }
             else{
                 width = (int) (1000 - (1000 * (((double)now_time) / ((double)max_time))));
@@ -102,6 +108,7 @@ public class Audition extends JPanel{
             }
         }
         
+        is_ran[1] = 0;
         return is_ran;
     }
 
