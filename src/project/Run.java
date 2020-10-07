@@ -58,7 +58,7 @@ public class Run extends JPanel implements Runnable{
 //        });
 //    }
     public Run() throws IOException {
-        
+        System.out.println("ดีจ้า");
         new Window(1200, 750, "Kuy", this);
         addKeyListener(new KeyInner());
         setFocusable(true); // ทำให้สามารถใช้งานkeyboardได้ - ทำให้ java ตั้งใจฟัง keybord
