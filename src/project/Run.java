@@ -34,7 +34,8 @@ public class Run extends JPanel implements Runnable{
     private JPanel cards;
     private JPanel panel_main, panel_sub;
     
-    Player player = new Player();
+    Character c1 = new Knight();
+    Character c2 = new Knight();
     Audition audition = new Audition();
     
     public Timer timer;
@@ -94,7 +95,8 @@ public class Run extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(bg, 0, 0, this);
-        player.draw(g);
+        c1.draw(g, 300);
+        c2.draw(g, 100);
         is_ran = audition.draw(g, is_ran, 1000, (int)((System.nanoTime() - start) / msp1));
         is_ran[0] = 0;
         
