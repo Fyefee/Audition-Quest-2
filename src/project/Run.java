@@ -26,42 +26,22 @@ public class Run extends JPanel implements Runnable{
     private Thread th;
     private boolean running = false, is_press = true;
     public int[] is_ran = {1, 0};
-    private BufferedImage img;
     private int click = 0;
-    //Image player = new ImageIcon(getClass().getResource("img/human_idle.gif")).getImage();
-    Image bg = new ImageIcon(getClass().getResource("img/bg_scale_2.gif")).getImage();
-    
-    private JPanel cards;
-    private JPanel panel_main, panel_sub;
     
     Character c1 = new Knight();
     Character c2 = new Knight();
     Audition audition = new Audition();
+    Background bg = new Background();
     
     public Timer timer;
     private int nano = 1000000000, msp1 = 10000000;
     public long start = System.nanoTime(), now;
 
-//    public static void main(String[] args) {
-//        try {
-//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        SwingUtilities.invokeLater(() -> {
-//            try {
-//                new Frame();
-//            } catch (IOException ex) {
-//                Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        });
-//    }
     public Run() throws IOException {
         System.out.println("ดีจ้า");
         new Window(1200, 750, "Kuy", this);
         addKeyListener(new KeyInner());
-        setFocusable(true); // ทำให้สามารถใช้งานkeyboardได้ - ทำให้ java ตั้งใจฟัง keybord
+        setFocusable(true);
         requestFocus(); 
     }
     
@@ -81,11 +61,10 @@ public class Run extends JPanel implements Runnable{
     }
     
     public void run() {
-        long time = System.currentTimeMillis();
         while (running) {
             if((System.nanoTime() - start) % msp1 == 0){
-                //System.out.println((System.nanoTime() - start) / msp1);
                 repaint();
+                requestFocusInWindow();
             }
         }
         stop();
@@ -94,7 +73,7 @@ public class Run extends JPanel implements Runnable{
     
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(bg, 0, 0, this);
+        bg.draw(g);
         c1.draw(g, 300);
         c2.draw(g, 100);
         is_ran = audition.draw(g, is_ran, 1000, (int)((System.nanoTime() - start) / msp1));
@@ -142,29 +121,6 @@ public class Run extends JPanel implements Runnable{
                 is_ran[1] = 4;
                 is_press = false;
             }
-//            switch( keyCode ) { 
-//                case KeyEvent.VK_UP:
-//                    System.out.println("up"); 
-//                    is_ran[1] = 1;
-//                    is_press = true;
-//                    break;
-//                case KeyEvent.VK_DOWN:
-//                    System.out.println("down"); 
-//                    is_ran[1] = 2;
-//                    is_press = true;
-//                    break;
-//                case KeyEvent.VK_LEFT:
-//                    System.out.println("left"); 
-//                    is_ran[1] = 3;
-//                    is_press = true;
-//                    break;
-//                case KeyEvent.VK_RIGHT :
-//                    System.out.println("right"); 
-//                    is_ran[1] = 4;
-//                    is_press = true;
-//                    break;
-//            }
-
         }
 
         @Override

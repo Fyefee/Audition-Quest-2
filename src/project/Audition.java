@@ -87,9 +87,6 @@ public class Audition extends JPanel{
                 time_run = false;
                 width = 0;
             }
-            else if(!time_run){
-                width = width;
-            }
             else{
                 width = (int) (1000 - (1000 * (((double)now_time) / ((double)max_time))));
             }

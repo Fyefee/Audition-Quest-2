@@ -19,8 +19,14 @@ import javax.swing.*;
  */
 public class Window implements ActionListener, MouseListener{
     
+    private JFrame frame;
     private JButton b1;
-    private JPanel top_panel, bottom_panel, card_bottom_panel, bottom_panel_2, menu_panel, in_game_panel, all_card_panel;
+    private JPanel top_panel, bottom_panel, card_bottom_panel, bottom_panel_2, in_game_panel, all_card_panel;
+    
+    //Set Attribute in Menu
+    private JPanel menu_panel, menu_button_panel, empty_panel_top;
+    private JButton menu_button_play;
+            
     private CardLayout c1 = new CardLayout(), c_frame = new CardLayout();
     private boolean in_audition = false;
     
@@ -30,7 +36,7 @@ public class Window implements ActionListener, MouseListener{
     public Window(int width, int height, String title, Run run) throws IOException {
         
         //set frame
-        JFrame frame = new JFrame(title);
+        frame = new JFrame(title);
         frame.setPreferredSize(new Dimension(width, height));
         frame.setMaximumSize(new Dimension(width, height));
         frame.setMinimumSize(new Dimension(width, height));
@@ -38,9 +44,23 @@ public class Window implements ActionListener, MouseListener{
         all_card_panel = new JPanel();
         all_card_panel.setLayout(c_frame);
         
+        empty_panel_top = new JPanel();
+        empty_panel_top.setPreferredSize(new Dimension(1200, 100));
+        //MENU PANEL
         menu_panel = new JPanel();
-        menu_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        menu_panel.setLayout(new BorderLayout());
         
+        menu_button_panel = new JPanel();
+        menu_button_panel.setLayout(new FlowLayout());
+        
+        menu_button_play = new JButton("Start");
+        menu_button_play.addActionListener(this);
+        menu_button_panel.add(menu_button_play);
+        
+        menu_panel.add(empty_panel_top, BorderLayout.NORTH);
+        menu_panel.add(menu_button_panel, BorderLayout.CENTER);
+        
+        //IN-GAME PANEL
         in_game_panel = new JPanel();
         in_game_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         
@@ -112,7 +132,7 @@ public class Window implements ActionListener, MouseListener{
         
         all_card_panel.add(in_game_panel, IN_GAME);
         all_card_panel.add(menu_panel, MENU);
-        c_frame.show(all_card_panel, IN_GAME);
+        c_frame.show(all_card_panel, MENU);
         
         frame.add(all_card_panel);
         
@@ -142,8 +162,9 @@ public class Window implements ActionListener, MouseListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(b1)) {//กดเริ่มเกมใหม่
-            
+        if (e.getSource().equals(menu_button_play)) {//กดเริ่มเกมใหม่
+            c_frame.show(all_card_panel, IN_GAME);
+            frame.requestFocusInWindow();
         }
     }
 
