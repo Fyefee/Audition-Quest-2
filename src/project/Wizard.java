@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 public class Wizard extends Character {
 
     public Wizard() {
-        super(450, 600, 60, 60, 50);
+        super("Wizard", 450, 600, 60, 60, 50);
         super.setPic(new ImageIcon(getClass().getResource("img/wizard.gif")).getImage());
     }
     

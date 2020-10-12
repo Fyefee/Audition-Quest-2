@@ -28,7 +28,7 @@ public class Run extends JPanel implements Runnable{
     private int click = 0;
     
     public static Character c1 = new Knight();
-    public static Character c2 = new Knight();
+    public static Character c2 = new Archer();
     public static Monster m1 = new Slime(1);
     public static Monster m2 = new Slime(2);
     public static Audition audition = new Audition();
@@ -38,7 +38,7 @@ public class Run extends JPanel implements Runnable{
     private int nano = 1000000000, msp1 = 10000000;
     public static long start = System.nanoTime(), now;
 
-    public Run() throws IOException {
+    public Run() throws IOException, FontFormatException {
         new Window(1200, 750, "Kuy", this);
         addKeyListener(new KeyInner());
         setFocusable(true);
@@ -96,7 +96,7 @@ public class Run extends JPanel implements Runnable{
     }
 
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, FontFormatException {
         new Run();
     }
     class KeyInner implements KeyListener {

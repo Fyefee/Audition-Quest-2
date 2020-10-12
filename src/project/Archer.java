@@ -6,8 +6,8 @@ import javax.swing.ImageIcon;
 public class Archer extends Character{
 
     public Archer() {
-        super(470, 450, 80, 75, 77);
-        super.setPic(new ImageIcon(getClass().getResource("img/archer.gif")).getImage());
+        super("Archer", 470, 450, 80, 75, 77, 200, 200);
+        super.setPic(new ImageIcon(getClass().getResource("img/archer2.gif")).getImage());
     }
     
     public void skill1() {
