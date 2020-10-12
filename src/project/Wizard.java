@@ -1,11 +1,13 @@
 package project;
 
 import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Wizard extends Character {
 
     public Wizard() {
-        super(450, 600, 400, 60, 50);
+        super(450, 600, 60, 60, 50);
+        super.setPic(new ImageIcon(getClass().getResource("img/wizard.gif")).getImage());
     }
     
     public void skill1() {
