@@ -1,25 +1,74 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package project;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
-public abstract class Character extends JPanel implements Skill{
+
+/**
+ *
+ * @author Administrator
+ */
+public abstract class Monster extends JPanel implements Skill{
     private int hp;
     private int mp;
     private int speed;
     private int atk;
     private int def;
     private Image pic;
-
-    public Character(int hp, int mp, int speed, int atk, int def) {
+    private int x, y, size_x, size_y;
+    
+    public Monster() {
+    }
+    
+    public Monster(int hp, int mp, int speed, int atk, int def, int size_x, int size_y) {
         this.hp = hp;
         this.mp = mp;
         this.speed = speed;
         this.def = def;
         this.atk = atk;
+        this.size_x = size_x;
+        this.size_y = size_y;
     }
     
-    public void draw(Graphics g, int x) {
-        g.drawImage(pic, x, 325, 140 ,180, this);
+    public int getSize_x() {
+        return size_x;
+    }
+
+    public void setSize_x(int size_x) {
+        this.size_x = size_x;
+    }
+
+    public int getSize_y() {
+        return size_y;
+    }
+
+    public void setSize_y(int size_y) {
+        this.size_y = size_y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+    
+    public void draw(Graphics g) {
+        g.drawImage(pic, x, y, size_x , size_y, this);
     }
     
     public void setHp(int hp) {

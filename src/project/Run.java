@@ -25,20 +25,20 @@ public class Run extends JPanel implements Runnable{
 
     private Thread th;
     private boolean running = false, is_press = true;
-    public int[] is_ran = {1, 0};
     private int click = 0;
     
-    Character c1 = new Knight();
-    Character c2 = new Knight();
-    Audition audition = new Audition();
-    Background bg = new Background();
+    public static Character c1 = new Knight();
+    public static Character c2 = new Knight();
+    public static Monster m1 = new Slime(1);
+    public static Monster m2 = new Slime(2);
+    public static Audition audition = new Audition();
+    public Background bg = new Background();
     
     public Timer timer;
     private int nano = 1000000000, msp1 = 10000000;
-    public long start = System.nanoTime(), now;
+    public static long start = System.nanoTime(), now;
 
     public Run() throws IOException {
-        System.out.println("ดีจ้า");
         new Window(1200, 750, "Kuy", this);
         addKeyListener(new KeyInner());
         setFocusable(true);
@@ -53,7 +53,6 @@ public class Run extends JPanel implements Runnable{
     
     public synchronized void stop(){
         try{
-            th.join();
             running = false;
         } catch(Exception e){
             e.printStackTrace();
@@ -76,8 +75,10 @@ public class Run extends JPanel implements Runnable{
         bg.draw(g);
         c1.draw(g, 300);
         c2.draw(g, 100);
-        is_ran = audition.draw(g, is_ran, 1000, (int)((System.nanoTime() - start) / msp1));
-        is_ran[0] = 0;
+        m1.draw(g);
+        m2.draw(g);
+        audition.draw(g, 1000, (int)((System.nanoTime() - start) / msp1));
+        Audition.setPress_button(0);
         
         g.dispose();
         
@@ -106,19 +107,19 @@ public class Run extends JPanel implements Runnable{
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_UP && is_press) {
                 System.out.println("up"); 
-                is_ran[1] = 1;
+                Audition.setPress_button(1);
                 is_press = false;
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN && is_press) {
                 System.out.println("down"); 
-                is_ran[1] = 2;
+                Audition.setPress_button(2);
                 is_press = false;   
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT && is_press) {
                 System.out.println("left"); 
-                is_ran[1] = 3;
+                Audition.setPress_button(3);
                 is_press = false;  
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && is_press) {
                 System.out.println("right"); 
-                is_ran[1] = 4;
+                Audition.setPress_button(4);
                 is_press = false;
             }
         }
