@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -36,13 +38,15 @@ public class Window implements ActionListener, MouseListener {
     private int in_game_select_state = 0; // 0 = c1 select
 
     //Set Attribute in Game
-    private JPanel player_hp_panel, mon_hp_panel, button_panel;
+    private JPanel player_panel, monster_panel, button_panel;
     private JButton text_button;
 
     //Set Attribute in Bottom of Game
-    private JPanel p1_stat_panel, p2_stat_panel;
+    private JPanel p1_stat_panel, p2_stat_panel, p1_panel, p2_panel;
     private JLabel p1_name, p2_name, p1_hp, p2_hp, p1_mp, p2_mp, p1_speed, p2_speed;
-
+    private JPanel m1_stat_panel, m2_stat_panel, m1_panel, m2_panel;
+    private JLabel m1_name, m2_name, m1_hp, m2_hp, m1_mp, m2_mp, m1_speed, m2_speed;
+    
     private static int state = 1;
 
     private Integer[] speed = new Integer[4];
@@ -57,11 +61,13 @@ public class Window implements ActionListener, MouseListener {
     public Font font, sizedFont;
 
     Font customFont;
+    Border border_white = new LineBorder(Color.WHITE, 4, true);
+    Border border_red = new LineBorder(new Color(255, 72, 59), 4, true);
 
     public Window(int width, int height, String title, Run run) throws IOException, FontFormatException {
        
         //Add New Font
-        InputStream is = Window.class.getResourceAsStream("img/Pixellari.ttf");
+        InputStream is = Window.class.getResourceAsStream("img/Retron2000.ttf");
         font = Font.createFont(Font.TRUETYPE_FONT, is);
         sizedFont = font.deriveFont(12f);
 
@@ -114,9 +120,18 @@ public class Window implements ActionListener, MouseListener {
         text_bottom_panel.add(text_button);
 
         //In-game Player HP Panel
-        player_hp_panel = new JPanel();
-        player_hp_panel.setLayout(new GridLayout(2, 2));
-        player_hp_panel.setBackground(new Color(64, 72, 80));
+        player_panel = new JPanel();
+        player_panel.setLayout(new GridLayout(2, 1));
+        
+        p1_panel = new JPanel();
+        p1_panel.setLayout(new GridLayout(1, 2));
+        p1_panel.setBackground(new Color(64, 72, 80));
+        p1_panel.setBorder(border_white);
+        
+        p2_panel = new JPanel();
+        p2_panel.setLayout(new GridLayout(1, 2));
+        p2_panel.setBackground(new Color(64, 72, 80));
+        p2_panel.setBorder(border_white);
         
         p1_name = new JLabel(Run.c1.getName(), SwingConstants.CENTER);
         p1_name.setFont(sizedFont.deriveFont(Font.BOLD, 30f));
@@ -130,32 +145,95 @@ public class Window implements ActionListener, MouseListener {
         p1_stat_panel.setBackground(new Color(64, 72, 80));
         p1_stat_panel.setLayout(new GridLayout(3, 1));
         p1_hp = new JLabel("HP : " + Run.c1.getHp() + "/" + Run.c1.getMax_hp(), SwingConstants.CENTER);
-        p1_hp.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        p1_hp.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
         p1_hp.setForeground(Color.WHITE);
         p1_stat_panel.add(p1_hp);
         p1_mp = new JLabel("MP : " + Run.c1.getMp() + "/" + Run.c1.getMax_mp(), SwingConstants.CENTER);
-        p1_mp.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        p1_mp.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
         p1_mp.setForeground(Color.WHITE);
         p1_stat_panel.add(p1_mp);
         p1_speed = new JLabel("Speed : " + Run.c1.getSpeed(), SwingConstants.CENTER);
-        p1_speed.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        p1_speed.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
         p1_speed.setForeground(Color.WHITE);
         p1_stat_panel.add(p1_speed);
         
         p2_stat_panel = new JPanel();
         p2_stat_panel.setBackground(new Color(64, 72, 80));
-        p2_stat_panel.setLayout(new GridLayout(1, 2));
+        p2_stat_panel.setLayout(new GridLayout(3, 1));
+        p2_hp = new JLabel("HP : " + Run.c2.getHp() + "/" + Run.c2.getMax_hp(), SwingConstants.CENTER);
+        p2_hp.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
+        p2_hp.setForeground(Color.WHITE);
+        p2_stat_panel.add(p2_hp);
+        p2_mp = new JLabel("MP : " + Run.c2.getMp() + "/" + Run.c2.getMax_mp(), SwingConstants.CENTER);
+        p2_mp.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
+        p2_mp.setForeground(Color.WHITE);
+        p2_stat_panel.add(p2_mp);
+        p2_speed = new JLabel("Speed : " + Run.c2.getSpeed(), SwingConstants.CENTER);
+        p2_speed.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
+        p2_speed.setForeground(Color.WHITE);
+        p2_stat_panel.add(p2_speed);
         
-        player_hp_panel.add(p1_name);
-        player_hp_panel.add(p1_stat_panel);
-        player_hp_panel.add(p2_name);
-        player_hp_panel.add(p2_stat_panel);
-        bottom_panel.add(player_hp_panel);
+        p1_panel.add(p1_name);
+        p1_panel.add(p1_stat_panel);
+        p2_panel.add(p2_name);
+        p2_panel.add(p2_stat_panel);
+        player_panel.add(p1_panel);
+        player_panel.add(p2_panel);
+        bottom_panel.add(player_panel);
         
         //In-game Monster HP Panel
-        mon_hp_panel = new JPanel();
-        mon_hp_panel.setBackground(new Color(64, 72, 80));
-        bottom_panel.add(mon_hp_panel);
+        monster_panel = new JPanel();
+        monster_panel.setLayout(new GridLayout(2, 1));
+        
+        m1_panel = new JPanel();
+        m1_panel.setLayout(new GridLayout(1, 2));
+        m1_panel.setBackground(new Color(64, 72, 80));
+        m1_panel.setBorder(border_red);
+        
+        m2_panel = new JPanel();
+        m2_panel.setLayout(new GridLayout(1, 2));
+        m2_panel.setBackground(new Color(64, 72, 80));
+        m2_panel.setBorder(border_red);
+        
+        m1_name = new JLabel(Run.m1.getName(), SwingConstants.CENTER);
+        m1_name.setFont(sizedFont.deriveFont(Font.BOLD, 30f));
+        m1_name.setForeground(new Color(255, 72, 59));
+        
+        m2_name = new JLabel(Run.m2.getName(), SwingConstants.CENTER);
+        m2_name.setFont(sizedFont.deriveFont(Font.BOLD, 30f));
+        m2_name.setForeground(new Color(255, 72, 59));
+        
+        m1_stat_panel = new JPanel();
+        m1_stat_panel.setBackground(new Color(64, 72, 80));
+        m1_stat_panel.setLayout(new GridLayout(2, 1));
+        m1_hp = new JLabel("HP : " + Run.m1.getHp() + "/" + Run.m1.getMax_hp(), SwingConstants.CENTER);
+        m1_hp.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
+        m1_hp.setForeground(new Color(255, 72, 59));
+        m1_stat_panel.add(m1_hp);
+        m1_speed = new JLabel("Speed : " + Run.m1.getSpeed(), SwingConstants.CENTER);
+        m1_speed.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
+        m1_speed.setForeground(new Color(255, 72, 59));
+        m1_stat_panel.add(m1_speed);
+        
+        m2_stat_panel = new JPanel();
+        m2_stat_panel.setBackground(new Color(64, 72, 80));
+        m2_stat_panel.setLayout(new GridLayout(2, 1));
+        m2_hp = new JLabel("HP : " + Run.m2.getHp() + "/" + Run.m2.getMax_hp(), SwingConstants.CENTER);
+        m2_hp.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
+        m2_hp.setForeground(new Color(255, 72, 59));
+        m2_stat_panel.add(m2_hp);
+        m2_speed = new JLabel("Speed : " + Run.m2.getSpeed(), SwingConstants.CENTER);
+        m2_speed.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
+        m2_speed.setForeground(new Color(255, 72, 59));
+        m2_stat_panel.add(m2_speed);
+        
+        m1_panel.add(m1_name);
+        m1_panel.add(m1_stat_panel);
+        m2_panel.add(m2_name);
+        m2_panel.add(m2_stat_panel);
+        monster_panel.add(m1_panel);
+        monster_panel.add(m2_panel);
+        bottom_panel.add(monster_panel);
 
         button_attack = new JButton();
         button_attack.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("img/b1.png"))));

@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  */
 public abstract class Monster extends JPanel implements Skill{
     private String name;
-    private int hp;
+    private int hp, max_hp;
     private int mp;
     private int speed;
     private int atk;
@@ -29,6 +29,7 @@ public abstract class Monster extends JPanel implements Skill{
     public Monster(String name, int hp, int mp, int speed, int atk, int def, int size_x, int size_y) {
         this.name = name;
         this.hp = hp;
+        this.max_hp = hp;
         this.mp = mp;
         this.speed = speed;
         this.def = def;
@@ -127,6 +128,14 @@ public abstract class Monster extends JPanel implements Skill{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getMax_hp() {
+        return max_hp;
+    }
+
+    public void setMax_hp(int max_hp) {
+        this.max_hp = max_hp;
     }
     
 }
