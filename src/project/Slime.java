@@ -20,7 +20,7 @@ public class Slime extends Monster{
             case 2: super.setX(925); super.setY(375); break;
             default: break;
         }
-        super.setPic(new ImageIcon(getClass().getResource("img/slime_idle.gif")).getImage());
+        super.setPic(new ImageIcon(getClass().getResource("img/slime/slime_idle.gif")).getImage());
     }
 
     public void skill1() {

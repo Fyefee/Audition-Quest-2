@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  */
 public class Background extends JPanel{
     
-    Image bg = new ImageIcon(getClass().getResource("img/bg_scale_2.gif")).getImage();
+    Image bg = new ImageIcon(getClass().getResource("img/Background/bg_scale_2.gif")).getImage();
     
     public void draw(Graphics g){
         g.drawImage(bg, 0, 0, this);

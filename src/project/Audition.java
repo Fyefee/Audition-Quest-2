@@ -44,7 +44,18 @@ public class Audition extends JPanel{
         newarr[n] = x; 
   
         return newarr; 
-    } 
+    }
+    
+    public static Integer[] deleteSpeed(Integer arr[]) 
+    { 
+        int i; 
+        Integer newarr[] = new Integer[arr.length-1]; 
+  
+        for (i = 0; i < arr.length-1; i++) 
+            newarr[i] = arr[i+1]; 
+  
+        return newarr; 
+    }
     
     public void draw(Graphics g, int max_time, int now_time) {
         now_time -= 100;
