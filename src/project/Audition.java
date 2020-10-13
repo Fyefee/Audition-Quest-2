@@ -20,7 +20,9 @@ public class Audition extends JPanel{
     Image arrow_up, arrow_down, arrow_left, arrow_right, empty, wrong;
     private int x , y, state, width;
     private int[] random;
-    private static boolean is_show = false, time_run = false;
+    private static Integer[] speed;
+    private static int press_button;
+    private static boolean is_show = false, time_run = false, is_random = false;
     
     public Audition(){
         arrow_up = new ImageIcon(getClass().getResource("img/arrow/arrow_up.png")).getImage();
@@ -44,19 +46,21 @@ public class Audition extends JPanel{
         return newarr; 
     } 
     
-    public int[] draw(Graphics g, int[] is_ran, int max_time, int now_time) {
+    public void draw(Graphics g, int max_time, int now_time) {
+        now_time -= 100;
         x = 100;
         y = 100;
-        if (is_ran[0] == 1){
+        if (is_random){
             for (int i = 0; i < 10; i++){
                 int rand = (int)(Math.random() * 4) + 1;
                 random = addX(i, random, rand);
             }
             state = 0;
             System.out.println(Arrays.toString(random));
+            is_random = false;
         }
         
-        if (time_run && random[state] == is_ran[1]){
+        if (time_run && random[state] == press_button && (int)now_time >= 0){
             random[state] = 0;
             if (state <= 9){
                 state++;
@@ -66,9 +70,9 @@ public class Audition extends JPanel{
             }
             System.out.println(Arrays.toString(random));
         }
-        else if (time_run && (random[state] != is_ran[1] && is_ran[1] != 0)){
+        else if (time_run && (random[state] != press_button && press_button != 0 && (int)now_time >= 0)){
             random[state] = 5;
-            is_ran[1] = 0;
+            press_button = 0;
             if (state <= 9){
                 state++;
             }
@@ -87,8 +91,8 @@ public class Audition extends JPanel{
                 time_run = false;
                 width = 0;
             }
-            else if(!time_run){
-                width = width;
+            else if ((int)now_time < 0){
+                width = 1000;
             }
             else{
                 width = (int) (1000 - (1000 * (((double)now_time) / ((double)max_time))));
@@ -108,8 +112,7 @@ public class Audition extends JPanel{
             }
         }
         
-        is_ran[1] = 0;
-        return is_ran;
+        press_button = 0;
     }
 
     public static void setIs_show(boolean is_show) {
@@ -119,5 +122,31 @@ public class Audition extends JPanel{
     public static void setTime_run(boolean time_run) {
         Audition.time_run = time_run;
     }
+
+    public static int getPress_button() {
+        return press_button;
+    }
+
+    public static void setPress_button(int press_button) {
+        Audition.press_button = press_button;
+    }
+
+    public static boolean isIs_run() {
+        return is_random;
+    }
+
+    public static void setIs_run(boolean is_run) {
+        Audition.is_random = is_run;
+    }
+
+    public static Integer[] getSpeed() {
+        return speed;
+    }
+
+    public static void setSpeed(Integer[] speed) {
+        Audition.speed = speed;
+    }
+
+    
     
 }

@@ -25,43 +25,23 @@ public class Run extends JPanel implements Runnable{
 
     private Thread th;
     private boolean running = false, is_press = true;
-    public int[] is_ran = {1, 0};
-    private BufferedImage img;
     private int click = 0;
-    //Image player = new ImageIcon(getClass().getResource("img/human_idle.gif")).getImage();
-    Image bg = new ImageIcon(getClass().getResource("img/bg_scale_2.gif")).getImage();
     
-    private JPanel cards;
-    private JPanel panel_main, panel_sub;
-    
-    Character c1 = new Knight();
-    Character c2 = new Knight();
-    Audition audition = new Audition();
+    public static Character c1 = new Knight();
+    public static Character c2 = new Archer();
+    public static Monster m1 = new Slime(1);
+    public static Monster m2 = new Slime(2);
+    public static Audition audition = new Audition();
+    public Background bg = new Background();
     
     public Timer timer;
     private int nano = 1000000000, msp1 = 10000000;
-    public long start = System.nanoTime(), now;
+    public static long start = System.nanoTime(), now;
 
-//    public static void main(String[] args) {
-//        try {
-//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        SwingUtilities.invokeLater(() -> {
-//            try {
-//                new Frame();
-//            } catch (IOException ex) {
-//                Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        });
-//    }
-    public Run() throws IOException {
-        System.out.println("ดีจ้า");
+    public Run() throws IOException, FontFormatException {
         new Window(1200, 750, "Kuy", this);
         addKeyListener(new KeyInner());
-        setFocusable(true); // ทำให้สามารถใช้งานkeyboardได้ - ทำให้ java ตั้งใจฟัง keybord
+        setFocusable(true);
         requestFocus(); 
     }
     
@@ -73,7 +53,6 @@ public class Run extends JPanel implements Runnable{
     
     public synchronized void stop(){
         try{
-            th.join();
             running = false;
         } catch(Exception e){
             e.printStackTrace();
@@ -81,11 +60,10 @@ public class Run extends JPanel implements Runnable{
     }
     
     public void run() {
-        long time = System.currentTimeMillis();
         while (running) {
             if((System.nanoTime() - start) % msp1 == 0){
-                //System.out.println((System.nanoTime() - start) / msp1);
                 repaint();
+                requestFocusInWindow();
             }
         }
         stop();
@@ -94,11 +72,13 @@ public class Run extends JPanel implements Runnable{
     
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(bg, 0, 0, this);
+        bg.draw(g);
         c1.draw(g, 300);
         c2.draw(g, 100);
-        is_ran = audition.draw(g, is_ran, 1000, (int)((System.nanoTime() - start) / msp1));
-        is_ran[0] = 0;
+        m1.draw(g);
+        m2.draw(g);
+        audition.draw(g, 1000, (int)((System.nanoTime() - start) / msp1));
+        Audition.setPress_button(0);
         
         g.dispose();
         
@@ -116,7 +96,7 @@ public class Run extends JPanel implements Runnable{
     }
 
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, FontFormatException {
         new Run();
     }
     class KeyInner implements KeyListener {
@@ -127,44 +107,21 @@ public class Run extends JPanel implements Runnable{
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_UP && is_press) {
                 System.out.println("up"); 
-                is_ran[1] = 1;
+                Audition.setPress_button(1);
                 is_press = false;
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN && is_press) {
                 System.out.println("down"); 
-                is_ran[1] = 2;
+                Audition.setPress_button(2);
                 is_press = false;   
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT && is_press) {
                 System.out.println("left"); 
-                is_ran[1] = 3;
+                Audition.setPress_button(3);
                 is_press = false;  
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && is_press) {
                 System.out.println("right"); 
-                is_ran[1] = 4;
+                Audition.setPress_button(4);
                 is_press = false;
             }
-//            switch( keyCode ) { 
-//                case KeyEvent.VK_UP:
-//                    System.out.println("up"); 
-//                    is_ran[1] = 1;
-//                    is_press = true;
-//                    break;
-//                case KeyEvent.VK_DOWN:
-//                    System.out.println("down"); 
-//                    is_ran[1] = 2;
-//                    is_press = true;
-//                    break;
-//                case KeyEvent.VK_LEFT:
-//                    System.out.println("left"); 
-//                    is_ran[1] = 3;
-//                    is_press = true;
-//                    break;
-//                case KeyEvent.VK_RIGHT :
-//                    System.out.println("right"); 
-//                    is_ran[1] = 4;
-//                    is_press = true;
-//                    break;
-//            }
-
         }
 
         @Override
