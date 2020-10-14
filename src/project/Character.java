@@ -3,7 +3,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
 public abstract class Character extends JPanel implements Skill{
-    private String name;
+    private String name, attack_target = "";
     private int hp, max_hp;
     private int mp, max_mp;
     private int speed;
@@ -99,6 +99,14 @@ public abstract class Character extends JPanel implements Skill{
 
     public void setMax_mp(int max_mp) {
         this.max_mp = max_mp;
+    }
+
+    public String getAttack_target() {
+        return attack_target;
+    }
+
+    public void setAttack_target(String attack_target) {
+        this.attack_target = attack_target;
     }
     
     
