@@ -8,6 +8,8 @@ public class Knight extends Character {
     
     public Knight() {
         super("Knight", 650, 300, 60, 80, 80, 140, 180);
+        super.setX(300); 
+        super.setY(320);
         super.setPic(new ImageIcon(getClass().getResource("img/human_idle.gif")).getImage());
     }
 

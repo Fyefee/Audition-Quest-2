@@ -18,11 +18,14 @@ import javax.swing.*;
 public class Audition extends JPanel{
     
     Image arrow_up, arrow_down, arrow_left, arrow_right, empty, wrong;
-    private int x , y, state, width;
+    private static int x , y, state, width, arrow_count, arrow_score;
     private int[] random;
     private static Integer[] speed;
-    private static int press_button;
+    private static int press_button, max_turn = 4, turn = 1;
     private static boolean is_show = false, time_run = false, is_random = false;
+    private static double attack_percent;
+    private static Monster target_m;
+    private static Character target_c, who_attack;
     
     public Audition(){
         arrow_up = new ImageIcon(getClass().getResource("img/arrow/arrow_up.png")).getImage();
@@ -62,35 +65,36 @@ public class Audition extends JPanel{
         x = 100;
         y = 100;
         if (is_random){
-            for (int i = 0; i < 10; i++){
+            for (int i = 0; i < arrow_count; i++){
                 int rand = (int)(Math.random() * 4) + 1;
                 random = addX(i, random, rand);
             }
             state = 0;
-            System.out.println(Arrays.toString(random));
             is_random = false;
         }
         
         if (time_run && random[state] == press_button && (int)now_time >= 0){
             random[state] = 0;
-            if (state <= 9){
+            arrow_score++;
+            if (state < arrow_count){
                 state++;
-            }
-            else{
-                
-            }
-            System.out.println(Arrays.toString(random));
+            }          
         }
         else if (time_run && (random[state] != press_button && press_button != 0 && (int)now_time >= 0)){
             random[state] = 5;
             press_button = 0;
-            if (state <= 9){
+            if (state < arrow_count){
                 state++;
+            }
+            if (attack_percent > 0){
+                attack_percent -= 0.2;
             }
         }
         
-        if (state > 9){
-            time_run = false;            
+        if (state > arrow_count-1 && time_run){
+            time_run = false;
+            is_show = false;
+            who_attack.attack(target_c);
         }
         
         if (is_show){
@@ -158,6 +162,53 @@ public class Audition extends JPanel{
         Audition.speed = speed;
     }
 
+    public static boolean isIs_random() {
+        return is_random;
+    }
+
+    public static void setIs_random(boolean is_random) {
+        Audition.is_random = is_random;
+    }
+
+    public static int getArrow_count() {
+        return arrow_count;
+    }
+
+    public static void setArrow_count(int arrow_count) {
+        Audition.arrow_count = arrow_count;
+    }   
+
+    public static Monster getTarget_m() {
+        return target_m;
+    }
+
+    public static void setTarget_m(Monster target_m) {
+        Audition.target_m = target_m;
+    }
+
+    public static Character getTarget_c() {
+        return target_c;
+    }
+
+    public static void setTarget_c(Character target_c) {
+        Audition.target_c = target_c;
+    }
+
+    public static Character getWho_attack() {
+        return who_attack;
+    }
+
+    public static void setWho_attack(Character who_attack) {
+        Audition.who_attack = who_attack;
+    }
+
+    public static double getAttack_percent() {
+        return attack_percent;
+    }
+
+    public static void setAttack_percent(double attack_percent) {
+        Audition.attack_percent = attack_percent;
+    }
     
     
 }

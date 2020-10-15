@@ -29,8 +29,8 @@ public class Run extends JPanel implements Runnable{
     
     public static Character c1 = new Knight();
     public static Character c2 = new Archer();
-    public static Monster m1 = new Slime(1);
-    public static Monster m2 = new Slime(2);
+    public static Character m1 = new Slime(1);
+    public static Character m2 = new Slime(2);
     public static Audition audition = new Audition();
     public Background bg = new Background();
     
@@ -73,8 +73,8 @@ public class Run extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         bg.draw(g);
-        c1.draw(g, 300);
-        c2.draw(g, 100);
+        c1.draw(g);
+        c2.draw(g);
         m1.draw(g);
         m2.draw(g);
         audition.draw(g, 1000, (int)((System.nanoTime() - start) / msp1));
@@ -106,19 +106,15 @@ public class Run extends JPanel implements Runnable{
         @Override
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_UP && is_press) {
-                System.out.println("up"); 
                 Audition.setPress_button(1);
                 is_press = false;
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN && is_press) {
-                System.out.println("down"); 
                 Audition.setPress_button(2);
                 is_press = false;   
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT && is_press) {
-                System.out.println("left"); 
                 Audition.setPress_button(3);
                 is_press = false;  
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && is_press) {
-                System.out.println("right"); 
                 Audition.setPress_button(4);
                 is_press = false;
             }

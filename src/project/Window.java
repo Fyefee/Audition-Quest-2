@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -41,13 +42,14 @@ public class Window implements ActionListener, MouseListener {
 
     //Set Attribute in Bottom of Game
     private JPanel p1_stat_panel, p2_stat_panel, p1_panel, p2_panel;
-    private JLabel p1_name, p2_name, p1_hp, p2_hp, p1_mp, p2_mp, p1_speed, p2_speed;
+    public static JLabel p1_name, p2_name, p1_hp, p2_hp, p1_mp, p2_mp, p1_speed, p2_speed;
     private JPanel m1_stat_panel, m2_stat_panel, m1_panel, m2_panel;
-    private JLabel m1_name, m2_name, m1_hp, m2_hp, m1_speed, m2_speed;
+    public static JLabel m1_name, m2_name, m1_hp, m2_hp, m1_speed, m2_speed;
 
     //Set Attribute for select tabs
     public static int target, attack_state = 1; //1 = c1 select
-    private JPanel card_bottom_panel, in_game_main_button_panel;
+    public static String attackText;
+    private JPanel card_bottom_panel, in_game_main_button_panel, empty_panel_bottom;
     private JPanel target_panel, text_button_panel;
     private JButton text_button;
     private JButton button_attack, c_target_button, m1_target_button, m2_target_button, back_button;
@@ -235,7 +237,7 @@ public class Window implements ActionListener, MouseListener {
         c_target_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
         c_target_button.setForeground(Color.WHITE);
         c_target_button.addMouseListener(this);
-        c_target_button.addActionListener(this);   
+        c_target_button.addActionListener(this);
         m1_target_button = new JButton("");
         m1_target_button.setBackground(button_select);
         m1_target_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
@@ -262,7 +264,7 @@ public class Window implements ActionListener, MouseListener {
         target_panel.add(m1_target_button);
         target_panel.add(c_target_button);
         target_panel.add(m2_target_button);
-        
+
         //Button Text Panel
         text_button = new JButton();
         text_button.setBackground(button_select);
@@ -273,7 +275,10 @@ public class Window implements ActionListener, MouseListener {
         text_button_panel = new JPanel();
         text_button_panel.setLayout(new BorderLayout());
         text_button_panel.add(text_button);
-        
+
+        //Empty Panel
+        empty_panel_bottom = new JPanel();
+        empty_panel_bottom.setBackground(button_select);
 
         button_attack = new JButton();
         button_attack.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("img/b1.png"))));
@@ -308,6 +313,7 @@ public class Window implements ActionListener, MouseListener {
         card_bottom_panel.add("main_select", in_game_main_button_panel);
         card_bottom_panel.add("target_select", target_panel);
         card_bottom_panel.add("text_button", text_button_panel);
+        card_bottom_panel.add("empty", empty_panel_bottom);
         card_select.show(card_bottom_panel, "select");
 
         in_game_panel.add(bottom_panel);
@@ -321,10 +327,30 @@ public class Window implements ActionListener, MouseListener {
         frame.setVisible(true);
         run.start();
     }
-    
-    public void checkAttack(Character c){
-        if (c.getAttack_target().equals("attack c1")){
+
+    public void checkAttack(Character c) {
+        if (c.getAttack_target().equals("attack c1")) {
+            Run.c2.start_attack(c, Run.c1);
+        } else if (c.getAttack_target().equals("attack c2")) {
+            Run.c2.start_attack(c, Run.c2);
+        } else if (c.getAttack_target().equals("attack m1")) {
+            Run.c2.start_attack(c, Run.m1);
+        } else if (c.getAttack_target().equals("attack m2")) {
+            Run.c2.start_attack(c, Run.m2);
         }
+    }
+
+    public void setSpeed() {
+        speed[0] = Run.c1.getSpeed();
+        speed[1] = Run.c2.getSpeed();
+        speed[2] = Run.m1.getSpeed();
+        speed[3] = Run.m2.getSpeed();
+        Arrays.sort(speed, Collections.reverseOrder());
+        Audition.setSpeed(speed);
+    }
+
+    public void setAttackText(Character c, String target) {
+        c.setAttack_target(attackText + target);
     }
 
     @Override
@@ -429,23 +455,16 @@ public class Window implements ActionListener, MouseListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {      
+    public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(menu_button_play)) {//กดเริ่มเกมใหม่
             c_frame.show(all_card_panel, IN_GAME);
             frame.requestFocusInWindow();
 
-            speed[0] = Run.c1.getSpeed();
-            speed[1] = Run.c2.getSpeed();
-            speed[2] = Run.m1.getSpeed();
-            speed[3] = Run.m2.getSpeed();
-            Arrays.sort(speed, Collections.reverseOrder());
-
-            Audition.setSpeed(speed);
         } else if (e.getSource().equals(button_attack)) {//กดเริ่มเกมใหม่
             card_select.show(card_bottom_panel, "target_select");
-            if (attack_state == 1){
+            if (attack_state == 1) {
                 c_target_button.setText(Run.c2.getName());
-            } else if (attack_state == 2){
+            } else if (attack_state == 2) {
                 c_target_button.setText(Run.c1.getName());
             }
             m1_target_button.setText(Run.m1.getName());
@@ -453,10 +472,7 @@ public class Window implements ActionListener, MouseListener {
             p1_panel.setBorder(null);
             p2_panel.setBorder(null);
             target = 1;
-//            Audition.setIs_show(true);
-//            Audition.setTime_run(true);
-//            Run.start = System.nanoTime();
-//            Audition.setIs_run(true);
+            attackText = "attack ";
         } else if (e.getSource().equals(back_button)) {
             card_select.show(card_bottom_panel, "main_select");
             if (attack_state == 1) {
@@ -464,79 +480,123 @@ public class Window implements ActionListener, MouseListener {
             } else if (attack_state == 2) {
                 p2_panel.setBorder(border_white);
             }
-//            Audition.setIs_show(true);
-//            Audition.setTime_run(true);
-//            Run.start = System.nanoTime();
-//            Audition.setIs_run(true);
-        } else if (e.getSource().equals(m1_target_button)){
-            if (attack_state == 1){
+        } else if (e.getSource().equals(m1_target_button)) {
+            if (attack_state == 1) {
                 switch (target) {
-                    case 1: Run.c1.setAttack_target("attack m1"); break;
-                    case 2: Run.c1.setAttack_target("attack allm"); break;    
-                    case 3: Run.c1.setAttack_target("attack all"); break;    
-                    default: break;     
+                    case 1:
+                        setAttackText(Run.c1, "m1");
+                        break;
+                    case 2:
+                        setAttackText(Run.c1, "allm");
+                        break;
+                    case 3:
+                        setAttackText(Run.c1, "all");
+                        break;
+                    default:
+                        break;
                 }
                 attack_state = 2;
                 m1_panel.setBorder(null);
                 card_select.show(card_bottom_panel, "main_select");
                 p2_panel.setBorder(border_white);
-            } else if (attack_state == 2){
+            } else if (attack_state == 2) {
                 switch (target) {
-                    case 1: Run.c2.setAttack_target("attack m1"); break;
-                    case 2: Run.c2.setAttack_target("attack allm"); break;    
-                    case 3: Run.c2.setAttack_target("attack all"); break;    
-                    default: break;     
+                    case 1:
+                        setAttackText(Run.c2, "m1");
+                        break;
+                    case 2:
+                        setAttackText(Run.c2, "allm");
+                        break;
+                    case 3:
+                        setAttackText(Run.c2, "all");
+                        break;
+                    default:
+                        break;
                 }
                 attack_state = 0;
                 m1_panel.setBorder(null);
+                setSpeed();
                 card_select.show(card_bottom_panel, "text_button");
-            }    
-        } else if (e.getSource().equals(m2_target_button)){
-            if (attack_state == 1){
+            }
+        } else if (e.getSource().equals(m2_target_button)) {
+            if (attack_state == 1) {
                 switch (target) {
-                    case 1: Run.c1.setAttack_target("attack m2"); break;
-                    case 2: Run.c1.setAttack_target("attack allm"); break;    
-                    case 3: Run.c1.setAttack_target("attack all"); break;    
-                    default: break;     
+                    case 1:
+                        setAttackText(Run.c1, "m2");
+                        break;
+                    case 2:
+                        setAttackText(Run.c1, "allm");
+                        break;
+                    case 3:
+                        setAttackText(Run.c1, "all");
+                        break;
+                    default:
+                        break;
                 }
                 attack_state = 2;
                 m2_panel.setBorder(null);
                 card_select.show(card_bottom_panel, "main_select");
                 p2_panel.setBorder(border_white);
-            } else if (attack_state == 2){
+            } else if (attack_state == 2) {
                 switch (target) {
-                    case 1: Run.c2.setAttack_target("attack m2"); break;
-                    case 2: Run.c2.setAttack_target("attack allm"); break;    
-                    case 3: Run.c2.setAttack_target("attack all"); break;    
-                    default: break;     
+                    case 1:
+                        setAttackText(Run.c2, "m2");
+                        break;
+                    case 2:
+                        setAttackText(Run.c2, "allm");
+                        break;
+                    case 3:
+                        setAttackText(Run.c2, "all");
+                        break;
+                    default:
+                        break;
                 }
                 attack_state = 0;
                 m2_panel.setBorder(null);
+                setSpeed();
                 card_select.show(card_bottom_panel, "text_button");
-            }    
-        } else if (e.getSource().equals(c_target_button)){
-            if (attack_state == 1){
+            }
+        } else if (e.getSource().equals(c_target_button)) {
+            if (attack_state == 1) {
                 switch (target) {
-                    case 1: Run.c1.setAttack_target("attack c2"); break;
-                    case 2: Run.c1.setAttack_target("attack c2"); break;    
-                    case 3: Run.c1.setAttack_target("attack all"); break;    
-                    default: break;     
+                    case 1:
+                        setAttackText(Run.c1, "c2");
+                        break;
+                    case 2:
+                        setAttackText(Run.c1, "c2");
+                        break;
+                    case 3:
+                        setAttackText(Run.c1, "all");
+                        break;
+                    default:
+                        break;
                 }
                 attack_state = 2;
                 p2_panel.setBorder(null);
                 card_select.show(card_bottom_panel, "main_select");
                 p2_panel.setBorder(border_white);
-            } else if (attack_state == 2){
+            } else if (attack_state == 2) {
                 switch (target) {
-                    case 1: Run.c2.setAttack_target("attack c1"); break;
-                    case 2: Run.c2.setAttack_target("attack c1"); break;    
-                    case 3: Run.c2.setAttack_target("attack all"); break;    
-                    default: break;     
+                    case 1:
+                        setAttackText(Run.c2, "c1");
+                        break;
+                    case 2:
+                        setAttackText(Run.c2, "c1");
+                        break;
+                    case 3:
+                        setAttackText(Run.c2, "all");
+                        break;
+                    default:
+                        break;
                 }
                 attack_state = 0;
                 p1_panel.setBorder(null);
+                setSpeed();
+                //text_button.setText(Audition.getSpeed()[0].);
                 card_select.show(card_bottom_panel, "text_button");
-            }    
+            }
+        } else if (e.getSource().equals(text_button)) {
+            checkAttack(Run.c2);
         }
     }
 

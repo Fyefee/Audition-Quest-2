@@ -138,4 +138,5 @@ public abstract class Monster extends JPanel implements Skill{
         this.max_hp = max_hp;
     }
     
+    
 }
