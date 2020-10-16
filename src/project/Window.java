@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -48,7 +49,7 @@ public class Window implements ActionListener, MouseListener {
 
     //Set Attribute for select tabs
     public static int target, attack_state = 1; //1 = c1 select
-    public static String attackText;
+    public static String attackText, text_button_text = "";
     private JPanel card_bottom_panel, in_game_main_button_panel, empty_panel_bottom;
     private JPanel target_panel, text_button_panel;
     private JButton text_button;
@@ -76,6 +77,9 @@ public class Window implements ActionListener, MouseListener {
         InputStream is = Window.class.getResourceAsStream("img/Retron2000.ttf");
         font = Font.createFont(Font.TRUETYPE_FONT, is);
         sizedFont = font.deriveFont(12f);
+        
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(font);
 
         //set frame
         frame = new JFrame(title);
@@ -323,34 +327,47 @@ public class Window implements ActionListener, MouseListener {
         c_frame.show(all_card_panel, MENU);
 
         frame.add(all_card_panel);
+        frame.pack();
 
         frame.setVisible(true);
         run.start();
     }
 
-    public void checkAttack(Character c) {
-        if (c.getAttack_target().equals("attack c1")) {
-            Run.c2.start_attack(c, Run.c1);
-        } else if (c.getAttack_target().equals("attack c2")) {
-            Run.c2.start_attack(c, Run.c2);
-        } else if (c.getAttack_target().equals("attack m1")) {
-            Run.c2.start_attack(c, Run.m1);
-        } else if (c.getAttack_target().equals("attack m2")) {
-            Run.c2.start_attack(c, Run.m2);
-        }
+    public void end_select() {
+        attack_state = 0;
+        p1_panel.setBorder(null);
+        p2_panel.setBorder(null);
+        m1_panel.setBorder(null);
+        m2_panel.setBorder(null);
+        Collections.sort(Audition.speed, Comparator.comparing(Character::getSpeed).reversed());
+        setText_Button();
+        card_select.show(card_bottom_panel, "text_button");
+//       for (Character c: Audition.speed)
+//       System.out.println(c.getSpeed());
     }
 
-    public void setSpeed() {
-        speed[0] = Run.c1.getSpeed();
-        speed[1] = Run.c2.getSpeed();
-        speed[2] = Run.m1.getSpeed();
-        speed[3] = Run.m2.getSpeed();
-        Arrays.sort(speed, Collections.reverseOrder());
-        Audition.setSpeed(speed);
+    public void setText_Button() {
+        text_button_text = "<html><font face='Retron2000'><center>" + Audition.speed.get(Audition.turn - 1).getName() + " ";
+        if (attackText.equals("attack")) {
+            text_button_text += "used attack to ";
+        }
+        if (Audition.speed.get(Audition.turn - 1).getTarget().equals("c1")) {
+            text_button_text += Run.c1.getName();
+        } else if (Audition.speed.get(Audition.turn - 1).getTarget().equals("c2")) {
+            text_button_text += Run.c2.getName();
+        } else if (Audition.speed.get(Audition.turn - 1).getTarget().equals("m1")) {
+            text_button_text += Run.m1.getName();
+        } else if (Audition.speed.get(Audition.turn - 1).getTarget().equals("m2")) {
+            text_button_text += Run.m2.getName();
+        }
+        text_button_text += "...";
+        text_button.setText(text_button_text);
+        text_button_text = "";
     }
 
     public void setAttackText(Character c, String target) {
-        c.setAttack_target(attackText + target);
+        c.setAttack_target(attackText);
+        c.setTarget(target);
     }
 
     @Override
@@ -472,7 +489,7 @@ public class Window implements ActionListener, MouseListener {
             p1_panel.setBorder(null);
             p2_panel.setBorder(null);
             target = 1;
-            attackText = "attack ";
+            attackText = "attack";
         } else if (e.getSource().equals(back_button)) {
             card_select.show(card_bottom_panel, "main_select");
             if (attack_state == 1) {
@@ -513,10 +530,7 @@ public class Window implements ActionListener, MouseListener {
                     default:
                         break;
                 }
-                attack_state = 0;
-                m1_panel.setBorder(null);
-                setSpeed();
-                card_select.show(card_bottom_panel, "text_button");
+                end_select();
             }
         } else if (e.getSource().equals(m2_target_button)) {
             if (attack_state == 1) {
@@ -551,10 +565,7 @@ public class Window implements ActionListener, MouseListener {
                     default:
                         break;
                 }
-                attack_state = 0;
-                m2_panel.setBorder(null);
-                setSpeed();
-                card_select.show(card_bottom_panel, "text_button");
+                end_select();
             }
         } else if (e.getSource().equals(c_target_button)) {
             if (attack_state == 1) {
@@ -589,14 +600,10 @@ public class Window implements ActionListener, MouseListener {
                     default:
                         break;
                 }
-                attack_state = 0;
-                p1_panel.setBorder(null);
-                setSpeed();
-                //text_button.setText(Audition.getSpeed()[0].);
-                card_select.show(card_bottom_panel, "text_button");
+                end_select();
             }
         } else if (e.getSource().equals(text_button)) {
-            checkAttack(Run.c2);
+            Audition.speed.get(Audition.turn - 1).checkAttack();
         }
     }
 

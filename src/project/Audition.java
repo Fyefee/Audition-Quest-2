@@ -8,6 +8,7 @@ package project;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.*;
 
@@ -20,8 +21,9 @@ public class Audition extends JPanel{
     Image arrow_up, arrow_down, arrow_left, arrow_right, empty, wrong;
     private static int x , y, state, width, arrow_count, arrow_score;
     private int[] random;
-    private static Integer[] speed;
-    private static int press_button, max_turn = 4, turn = 1;
+    public static ArrayList<Character> speed = new ArrayList<Character>();
+    private static int press_button, max_turn = 4;
+    public static int turn = 1;
     private static boolean is_show = false, time_run = false, is_random = false;
     private static double attack_percent;
     private static Monster target_m;
@@ -34,6 +36,11 @@ public class Audition extends JPanel{
         arrow_right = new ImageIcon(getClass().getResource("img/arrow/arrow_right.png")).getImage();
         empty = new ImageIcon(getClass().getResource("img/empty.png")).getImage();
         wrong = new ImageIcon(getClass().getResource("img/x.png")).getImage();
+        speed.add(Run.c1);
+        speed.add(Run.c2);
+        speed.add(Run.m1);
+        speed.add(Run.m2);
+        
     }
     
     public static int[] addX(int n, int arr[], int x) 
@@ -152,14 +159,6 @@ public class Audition extends JPanel{
 
     public static void setIs_run(boolean is_run) {
         Audition.is_random = is_run;
-    }
-
-    public static Integer[] getSpeed() {
-        return speed;
-    }
-
-    public static void setSpeed(Integer[] speed) {
-        Audition.speed = speed;
     }
 
     public static boolean isIs_random() {

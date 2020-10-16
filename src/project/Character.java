@@ -20,7 +20,7 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 public abstract class Character extends JPanel implements Skill{
-    private String name, attack_target = "";
+    private String name, attack_type = "", target = "";
     private int hp, max_hp;
     private int mp, max_mp;
     private int speed;
@@ -42,22 +42,39 @@ public abstract class Character extends JPanel implements Skill{
         this.size_y = size_y;
     }
     
-    public void start_attack(Character c1, Character c2){
-        Run.start = System.nanoTime();
-        Audition.setArrow_count(5);
-        Audition.setIs_random(true);
-        Audition.setTime_run(true);
-        Audition.setIs_show(true);
-        Audition.setAttack_percent(1);
-        
-        Audition.setTarget_c(c2);
-        Audition.setWho_attack(c1);
+    public void checkAttack() {
+        if (this.getAttack_target().equals("attack")) {
+            if (this.getTarget().equals("c1"))
+            this.start_attack(Run.c1, 5);
+            else if (this.getTarget().equals("c2"))
+            this.start_attack(Run.c2, 5);
+            else if (this.getTarget().equals("m1"))
+            this.start_attack(Run.m1, 5);
+            else if (this.getTarget().equals("m2"))
+            this.start_attack(Run.m2, 5);
+        }
+    }
+    
+    public void start_attack(Character c, int arrow_count){
+        if (this == Run.c1 || this == Run.c2){
+            Run.start = System.nanoTime();
+            Run.setMax_time(500);
+            Audition.setArrow_count(arrow_count);
+            Audition.setIs_random(true);
+            Audition.setTime_run(true);
+            Audition.setIs_show(true);
+            Audition.setAttack_percent(1);
+
+            Audition.setTarget_c(c);
+            Audition.setWho_attack(this);
+        }   
     }
     
     public void attack(Character c){
         try {
-            System.out.println(Audition.getWho_attack().getName() + " Attack " + c.getName() + " " + ((int)((double)Audition.getWho_attack().getAtk() * Audition.getAttack_percent()) + " Damage."));
-            c.setHp(c.getHp() - (int)((double)Audition.getWho_attack().getAtk() * Audition.getAttack_percent()));
+            System.out.println(Audition.getWho_attack().getName() + " Attack " + c.getName() + " " + ((int)((double)Audition.getWho_attack().getAtk() * Audition.getAttack_percent() - c.getDef()) + " Damage."));
+            if (((int)((double)Audition.getWho_attack().getAtk() * Audition.getAttack_percent() - c.getDef())) > 0)
+            c.setHp(c.getHp() - ((int)((double)Audition.getWho_attack().getAtk() * Audition.getAttack_percent()) - c.getDef()));
             
             Window.p1_hp.setText("HP : " + Run.c1.getHp() + "/" + Run.c1.getMax_hp());
             Window.p2_hp.setText("HP : " + Run.c2.getHp() + "/" + Run.c2.getMax_hp());
@@ -144,11 +161,11 @@ public abstract class Character extends JPanel implements Skill{
     }
 
     public String getAttack_target() {
-        return attack_target;
+        return attack_type;
     }
 
     public void setAttack_target(String attack_target) {
-        this.attack_target = attack_target;
+        this.attack_type = attack_target;
     }
 
     public int getX() {
@@ -182,5 +199,13 @@ public abstract class Character extends JPanel implements Skill{
     public void setSize_y(int size_y) {
         this.size_y = size_y;
     }
-       
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }    
+    
 }

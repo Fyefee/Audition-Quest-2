@@ -26,6 +26,7 @@ public class Run extends JPanel implements Runnable{
     private Thread th;
     private boolean running = false, is_press = true;
     private int click = 0;
+    private static int max_time;
     
     public static Character c1 = new Knight();
     public static Character c2 = new Archer();
@@ -77,7 +78,7 @@ public class Run extends JPanel implements Runnable{
         c2.draw(g);
         m1.draw(g);
         m2.draw(g);
-        audition.draw(g, 1000, (int)((System.nanoTime() - start) / msp1));
+        audition.draw(g, max_time, (int)((System.nanoTime() - start) / msp1));
         Audition.setPress_button(0);
         
         g.dispose();
@@ -138,6 +139,14 @@ public class Run extends JPanel implements Runnable{
                     break;
             }
         }
+    }
+
+    public static int getMax_time() {
+        return max_time;
+    }
+
+    public static void setMax_time(int max_time) {
+        Run.max_time = max_time;
     }
    
 }
