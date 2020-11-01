@@ -20,7 +20,7 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 public abstract class Character extends JPanel implements Skill{
-    private String name, attack_type = "", target = "";
+    private String name, attack_type = "", target = "", type = "";
     private int hp, max_hp;
     private int mp, max_mp;
     private int speed;
@@ -28,8 +28,13 @@ public abstract class Character extends JPanel implements Skill{
     private int def;
     private Image pic;
     private int x, y, size_x, size_y;
+    private boolean alive = true;
+    private int rand;
 
-    public Character(String name, int hp, int mp, int speed, int atk, int def, int size_x, int size_y) {
+    public Character(){
+    }
+
+    public Character(String name, int hp, int mp, int speed, int atk, int def, int size_x, int size_y, String type) {
         this.name = name;
         this.hp = hp;
         max_hp = hp;
@@ -40,25 +45,44 @@ public abstract class Character extends JPanel implements Skill{
         this.atk = atk;
         this.size_x = size_x;
         this.size_y = size_y;
+        this.type = type;
     }
     
     public void checkAttack() {
-        if (this.getAttack_target().equals("attack")) {
+        if (this.type.equals("Player")) {
+            if (this.getAttack_target().equals("attack")) {
+                if (this.getTarget().equals("c1") && Run.c1.isAlive())
+                    this.start_attack(Run.c1, 5);
+                else if (this.getTarget().equals("c2") && Run.c2.isAlive())
+                    this.start_attack(Run.c2, 5);
+                else if (this.getTarget().equals("m1") && Run.m1.isAlive())
+                    this.start_attack(Run.m1, 5);
+                else if (this.getTarget().equals("m2") && Run.m2.isAlive())
+                    this.start_attack(Run.m2, 5);
+                else {
+                    for (int i = 0; i <= (4 - Audition.turn); i++){
+                        Audition.turn++;
+                        if (Audition.speed.get(Audition.turn - 1).isAlive())
+                            break;
+                    }
+                    Window.setText_Button();
+                    Window.text_showattack = true;
+                }
+            }
+        } else {
+            Audition.setAttack_percent(1);
+            Audition.setWho_attack(this);
             if (this.getTarget().equals("c1"))
-            this.start_attack(Run.c1, 5);
+                this.attack(Run.c1);
             else if (this.getTarget().equals("c2"))
-            this.start_attack(Run.c2, 5);
-            else if (this.getTarget().equals("m1"))
-            this.start_attack(Run.m1, 5);
-            else if (this.getTarget().equals("m2"))
-            this.start_attack(Run.m2, 5);
+                this.attack(Run.c2);
         }
     }
     
     public void start_attack(Character c, int arrow_count){
         if (this == Run.c1 || this == Run.c2){
             Run.start = System.nanoTime();
-            Run.setMax_time(500);
+            Run.setMax_time(400);
             Audition.setArrow_count(arrow_count);
             Audition.setIs_random(true);
             Audition.setTime_run(true);
@@ -72,19 +96,31 @@ public abstract class Character extends JPanel implements Skill{
     
     public void attack(Character c){
         try {
-            System.out.println(Audition.getWho_attack().getName() + " Attack " + c.getName() + " " + ((int)((double)Audition.getWho_attack().getAtk() * Audition.getAttack_percent() - c.getDef()) + " Damage."));
+            String text = Audition.getWho_attack().getName() + " Attack " + c.getName() + " " + ((int)((double)Audition.getWho_attack().getAtk() * Audition.getAttack_percent() - c.getDef()) + " Damage.");
+            System.out.println(text);
             if (((int)((double)Audition.getWho_attack().getAtk() * Audition.getAttack_percent() - c.getDef())) > 0)
             c.setHp(c.getHp() - ((int)((double)Audition.getWho_attack().getAtk() * Audition.getAttack_percent()) - c.getDef()));
+
+            if (c.getHp() <= 0){
+                c.setAlive(false);
+                c.setHp(0);
+            }
             
             Window.p1_hp.setText("HP : " + Run.c1.getHp() + "/" + Run.c1.getMax_hp());
             Window.p2_hp.setText("HP : " + Run.c2.getHp() + "/" + Run.c2.getMax_hp());
             Window.m1_hp.setText("HP : " + Run.m1.getHp() + "/" + Run.m1.getMax_hp());
             Window.m2_hp.setText("HP : " + Run.m2.getHp() + "/" + Run.m2.getMax_hp());
-        } catch (Exception e) {}  
+            
+            Window.setText_Button(text);
+            Audition.turn++;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
       
     
     public void draw(Graphics g) {
+        if (alive)
         g.drawImage(pic, x, y, size_x , size_y, this);
     }
     
@@ -206,6 +242,29 @@ public abstract class Character extends JPanel implements Skill{
 
     public void setTarget(String target) {
         this.target = target;
-    }    
-    
+    }
+
+    public String getAttack_type() {
+        return attack_type;
+    }
+
+    public void setAttack_type(String attack_type) {
+        this.attack_type = attack_type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
 }

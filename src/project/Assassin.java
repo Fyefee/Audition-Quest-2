@@ -6,8 +6,8 @@ import javax.swing.ImageIcon;
 public class Assassin extends Character{
 
     public Assassin() {
-        super("Assassin", 550, 400, 90, 85, 50);
-        super.setPic(new ImageIcon(getClass().getResource("img/assassin.gif")).getImage());
+//        super("Assassin", 550, 400, 90, 85, 50);
+//        super.setPic(new ImageIcon(getClass().getResource("img/assassin.gif")).getImage());
     }
     
     public void skill1() {

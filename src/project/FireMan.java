@@ -6,8 +6,8 @@ import javax.swing.ImageIcon;
 public class FireMan extends Character{
 
     public FireMan() {
-        super("Fireman", 470, 450, 90, 85, 50);
-        super.setPic(new ImageIcon(getClass().getResource("img/fireman.gif")).getImage());
+//        super("Fireman", 470, 450, 90, 85, 50);
+//        super.setPic(new ImageIcon(getClass().getResource("img/fireman.gif")).getImage());
     }
     
     public void skill1() {

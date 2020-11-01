@@ -16,8 +16,6 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,7 +38,7 @@ public class Run extends JPanel implements Runnable{
     public static long start = System.nanoTime(), now;
 
     public Run() throws IOException, FontFormatException {
-        new Window(1200, 750, "Kuy", this);
+        new Window(1205, 759, "Kuy", this);
         addKeyListener(new KeyInner());
         setFocusable(true);
         requestFocus(); 

@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 public class Slime extends Character{
     
     public Slime(int position) {
-        super("Slime", 300, 300, 10, 80, 20, 120, 120);
+        super("Slime", 50, 300, 10, 30, 20, 120, 120, "Monster");
         switch (position){
             case 1: super.setX(760); super.setY(375); break;
             case 2: super.setX(925); super.setY(375); break;
