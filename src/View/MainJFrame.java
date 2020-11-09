@@ -30,6 +30,7 @@ public class MainJFrame extends JFrame{
         frame.pack();
         frame.setVisible(true);
         frame.add(all_card_panel);
+        frame.validate();
 
     }
 

@@ -8,7 +8,7 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.InputStream;
-
+import Controllers.*;
 public class InGameJPanel extends JPanel {
 
     private JPanel top_panel, bottom_panel;
@@ -57,32 +57,32 @@ public class InGameJPanel extends JPanel {
         p1_panel = new JPanel();
         p2_panel = new JPanel();
 
-        p1_name = new JLabel(InGameController.getC1().getName(), SwingConstants.CENTER);
-        p2_name = new JLabel(InGameController.getC2().getName(), SwingConstants.CENTER);
+        p1_name = new JLabel(igc.getC1().getName(), SwingConstants.CENTER);
+        p2_name = new JLabel(igc.getC2().getName(), SwingConstants.CENTER);
 
         p1_stat_panel = new JPanel();
-        p1_hp = new JLabel("HP : " + InGameController.getC1().getHp() + "/" + InGameController.getC1().getMax_hp(), SwingConstants.CENTER);
-        p1_mp = new JLabel("MP : " + InGameController.getC1().getMp() + "/" + InGameController.getC1().getMax_mp(), SwingConstants.CENTER);
-        p1_speed = new JLabel("Speed : " + InGameController.getC1().getSpeed(), SwingConstants.CENTER);
+        p1_hp = new JLabel("HP : " + igc.getC1().getHp() + "/" + igc.getC1().getMax_hp(), SwingConstants.CENTER);
+        p1_mp = new JLabel("MP : " + igc.getC1().getMp() + "/" + igc.getC1().getMax_mp(), SwingConstants.CENTER);
+        p1_speed = new JLabel("Speed : " + igc.getC1().getSpeed(), SwingConstants.CENTER);
 
         p2_stat_panel = new JPanel();
-        p2_hp = new JLabel("HP : " + InGameController.getC2().getHp() + "/" + InGameController.getC2().getMax_hp(), SwingConstants.CENTER);
-        p2_mp = new JLabel("MP : " + InGameController.getC2().getMp() + "/" + InGameController.getC2().getMax_mp(), SwingConstants.CENTER);
-        p2_speed = new JLabel("Speed : " + InGameController.getC2().getSpeed(), SwingConstants.CENTER);
+        p2_hp = new JLabel("HP : " + igc.getC2().getHp() + "/" + igc.getC2().getMax_hp(), SwingConstants.CENTER);
+        p2_mp = new JLabel("MP : " + igc.getC2().getMp() + "/" + igc.getC2().getMax_mp(), SwingConstants.CENTER);
+        p2_speed = new JLabel("Speed : " + igc.getC2().getSpeed(), SwingConstants.CENTER);
 
         m1_panel = new JPanel();
         m2_panel = new JPanel();
 
-        m1_name = new JLabel(InGameController.getM1().getName(), SwingConstants.CENTER);
-        m2_name = new JLabel(InGameController.getM2().getName(), SwingConstants.CENTER);
+        m1_name = new JLabel(igc.getM1().getName(), SwingConstants.CENTER);
+        m2_name = new JLabel(igc.getM2().getName(), SwingConstants.CENTER);
 
         m1_stat_panel = new JPanel();
-        m1_hp = new JLabel("HP : " + InGameController.getM1().getHp() + "/" + InGameController.getM1().getMax_hp(), SwingConstants.CENTER);
-        m1_speed = new JLabel("Speed : " + InGameController.getM1().getSpeed(), SwingConstants.CENTER);
+        m1_hp = new JLabel("HP : " + igc.getM1().getHp() + "/" + igc.getM1().getMax_hp(), SwingConstants.CENTER);
+        m1_speed = new JLabel("Speed : " + igc.getM1().getSpeed(), SwingConstants.CENTER);
 
         m2_stat_panel = new JPanel();
-        m2_hp = new JLabel("HP : " + InGameController.getM2().getHp() + "/" + InGameController.getM2().getMax_hp(), SwingConstants.CENTER);
-        m2_speed = new JLabel("Speed : " + InGameController.getM2().getSpeed(), SwingConstants.CENTER);
+        m2_hp = new JLabel("HP : " + igc.getM2().getHp() + "/" + igc.getM2().getMax_hp(), SwingConstants.CENTER);
+        m2_speed = new JLabel("Speed : " + igc.getM2().getSpeed(), SwingConstants.CENTER);
 
         card_select = new CardLayout();
         card_bottom_panel = new JPanel();
@@ -119,6 +119,8 @@ public class InGameJPanel extends JPanel {
             ge.registerFont(font);
 
         } catch (Exception e){}
+
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         bottom_panel.setLayout(new GridLayout(1, 3));
         bottom_panel.setPreferredSize(new Dimension(1200, 200));
@@ -182,9 +184,11 @@ public class InGameJPanel extends JPanel {
 
         this.add(top_panel);
         this.add(bottom_panel);
+        this.setBorder(BorderFactory.createEmptyBorder(-10, 0, 0, 0));
 
         bottom_panel.add(player_panel);
         bottom_panel.add(monster_panel);
+        top_panel.setBorder(BorderFactory.createEmptyBorder(-5, 0, -5, 0));
 
         player_panel.add(p1_panel);
         player_panel.add(p2_panel);
@@ -220,4 +224,11 @@ public class InGameJPanel extends JPanel {
 
     }
 
+    public JPanel getTop_panel() {
+        return top_panel;
+    }
+
+    public void setTop_panel(JPanel top_panel) {
+        this.top_panel = top_panel;
+    }
 }
