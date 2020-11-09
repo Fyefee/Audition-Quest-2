@@ -11,6 +11,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -26,10 +27,15 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Model" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\Jeff's work\Year2\OOP\OOP_Project\src\Model" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -58,19 +64,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -91,6 +84,8 @@
       <workItem from="1604483323534" duration="43000" />
       <workItem from="1604650496375" duration="440000" />
       <workItem from="1604687442260" duration="6957000" />
+      <workItem from="1604745134303" duration="8279000" />
+      <workItem from="1604774346716" duration="932000" />
     </task>
     <servers />
   </component>
@@ -102,34 +97,42 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="731" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1604688625220" />
-    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1604690904920">
+    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1604753748735">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1604690904920" />
+    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1604753748735" />
     <state x="739" y="261" key="FileChooserDialogImpl" timestamp="1604483355162">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="739" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604483355162" />
-    <state width="1340" height="266" key="GridCell.Tab.0.bottom" timestamp="1604694463885">
+    <state width="1340" height="266" key="GridCell.Tab.0.bottom" timestamp="1604757645531">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="266" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604694463885" />
-    <state width="1340" height="266" key="GridCell.Tab.0.center" timestamp="1604694463885">
+    <state width="1340" height="266" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604757645531" />
+    <state width="1340" height="266" key="GridCell.Tab.0.center" timestamp="1604757645531">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="266" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604694463885" />
-    <state width="1340" height="266" key="GridCell.Tab.0.left" timestamp="1604694463885">
+    <state width="1340" height="266" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604757645531" />
+    <state width="1340" height="266" key="GridCell.Tab.0.left" timestamp="1604757645531">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="266" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604694463885" />
-    <state width="1340" height="266" key="GridCell.Tab.0.right" timestamp="1604694463885">
+    <state width="1340" height="266" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604757645531" />
+    <state width="1340" height="266" key="GridCell.Tab.0.right" timestamp="1604757645531">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="266" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604694463885" />
+    <state width="1340" height="266" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604757645531" />
     <state x="440" y="94" key="SettingsEditor" timestamp="1604650789612">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1604650789612" />
+    <state x="972" y="4" width="952" height="685" key="dock-window-1" timestamp="1604774508152">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="972" y="4" width="952" height="685" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1604774508152" />
+    <state x="443" y="304" key="extract.method.dialog" timestamp="1604755570567">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="443" y="304" key="extract.method.dialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604755570567" />
     <state x="342" y="140" key="new project wizard" timestamp="1604483362355">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

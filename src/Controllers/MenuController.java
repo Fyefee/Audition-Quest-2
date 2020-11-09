@@ -1,5 +1,6 @@
 package Controllers;
 
+import View.MainJFrame;
 import View.MenuJPanel;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class MenuController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(menu_button_play)){
-            System.out.println("Test");
+            MainJFrame.getC_frame().show(MainJFrame.getAll_card_panel(), "GAME");
         }
     }
 }

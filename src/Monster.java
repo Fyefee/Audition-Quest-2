@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  *
  * @author Administrator
  */
-public abstract class Monster extends JPanel implements Skill{
+public abstract class Monster extends JPanel {
     private String name;
     private int hp, max_hp;
     private int mp;
