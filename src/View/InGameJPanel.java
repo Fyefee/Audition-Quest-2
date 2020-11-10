@@ -20,14 +20,6 @@ public class InGameJPanel extends JPanel {
     private JPanel m1_stat_panel, m2_stat_panel, m1_panel, m2_panel;
     private static JLabel m1_name, m2_name, m1_hp, m2_hp, m1_speed, m2_speed;
 
-    private JPanel card_bottom_panel, in_game_main_button_panel, empty_panel_bottom;
-    private JPanel target_panel, text_button_panel;
-    private static JButton text_button;
-    private JButton button_attack, button_skill, button_defense, button_bag;
-    private JButton c_target_button, m1_target_button, m2_target_button, back_button;
-
-    private CardLayout card_select;
-
     private Icon bg;
 
     public Font font, sizedFont;
@@ -39,6 +31,8 @@ public class InGameJPanel extends JPanel {
     private Color button_select = new Color(120, 125, 129);
 
     private InGameController igc;
+
+    private InGameButtonJPanel inGameButtonJPanel;
 
     public InGameJPanel(InGameController igc){
         this.igc = igc;
@@ -83,27 +77,6 @@ public class InGameJPanel extends JPanel {
         m2_stat_panel = new JPanel();
         m2_hp = new JLabel("HP : " + igc.getM2().getHp() + "/" + igc.getM2().getMax_hp(), SwingConstants.CENTER);
         m2_speed = new JLabel("Speed : " + igc.getM2().getSpeed(), SwingConstants.CENTER);
-
-        card_select = new CardLayout();
-        card_bottom_panel = new JPanel();
-        in_game_main_button_panel = new JPanel();
-
-        button_attack = new JButton();
-        button_skill = new JButton();
-        button_defense = new JButton();
-        button_bag = new JButton();
-
-        c_target_button = new JButton();
-        m1_target_button = new JButton();
-        m2_target_button = new JButton();
-        back_button = new JButton("Back");
-
-        target_panel = new JPanel();
-
-        bg = new ImageIcon(getClass().getResource("img/text_click.png"));
-        text_button = new JButton("", bg);
-
-        empty_panel_bottom = new JPanel();
 
     }
 
@@ -230,5 +203,71 @@ public class InGameJPanel extends JPanel {
 
     public void setTop_panel(JPanel top_panel) {
         this.top_panel = top_panel;
+    }
+
+    @Override
+    public Font getFont() {
+        return font;
+    }
+
+    @Override
+    public void setFont(Font font) {
+        this.font = font;
+    }
+
+    public Font getSizedFont() {
+        return sizedFont;
+    }
+
+    public void setSizedFont(Font sizedFont) {
+        this.sizedFont = sizedFont;
+    }
+
+    public Font getCustomFont() {
+        return customFont;
+    }
+
+    public void setCustomFont(Font customFont) {
+        this.customFont = customFont;
+    }
+
+    public JPanel getBottom_panel() {
+        return bottom_panel;
+    }
+
+    public void setBottom_panel(JPanel bottom_panel) {
+        this.bottom_panel = bottom_panel;
+    }
+
+    public JPanel getP1_panel() {
+        return p1_panel;
+    }
+
+    public void setP1_panel(JPanel p1_panel) {
+        this.p1_panel = p1_panel;
+    }
+
+    public JPanel getP2_panel() {
+        return p2_panel;
+    }
+
+    public void setP2_panel(JPanel p2_panel) {
+        this.p2_panel = p2_panel;
+    }
+
+    public JPanel getM1_panel() {
+        return m1_panel;
+    }
+
+    public void setM1_panel(JPanel m1_panel) {
+        this.m1_panel = m1_panel;
+    }
+
+    public JPanel getM2_panel() {
+        return m2_panel;
+    }
+
+    public void setM2_panel(JPanel m2_panel) {
+        this.m2_panel = m2_panel;
     }
 }
