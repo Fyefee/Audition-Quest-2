@@ -1,5 +1,7 @@
 package Main;
 
+import Controllers.MainJFrameController;
+import Controllers.MenuController;
 import View.MainJFrame;
 
 import javax.swing.*;
@@ -10,7 +12,8 @@ public class Main {
         try{
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {}
-        MainJFrame.createAndShowGUI(1200, 732);
+
+        new MainJFrameController();
     }
 
 }

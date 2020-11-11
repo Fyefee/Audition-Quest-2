@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -41,7 +42,7 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         this.inGameJPanel = new InGameJPanel(this);
         this.inGameRenderImage = new InGameRenderImage(this);
         this.inGameButtonJPanel = new InGameButtonJPanel(this);
-        this.auditionController = new AuditionController();
+        this.auditionController = new AuditionController(this);
         inGameJPanel.getTop_panel().add(inGameRenderImage);
         inGameJPanel.getBottom_panel().add(inGameButtonJPanel);
     }
@@ -101,7 +102,9 @@ public class InGameController implements Runnable, MouseListener, ActionListener
             Collections.sort(AuditionController.getSpeed(), Comparator.comparing(Model.Character::getSpeed).reversed());
             AuditionController.addX(0, AuditionController.getRandom(), 0);
         } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button())){
-            AuditionController.setRandom(null);
+            auditionController.setArrow_count(10);
+            auditionController.random();
+            auditionController.setIs_show(true);
         }
     }
 
@@ -206,6 +209,26 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         }
     }
 
+    public void setInGameJPanel(InGameJPanel inGameJPanel) {
+        this.inGameJPanel = inGameJPanel;
+    }
+
+    public InGameButtonJPanel getInGameButtonJPanel() {
+        return inGameButtonJPanel;
+    }
+
+    public void setInGameButtonJPanel(InGameButtonJPanel inGameButtonJPanel) {
+        this.inGameButtonJPanel = inGameButtonJPanel;
+    }
+
+    public AuditionController getAuditionController() {
+        return auditionController;
+    }
+
+    public void setAuditionController(AuditionController auditionController) {
+        this.auditionController = auditionController;
+    }
+
     public Background getBg() {
         return bg;
     }
@@ -244,5 +267,13 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
     public void setM2(Character m2) {
         this.m2 = m2;
+    }
+
+    public InGameRenderImage getInGameRenderImage() {
+        return inGameRenderImage;
+    }
+
+    public void setInGameRenderImage(InGameRenderImage inGameRenderImage) {
+        this.inGameRenderImage = inGameRenderImage;
     }
 }

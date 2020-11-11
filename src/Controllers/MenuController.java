@@ -27,7 +27,7 @@ public class MenuController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(menu_button_play)){
-            MainJFrame.getC_frame().show(MainJFrame.getAll_card_panel(), "GAME");
+            MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "GAME");
         }
     }
 }

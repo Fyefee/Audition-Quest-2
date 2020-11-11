@@ -8,9 +8,9 @@ import java.awt.*;
 
 public class MainJFrame extends JFrame{
 
-    private static JFrame frame;
-    private static JPanel all_card_panel;
-    private static CardLayout c_frame;
+    private JFrame frame;
+    private JPanel all_card_panel;
+    private CardLayout c_frame;
 
     public MainJFrame() {
         super("Audition Quest 2");
@@ -19,7 +19,7 @@ public class MainJFrame extends JFrame{
 
     }
 
-    public static void createAndShowGUI(int width, int height){
+    public void createAndShowGUI(int width, int height){
         frame = new MainJFrame();
         frame.setPreferredSize(new Dimension(width, height));
         frame.setMaximumSize(new Dimension(width, height));
@@ -45,33 +45,32 @@ public class MainJFrame extends JFrame{
     private void setComponents(){
 
         all_card_panel.setLayout(c_frame);
-        all_card_panel.add(new MenuController().getMenuJPanel(), "MENU");
-        all_card_panel.add(new InGameController().getInGameJPanel(), "GAME");
+
         c_frame.show(all_card_panel, "MENU");
 
     }
 
-    public static JFrame getFrame() {
+    public JFrame getFrame() {
         return frame;
     }
 
-    public static void setFrame(JFrame frame) {
-        MainJFrame.frame = frame;
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
     }
 
-    public static JPanel getAll_card_panel() {
+    public JPanel getAll_card_panel() {
         return all_card_panel;
     }
 
-    public static void setAll_card_panel(JPanel all_card_panel) {
-        MainJFrame.all_card_panel = all_card_panel;
+    public void setAll_card_panel(JPanel all_card_panel) {
+        this.all_card_panel = all_card_panel;
     }
 
-    public static CardLayout getC_frame() {
+    public CardLayout getC_frame() {
         return c_frame;
     }
 
-    public static void setC_frame(CardLayout c_frame) {
-        MainJFrame.c_frame = c_frame;
+    public void setC_frame(CardLayout c_frame) {
+        this.c_frame = c_frame;
     }
 }
