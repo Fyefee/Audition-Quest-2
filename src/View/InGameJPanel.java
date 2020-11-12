@@ -38,6 +38,9 @@ public class InGameJPanel extends JPanel {
         this.igc = igc;
         createComponents();
         setComponents();
+
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(this.igc);
     }
 
     private void createComponents(){

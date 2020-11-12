@@ -6,26 +6,23 @@ import View.InGameJPanel;
 import Model.*;
 import View.InGameRenderImage;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class InGameController implements Runnable, MouseListener, ActionListener {
+public class InGameController implements Runnable, MouseListener, ActionListener , KeyEventDispatcher {
 
     private InGameJPanel inGameJPanel;
     private InGameRenderImage inGameRenderImage;
     private InGameButtonJPanel inGameButtonJPanel;
     private AuditionController auditionController;
 
-    private Thread th;
-    private boolean running = false;
+    private Boolean is_press = true;
 
+    public long start = System.nanoTime(), now;
     private int nano = 1000000000, msp1 = 10000000;
-    public static long start = System.nanoTime(), now;
 
     private static Character c1 = new Knight();
     private static Character c2 = new Archer();
@@ -51,29 +48,19 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         return inGameJPanel;
     }
 
-    public synchronized void start(){
-        th = new Thread(this);
-        th.start();
-        running = true;
-    }
-
-    public synchronized void stop(){
-        try{
-            running = false;
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void run() {
-        while (running) {
+        while (true) {
             if((System.nanoTime() - start) % msp1 == 0){
+                now = System.nanoTime();
+                if (auditionController.getAudition_is_timerun()){
+                    auditionController.resize_bar((int)((now-start)/ msp1));
+                }
                 inGameRenderImage.repaint();
                 //requestFocusInWindow();
+                inGameJPanel.requestFocusInWindow();
             }
         }
-        stop();
     }
 
     @Override
@@ -99,12 +86,12 @@ public class InGameController implements Runnable, MouseListener, ActionListener
                 inGameJPanel.getP2_panel().setBorder(inGameButtonJPanel.getBorder_white());
             }
         } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button())){
-            Collections.sort(AuditionController.getSpeed(), Comparator.comparing(Model.Character::getSpeed).reversed());
+            Collections.sort(auditionController.getSpeed(), Comparator.comparing(Model.Character::getSpeed).reversed());
             AuditionController.addX(0, AuditionController.getRandom(), 0);
         } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button())){
-            auditionController.setArrow_count(10);
-            auditionController.random();
-            auditionController.setIs_show(true);
+            auditionController.start_audition(10, 400);
+            inGameRenderImage.setAudition(auditionController.getAudition());
+            start = System.nanoTime();
         }
     }
 
@@ -209,6 +196,39 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         }
     }
 
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent e) {
+        if (e.getID() == KeyEvent.KEY_PRESSED) {
+            if (e.getKeyCode() == KeyEvent.VK_UP && is_press) {
+                auditionController.check_audition_key(1);
+                is_press = false;
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN && is_press) {
+                auditionController.check_audition_key(2);
+                is_press = false;
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT && is_press) {
+                auditionController.check_audition_key(3);
+                is_press = false;
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && is_press) {
+                auditionController.check_audition_key(4);
+                is_press = false;
+            }
+        } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+            int keyCode = e.getKeyCode();
+            switch( keyCode ) {
+                case KeyEvent.VK_UP:
+                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_LEFT:
+                case KeyEvent.VK_RIGHT :
+                    is_press = true;
+                    break;
+                default: break;
+            }
+        } else if (e.getID() == KeyEvent.KEY_TYPED) {
+            System.out.println("3test3");
+        }
+        return false;
+    }
+
     public void setInGameJPanel(InGameJPanel inGameJPanel) {
         this.inGameJPanel = inGameJPanel;
     }
@@ -275,5 +295,21 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
     public void setInGameRenderImage(InGameRenderImage inGameRenderImage) {
         this.inGameRenderImage = inGameRenderImage;
+    }
+
+    public int getNano() {
+        return nano;
+    }
+
+    public void setNano(int nano) {
+        this.nano = nano;
+    }
+
+    public int getMsp1() {
+        return msp1;
+    }
+
+    public void setMsp1(int msp1) {
+        this.msp1 = msp1;
     }
 }

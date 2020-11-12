@@ -8,6 +8,8 @@ public class MainJFrameController {
     private static MenuController menuController;
     private static InGameController inGameController;
 
+    private Thread th;
+
     public MainJFrameController() {
         createComponents();
         setComponentstoView();
@@ -22,6 +24,8 @@ public class MainJFrameController {
 
         inGameController = new InGameController();
 
+        th = new Thread(inGameController);
+        th.start();
     }
 
     public void setComponentstoView(){

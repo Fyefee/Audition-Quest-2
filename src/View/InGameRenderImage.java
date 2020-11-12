@@ -1,27 +1,28 @@
 package View;
 
-import Controllers.AuditionController;
 import Controllers.InGameController;
-import Model.Arrow;
+import Model.ArrowUp;
+import Model.AuditionObject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class InGameRenderImage extends JPanel {
 
     private InGameController inGameController;
-    private Arrow arrow;
     private Graphics g;
+    private ArrayList<AuditionObject> audition = new ArrayList<AuditionObject>();
 
     private int x, y;
 
+
     public InGameRenderImage(InGameController run){
         inGameController = run;
-        arrow = new Arrow();
+
     }
 
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
         g.drawImage(inGameController.bg.bg, 0, 0, this);
         audition(g);
         g.drawImage(inGameController.getC1().getPic(), inGameController.getC1().getX(), inGameController.getC1().getY(), inGameController.getC1().getSize_x(), inGameController.getC1().getSize_y(), this);
@@ -32,7 +33,8 @@ public class InGameRenderImage extends JPanel {
     }
 
     public void audition(Graphics g){
-        if (inGameController.getAuditionController().isIs_show()){
+
+        if (inGameController.getAuditionController().getAudition_is_show()){
             x = 100;
             y = 100;
 
@@ -40,24 +42,26 @@ public class InGameRenderImage extends JPanel {
             g.fillRect(100, 100, 1000, 100);
 
             g.setColor(new Color(0,255,0));
-            g.fillRect(100, 200, inGameController.getAuditionController().getWidth(), 10);
-            for (int i = 0; i < inGameController.getAuditionController().getRandom().length; i++){
-                switch (inGameController.getAuditionController().getRandom()[i]){
-                    case 0: g.drawImage(arrow.getEmpty(), x, y, 100, 100, this); break;
-                    case 1: g.drawImage(arrow.getArrow_up(), x, y, 100, 100, this); break;
-                    case 2: g.drawImage(arrow.getArrow_down(), x, y, 100, 100, this); break;
-                    case 3: g.drawImage(arrow.getArrow_left(), x, y, 100, 100, this); break;
-                    case 4: g.drawImage(arrow.getArrow_right(), x, y, 100, 100, this); break;
-                    case 5: g.drawImage(arrow.getWrong(), x, y, 100, 100, this); break;
-                    default: break;
-                }
-                x += 100;
+            g.fillRect(inGameController.getAuditionController().getTimeBar().getPosition_x(), inGameController.getAuditionController().getTimeBar().getPosition_y(), inGameController.getAuditionController().getTimeBar().getSize_x(), inGameController.getAuditionController().getTimeBar().getSize_y());
+
+            for (int i = 0; i < audition.size(); i++){
+                g.drawImage(audition.get(i).getImage(), audition.get(i).getPosition_x(), audition.get(i).getPosition_y(), audition.get(i).getSize_x(), audition.get(i).getSize_y(), this);
             }
         }
+
     }
 
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(1200,520);
     }
+
+    public ArrayList<AuditionObject> getAudition() {
+        return audition;
+    }
+
+    public void setAudition(ArrayList<AuditionObject> audition) {
+        this.audition = audition;
+    }
+
 }
