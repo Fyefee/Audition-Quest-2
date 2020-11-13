@@ -16,9 +16,9 @@ public class InGameJPanel extends JPanel {
     private JPanel player_panel, monster_panel;
 
     private JPanel p1_stat_panel, p2_stat_panel, p1_panel, p2_panel;
-    private static JLabel p1_name, p2_name, p1_hp, p2_hp, p1_mp, p2_mp, p1_speed, p2_speed;
+    private JLabel p1_name, p2_name, p1_hp, p2_hp, p1_mp, p2_mp, p1_speed, p2_speed;
     private JPanel m1_stat_panel, m2_stat_panel, m1_panel, m2_panel;
-    private static JLabel m1_name, m2_name, m1_hp, m2_hp, m1_speed, m2_speed;
+    private JLabel m1_name, m2_name, m1_hp, m2_hp, m1_speed, m2_speed;
 
     private Icon bg;
 
@@ -272,5 +272,53 @@ public class InGameJPanel extends JPanel {
 
     public void setM2_panel(JPanel m2_panel) {
         this.m2_panel = m2_panel;
+    }
+
+    public Border getBorder_white() {
+        return border_white;
+    }
+
+    public void setBorder_white(Border border_white) {
+        this.border_white = border_white;
+    }
+
+    public Border getBorder_red() {
+        return border_red;
+    }
+
+    public void setBorder_red(Border border_red) {
+        this.border_red = border_red;
+    }
+
+    public JLabel getP1_hp() {
+        return p1_hp;
+    }
+
+    public void setP1_hp(JLabel p1_hp) {
+        this.p1_hp = p1_hp;
+    }
+
+    public JLabel getP2_hp() {
+        return p2_hp;
+    }
+
+    public void setP2_hp(JLabel p2_hp) {
+        this.p2_hp = p2_hp;
+    }
+
+    public JLabel getM1_hp() {
+        return m1_hp;
+    }
+
+    public void setM1_hp(JLabel m1_hp) {
+        this.m1_hp = m1_hp;
+    }
+
+    public JLabel getM2_hp() {
+        return m2_hp;
+    }
+
+    public void setM2_hp(JLabel m2_hp) {
+        this.m2_hp = m2_hp;
     }
 }

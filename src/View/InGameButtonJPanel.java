@@ -14,7 +14,7 @@ public class InGameButtonJPanel extends JPanel {
 
     private JPanel in_game_main_button_panel, empty_panel_bottom;
     private JPanel target_panel, text_button_panel;
-    private static JButton text_button;
+    private JButton text_button;
     private JButton button_attack, button_skill, button_defense, button_bag;
     private JButton c_target_button, m1_target_button, m2_target_button, back_button;
 
@@ -171,12 +171,12 @@ public class InGameButtonJPanel extends JPanel {
         this.card_select = card_select;
     }
 
-    public static JButton getText_button() {
+    public JButton getText_button() {
         return text_button;
     }
 
-    public static void setText_button(JButton text_button) {
-        InGameButtonJPanel.text_button = text_button;
+    public void setText_button(JButton text_button) {
+        this.text_button = text_button;
     }
 
     public JButton getButton_attack() {
@@ -257,5 +257,13 @@ public class InGameButtonJPanel extends JPanel {
 
     public void setBorder_red(Border border_red) {
         this.border_red = border_red;
+    }
+
+    public JPanel getText_button_panel() {
+        return text_button_panel;
+    }
+
+    public void setText_button_panel(JPanel text_button_panel) {
+        this.text_button_panel = text_button_panel;
     }
 }
