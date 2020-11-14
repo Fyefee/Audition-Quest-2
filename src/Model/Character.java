@@ -1,6 +1,7 @@
 package Model;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Character {
 
@@ -14,6 +15,7 @@ public class Character {
     private int x, y, size_x, size_y;
     private boolean alive = true;
     private int rand;
+    private ArrayList<Character> attack_target = new ArrayList<Character>();
 
     public Character(){
     }
@@ -174,5 +176,13 @@ public class Character {
 
     public void setRand(int rand) {
         this.rand = rand;
+    }
+
+    public ArrayList<Character> getAttack_target() {
+        return attack_target;
+    }
+
+    public void setAttack_target(ArrayList<Character> attack_target) {
+        this.attack_target = attack_target;
     }
 }

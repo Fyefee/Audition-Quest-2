@@ -19,7 +19,6 @@ public class AuditionController {
     private boolean is_show = false, time_run = false, is_random = false;
     private double attack_percent;
     private Character target_c, who_attack;
-    private Character target1;
     private AuditionObject auditionObject;
     private int max_time, now_time;
     private Boolean audition_is_show = false, audition_is_timerun = false;
@@ -85,6 +84,8 @@ public class AuditionController {
         if (now_time-100 >= max_time){
             audition_is_timerun = false;
             timeBar.setSize_x(0);
+            System.out.println(now_time);
+            System.out.println("WTF");
         }
         else if (now_time-100 < 0){
             timeBar.setSize_x(1000);
@@ -95,13 +96,12 @@ public class AuditionController {
     }
 
     public void start_audition(int arrow_count, int max_time){
-        inGameController.setStart(System.nanoTime());
+        setMax_time(max_time);
         setArrow_count(arrow_count);
         random();
         setAttack_percent(1);
-        setMax_time(max_time);
-        setAudition_is_show(true);
         setAudition_is_timerun(true);
+        setAudition_is_show(true);
         inGameController.getInGameRenderImage().setAudition(audition);
     }
 
@@ -117,7 +117,7 @@ public class AuditionController {
             if (state == arrow_count){
                 setAudition_is_show(false);
                 setAudition_is_timerun(false);
-                attack(speed.get(turn-1), target1);
+                attack(speed.get(turn-1));
             }
         }
     }
@@ -125,66 +125,60 @@ public class AuditionController {
     public void checkAttack(Character c) {
         if (c.getType().equals("Player")) {
             if (c.getAttack_type().equals("attack")) {
-                if (c.getTarget().equals("c1") && inGameController.getC1().isAlive()){
-                    target1 = inGameController.getC1();
-                    start_audition(5, 500);
-                    //this.start_attack(Run.c1, 5);
-                }
-                else if (c.getTarget().equals("c2") && inGameController.getC2().isAlive()){
-                    target1 = inGameController.getC2();
-                    start_audition(5, 500);
-                    //this.start_attack(Run.c2, 5);
-                }
-                else if (c.getTarget().equals("m1") && inGameController.getM1().isAlive()) {
-                    target1 = inGameController.getM1();
-                    start_audition(5, 500);
-                    //this.start_attack(Run.m1, 5);
-                }
-                else if (c.getTarget().equals("m2") && inGameController.getM2().isAlive()) {
-                    target1 = inGameController.getM2();
-                    start_audition(5, 500);
-                    //this.start_attack(Run.m2, 5);
-                }
-                else {
-                    for (int i = 0; i <= (4 - turn); i++){
-                        turn++;
-                        if (speed.get(turn - 1).isAlive())
-                            break;
+                    if (c.getAttack_target().get(0) == inGameController.getC1() && inGameController.getC1().isAlive()) {
+                        start_audition(5, 500);
+                    } else if (c.getAttack_target().get(0) == inGameController.getC2() && inGameController.getC2().isAlive()) {
+                        start_audition(5, 500);
+                    } else if (c.getAttack_target().get(0) == inGameController.getM1() && inGameController.getM1().isAlive()) {
+                        start_audition(5, 500);
+                    } else if (c.getAttack_target().get(0) == inGameController.getM2() && inGameController.getM2().isAlive()) {
+                        start_audition(5, 500);
+                    } else {
+                        for (int i = 0; i <= (4 - turn); i++) {
+                            turn++;
+                            if (speed.get(turn - 1).isAlive())
+                                break;
+                        }
+                        inGameController.setText_Button();
+                        inGameController.setText_showattack(true);
                     }
-                    inGameController.setText_Button();
-                    inGameController.setText_showattack(true);
                 }
             }
-        } else {
-            setAttack_percent(1);
-            setWho_attack(c);
-            if (c.getTarget().equals("c1"))
-                attack(c, inGameController.getC1());
-            else if (c.getTarget().equals("c2"))
-                attack(c, inGameController.getC2());
-        }
+            else {
+                setAttack_percent(1);
+                setWho_attack(c);
+                if (c.getAttack_target().get(0) == inGameController.getC1())
+                    attack(c);
+                else if (c.getAttack_target().get(0) == inGameController.getC2())
+                    attack(c);
+            }
     }
 
-    public void attack(Character who_attack, Character target){
+    public void attack(Character who_attack){
         try {
-            String text = who_attack.getName() + " Attack " + target.getName() + " " + ((int)((double)who_attack.getAtk() * attack_percent - target.getDef()) + " Damage.");
-            System.out.println(text);
-            if (((int)((double)who_attack.getAtk() * attack_percent - target.getDef())) > 0) {
-                target.setHp(target.getHp() - ((int) ((double) who_attack.getAtk() * attack_percent) - target.getDef()));
-            }
+            String text = "";
+            for (int i = 0; i < who_attack.getAttack_target().size(); i++) {
+                text = who_attack.getName() + " Attack " + who_attack.getAttack_target().get(i).getName() + " " + ((int) ((double) who_attack.getAtk() * attack_percent - who_attack.getAttack_target().get(i).getDef()) + " Damage.");
+                System.out.println(text);
+                if (((int) ((double) who_attack.getAtk() * attack_percent - who_attack.getAttack_target().get(i).getDef())) > 0) {
+                    who_attack.getAttack_target().get(i).setHp(who_attack.getAttack_target().get(i).getHp() - ((int) ((double) who_attack.getAtk() * attack_percent) - who_attack.getAttack_target().get(i).getDef()));
+                }
 
-            if (target.getHp() <= 0){
-                target.setAlive(false);
-                target.setHp(0);
-            }
+                if (who_attack.getAttack_target().get(i).getHp() <= 0) {
+                    who_attack.getAttack_target().get(i).setAlive(false);
+                    who_attack.getAttack_target().get(i).setHp(0);
+                }
 
+            }
             inGameController.getInGameJPanel().getP1_hp().setText("HP : " + inGameController.getC1().getHp() + "/" + inGameController.getC1().getMax_hp());
             inGameController.getInGameJPanel().getP2_hp().setText("HP : " + inGameController.getC2().getHp() + "/" + inGameController.getC2().getMax_hp());
             inGameController.getInGameJPanel().getM1_hp().setText("HP : " + inGameController.getM1().getHp() + "/" + inGameController.getM1().getMax_hp());
             inGameController.getInGameJPanel().getM2_hp().setText("HP : " + inGameController.getM2().getHp() + "/" + inGameController.getM2().getMax_hp());
 
+            inGameController.getInGameButtonJPanel().getCard_select().show(inGameController.getInGameButtonJPanel(), "text_button");
             inGameController.setText_Button(text);
             turn++;
+            inGameController.setIs_start(false);
         } catch (Exception e) {
             System.out.println(e);
         }
