@@ -9,7 +9,6 @@ import View.InGameRenderImage;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -32,8 +31,8 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
     public Background bg = new Background();
 
-    public int target, attack_state = 1; //1 = c1 select
-    public String attackText, text_button_text = "";
+    public int target_count, attack_state = 1; //1 = c1 select
+    public String text_button_text = "";
     public boolean text_showattack;
     private int rand;
 
@@ -78,24 +77,18 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
         Collections.sort(auditionController.getSpeed(), Comparator.comparing(Model.Character::getSpeed).reversed());
 
-        attackText = "attack";
         rand = (int) (Math.random() * 2) + 1;
-        if (attackText.equals("attack")) {
-            if (rand == 1) {
-                setAttackText(m1, c1);
-            } else {
-                setAttackText(m1, c2);
-            }
+        if (rand == 1) {
+            setAttackText(m1, c1);
+        } else {
+            setAttackText(m1, c2);
         }
 
-        attackText = "attack";
         rand = (int) (Math.random() * 2) + 1;
-        if (attackText.equals("attack")) {
-            if (rand == 1) {
-                setAttackText(m2, c1);
-            } else {
-                setAttackText(m2, c2);
-            }
+        if (rand == 1) {
+            setAttackText(m2, c1);
+        } else {
+            setAttackText(m2, c2);
         }
 
         setText_Button();
@@ -104,20 +97,17 @@ public class InGameController implements Runnable, MouseListener, ActionListener
     }
 
     public void setAttackText(Model.Character c, Model.Character target1) {
-        c.setAttack_type(attackText);
         c.setAttack_target(new ArrayList<Character>());
         c.getAttack_target().add(target1);
     }
 
     public void setAttackText(Model.Character c, Model.Character target1, Model.Character target2) {
-        c.setAttack_type(attackText);
         c.setAttack_target(new ArrayList<Character>());
         c.getAttack_target().add(target1);
         c.getAttack_target().add(target2);
     }
 
     public void setAttackText(Model.Character c, Model.Character target1, Model.Character target2, Model.Character target3) {
-        c.setAttack_type(attackText);
         c.setAttack_target(new ArrayList<Character>());
         c.getAttack_target().add(target1);
         c.getAttack_target().add(target2);
@@ -127,21 +117,11 @@ public class InGameController implements Runnable, MouseListener, ActionListener
     public void setText_Button() {
         text_button_text = "<html><font face='Retron2000'><center>" + auditionController.getSpeed().get(auditionController.getTurn() - 1).getName() + " ";
 
-        if (attackText.equals("attack")) {
-            text_button_text += "used attack to ";
-        }
+        text_button_text += auditionController.getSpeed().get(auditionController.getTurn() - 1).getAttack_text();
+
         for (int i = 0; i < auditionController.getSpeed().get(auditionController.getTurn() - 1).getAttack_target().size(); i++){
             text_button_text += auditionController.getSpeed().get(auditionController.getTurn() - 1).getAttack_target().get(i).getName() + " ";
         }
-//        if (auditionController.getSpeed().get(auditionController.getTurn() - 1).getTarget().equals("c1")) {
-//            text_button_text += c1.getName();
-//        } else if (auditionController.getSpeed().get(auditionController.getTurn() - 1).getTarget().equals("c2")) {
-//            text_button_text += c2.getName();
-//        } else if (auditionController.getSpeed().get(auditionController.getTurn() - 1).getTarget().equals("m1")) {
-//            text_button_text += m1.getName();
-//        } else if (auditionController.getSpeed().get(auditionController.getTurn() - 1).getTarget().equals("m2")) {
-//            text_button_text += m2.getName();
-//        }
         text_button_text += "...</html>";
         inGameButtonJPanel.getText_button().setText(text_button_text);
         text_button_text = "";
@@ -153,21 +133,43 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         text_button_text = "";
     }
 
+    public void endSelectTarget(Character who_attack, Character target){
+
+        if (target_count == 1){
+            setAttackText(who_attack, target);
+        } else if (target_count == 2 && target.getType().equals("Player")){
+            setAttackText(who_attack, target);
+        } else if (target_count == 2 && target.getType().equals("Monster")){
+            setAttackText(who_attack, m1, m2);
+        } else if (target_count == 3){
+            setAttackText(who_attack, c2, m1, m2);
+        }
+
+        if (who_attack == c1) {
+            attack_state = 2;
+            inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "main_select");
+            inGameJPanel.getP2_panel().setBorder(inGameJPanel.getBorder_white());
+        } else {
+            end_select();
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(inGameButtonJPanel.getButton_attack())) {//กดเริ่มเกมใหม่
             inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "target_select");
             if (attack_state == 1) {
                 inGameButtonJPanel.getC_target_button().setText(c2.getName());
+                c1.setAttack_text("used attack to ");
             } else if (attack_state == 2) {
                 inGameButtonJPanel.getC_target_button().setText(c1.getName());
+                c2.setAttack_text("used attack to ");
             }
             inGameButtonJPanel.getM1_target_button().setText(m1.getName());
             inGameButtonJPanel.getM2_target_button().setText(m2.getName());
             inGameJPanel.getP1_panel().setBorder(null);
             inGameJPanel.getP2_panel().setBorder(null);
-            target = 1;
-            attackText = "attack";
+            target_count = 1;
         } else if (e.getSource().equals(inGameButtonJPanel.getBack_button())) {
             inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "main_select");
             if (attack_state == 1) {
@@ -176,6 +178,12 @@ public class InGameController implements Runnable, MouseListener, ActionListener
                 inGameJPanel.getP2_panel().setBorder(inGameButtonJPanel.getBorder_white());
             }
         } else if (e.getSource().equals(inGameButtonJPanel.getText_button())) {
+            if (auditionController.getTurn() > auditionController.getSpeed().size()){
+                auditionController.setTurn(1);
+                attack_state = 1;
+                inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "main_select");
+                text_showattack = false;
+            }
             if (text_showattack){
                 if (auditionController.getSpeed().get(auditionController.getTurn() - 1).isAlive()) {
                     inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "empty");
@@ -188,79 +196,26 @@ public class InGameController implements Runnable, MouseListener, ActionListener
             }
             else{
                 text_showattack = true;
-                if (auditionController.getTurn() > 4){
-                    auditionController.setTurn(1);
-                    attack_state = 1;
-                    inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "main_select");
-                    text_showattack = false;
-                }
                 setText_Button();
             }
         } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button())){
             if (attack_state == 1  && c2.isAlive()) {
-                switch (target) {
-                    case 1:
-                    case 2:
-                        setAttackText(c1, c2);
-                        break;
-                    case 3:
-                        setAttackText(c1, c2, m1, m2);
-                        break;
-                    default:
-                        break;
-                }
-                attack_state = 2;
-                inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "main_select");
-                inGameJPanel.getP2_panel().setBorder(inGameJPanel.getBorder_white());
+                endSelectTarget(c1, c2);
             } else if (attack_state == 2  && c1.isAlive()) {
-                switch (target) {
-                    case 1:
-                    case 2:
-                        setAttackText(c2, c1);
-                        break;
-                    case 3:
-                        setAttackText(c2, c1, m1, m2);
-                        break;
-                    default:
-                        break;
-                }
-                end_select();
+                endSelectTarget(c2, c1);
             }
         } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button())){
-//            if (attack_state == 1) {
-//                switch (target) {
-//                    case 1:
-//                        setAttackText(Run.c1, "m1");
-//                        break;
-//                    case 2:
-//                        setAttackText(Run.c1, "allm");
-//                        break;
-//                    case 3:
-//                        setAttackText(Run.c1, "all");
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                attack_state = 2;
-//                m1_panel.setBorder(null);
-//                card_select.show(card_bottom_panel, "main_select");
-//                p2_panel.setBorder(border_white);
-//            } else if (attack_state == 2) {
-//                switch (target) {
-//                    case 1:
-//                        setAttackText(Run.c2, "m1");
-//                        break;
-//                    case 2:
-//                        setAttackText(Run.c2, "allm");
-//                        break;
-//                    case 3:
-//                        setAttackText(Run.c2, "all");
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                end_select();
-//            }
+            if (attack_state == 1  && m1.isAlive()) {
+                endSelectTarget(c1, m1);
+            } else if (attack_state == 2  && c1.isAlive()) {
+                endSelectTarget(c2, m1);
+            }
+        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button())){
+            if (attack_state == 1  && m2.isAlive()) {
+                endSelectTarget(c1, m2);
+            } else if (attack_state == 2  && c2.isAlive()) {
+                endSelectTarget(c2, m2);
+            }
         }
         System.out.println(auditionController.getTurn());
         System.out.println(text_showattack);
@@ -283,41 +238,41 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && (target == 1 || target == 2) && attack_state == 1) {
+        if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && (target_count == 1 || target_count == 2) && attack_state == 1) {
             inGameJPanel.getP2_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && (target == 1 || target == 2) && attack_state == 2) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && (target_count == 1 || target_count == 2) && attack_state == 2) {
             inGameJPanel.getP1_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && target == 3 && attack_state == 1) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && target_count == 3 && attack_state == 1) {
             inGameJPanel.getP2_panel().setBorder(inGameButtonJPanel.getBorder_red());
             inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
             inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && target == 3 && attack_state == 2) {
-            inGameJPanel.getP1_panel().setBorder(inGameButtonJPanel.getBorder_red());
-            inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
-            inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target == 1) {
-            inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target == 2) {
-            inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
-            inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target == 3 && attack_state == 1) {
-            inGameJPanel.getP2_panel().setBorder(inGameButtonJPanel.getBorder_red());
-            inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
-            inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target == 3 && attack_state == 2) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && target_count == 3 && attack_state == 2) {
             inGameJPanel.getP1_panel().setBorder(inGameButtonJPanel.getBorder_red());
             inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
             inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target == 1) {
-            inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target == 2) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target_count == 1) {
+            inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
+        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target_count == 2) {
             inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
             inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target == 3 && attack_state == 1) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target_count == 3 && attack_state == 1) {
             inGameJPanel.getP2_panel().setBorder(inGameButtonJPanel.getBorder_red());
             inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
             inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
-        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target == 3 && attack_state == 2) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target_count == 3 && attack_state == 2) {
+            inGameJPanel.getP1_panel().setBorder(inGameButtonJPanel.getBorder_red());
+            inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
+            inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
+        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target_count == 1) {
+            inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
+        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target_count == 2) {
+            inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
+            inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
+        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target_count == 3 && attack_state == 1) {
+            inGameJPanel.getP2_panel().setBorder(inGameButtonJPanel.getBorder_red());
+            inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
+            inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
+        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target_count == 3 && attack_state == 2) {
             inGameJPanel.getP1_panel().setBorder(inGameButtonJPanel.getBorder_red());
             inGameJPanel.getM1_panel().setBorder(inGameButtonJPanel.getBorder_red());
             inGameJPanel.getM2_panel().setBorder(inGameButtonJPanel.getBorder_red());
@@ -326,41 +281,41 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
     @Override
     public void mouseExited(MouseEvent e) {
-        if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && (target == 1 || target == 2) && attack_state == 1) {
+        if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && (target_count == 1 || target_count == 2) && attack_state == 1) {
             inGameJPanel.getP2_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && (target == 1 || target == 2) && attack_state == 2) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && (target_count == 1 || target_count == 2) && attack_state == 2) {
             inGameJPanel.getP1_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && target == 3 && attack_state == 1) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && target_count == 3 && attack_state == 1) {
             inGameJPanel.getP2_panel().setBorder(null);
             inGameJPanel.getM1_panel().setBorder(null);
             inGameJPanel.getM2_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && target == 3 && attack_state == 2) {
-            inGameJPanel.getP1_panel().setBorder(null);
-            inGameJPanel.getM1_panel().setBorder(null);
-            inGameJPanel.getM2_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target == 1) {
-            inGameJPanel.getM1_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target == 2) {
-            inGameJPanel.getM1_panel().setBorder(null);
-            inGameJPanel.getM2_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target == 3 && attack_state == 1) {
-            inGameJPanel.getP2_panel().setBorder(null);
-            inGameJPanel.getM1_panel().setBorder(null);
-            inGameJPanel.getM2_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target == 3 && attack_state == 2) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getC_target_button()) && target_count == 3 && attack_state == 2) {
             inGameJPanel.getP1_panel().setBorder(null);
             inGameJPanel.getM1_panel().setBorder(null);
             inGameJPanel.getM2_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target == 1) {
-            inGameJPanel.getM2_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target == 2) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target_count == 1) {
+            inGameJPanel.getM1_panel().setBorder(null);
+        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target_count == 2) {
             inGameJPanel.getM1_panel().setBorder(null);
             inGameJPanel.getM2_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target == 3 && attack_state == 1) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target_count == 3 && attack_state == 1) {
             inGameJPanel.getP2_panel().setBorder(null);
             inGameJPanel.getM1_panel().setBorder(null);
             inGameJPanel.getM2_panel().setBorder(null);
-        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target == 3 && attack_state == 2) {
+        } else if (e.getSource().equals(inGameButtonJPanel.getM1_target_button()) && target_count == 3 && attack_state == 2) {
+            inGameJPanel.getP1_panel().setBorder(null);
+            inGameJPanel.getM1_panel().setBorder(null);
+            inGameJPanel.getM2_panel().setBorder(null);
+        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target_count == 1) {
+            inGameJPanel.getM2_panel().setBorder(null);
+        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target_count == 2) {
+            inGameJPanel.getM1_panel().setBorder(null);
+            inGameJPanel.getM2_panel().setBorder(null);
+        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target_count == 3 && attack_state == 1) {
+            inGameJPanel.getP2_panel().setBorder(null);
+            inGameJPanel.getM1_panel().setBorder(null);
+            inGameJPanel.getM2_panel().setBorder(null);
+        } else if (e.getSource().equals(inGameButtonJPanel.getM2_target_button()) && target_count == 3 && attack_state == 2) {
             inGameJPanel.getP1_panel().setBorder(null);
             inGameJPanel.getM1_panel().setBorder(null);
             inGameJPanel.getM2_panel().setBorder(null);

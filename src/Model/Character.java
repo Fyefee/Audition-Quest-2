@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Character {
 
-    private String name, attack_type = "", target = "", type = "";
+    private String name, attack_text = "", target = "", type = "";
     private int hp, max_hp;
     private int mp, max_mp;
     private int speed;
@@ -42,12 +42,12 @@ public class Character {
         this.name = name;
     }
 
-    public String getAttack_type() {
-        return attack_type;
+    public String getAttack_text() {
+        return attack_text;
     }
 
-    public void setAttack_type(String attack_type) {
-        this.attack_type = attack_type;
+    public void setAttack_text(String attack_text) {
+        this.attack_text = attack_text;
     }
 
     public String getTarget() {

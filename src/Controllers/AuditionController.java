@@ -14,9 +14,8 @@ public class AuditionController {
     private static int[] random;
     private ArrayList<Model.Character> speed = new ArrayList<Character>();
     private ArrayList<Model.AuditionObject> audition;
-    private int press_button, max_turn = 4;
     private int turn = 1;
-    private boolean is_show = false, time_run = false, is_random = false;
+    private boolean is_show = false, time_run = false, is_random = false, can_type = false;
     private double attack_percent;
     private Character target_c, who_attack;
     private AuditionObject auditionObject;
@@ -82,15 +81,20 @@ public class AuditionController {
 
     public void resize_bar(int now_time){
         if (now_time-100 >= max_time){
+            can_type = false;
             audition_is_timerun = false;
+            audition_is_show = false;
             timeBar.setSize_x(0);
-            System.out.println(now_time);
-            System.out.println("WTF");
+            attack_percent -= ((double) (arrow_count - state)) * 0.2;
+            attack_percent -= ((double) (arrow_count - state)) * 0.2;
+            attack(speed.get(turn-1));
         }
         else if (now_time-100 < 0){
             timeBar.setSize_x(1000);
+            can_type = false;
         }
         else{
+            can_type = true;
             timeBar.setSize_x((int) (1000 - (1000 * (((double)now_time-100) / ((double)max_time)))));
         }
     }
@@ -106,7 +110,7 @@ public class AuditionController {
     }
 
     public void check_audition_key(int key){
-        if (state < arrow_count) {
+        if (state < arrow_count && can_type) {
             if (audition.get(state).getType() == key) {
                 audition.set(state, new Empty(audition.get(state).getPosition_x(), 100));
             } else {
@@ -124,7 +128,7 @@ public class AuditionController {
 
     public void checkAttack(Character c) {
         if (c.getType().equals("Player")) {
-            if (c.getAttack_type().equals("attack")) {
+            if (c.getAttack_target().size() == 1) {
                     if (c.getAttack_target().get(0) == inGameController.getC1() && inGameController.getC1().isAlive()) {
                         start_audition(5, 500);
                     } else if (c.getAttack_target().get(0) == inGameController.getC2() && inGameController.getC2().isAlive()) {
@@ -134,13 +138,14 @@ public class AuditionController {
                     } else if (c.getAttack_target().get(0) == inGameController.getM2() && inGameController.getM2().isAlive()) {
                         start_audition(5, 500);
                     } else {
-                        for (int i = 0; i <= (4 - turn); i++) {
+                        for (int i = 0; i <= (speed.size() - turn); i++) {
                             turn++;
                             if (speed.get(turn - 1).isAlive())
                                 break;
                         }
                         inGameController.setText_Button();
                         inGameController.setText_showattack(true);
+                        inGameController.getInGameButtonJPanel().getCard_select().show(inGameController.getInGameButtonJPanel(), "text_button");
                     }
                 }
             }
@@ -165,8 +170,9 @@ public class AuditionController {
                 }
 
                 if (who_attack.getAttack_target().get(i).getHp() <= 0) {
-                    who_attack.getAttack_target().get(i).setAlive(false);
                     who_attack.getAttack_target().get(i).setHp(0);
+                    who_attack.getAttack_target().get(i).setAlive(false);
+                    speed.remove(who_attack.getAttack_target().get(i));
                 }
 
             }
