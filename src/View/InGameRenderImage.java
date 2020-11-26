@@ -2,6 +2,7 @@ package View;
 
 import Controllers.InGameController;
 import Model.ArrowUp;
+import Model.AuditionModel;
 import Model.AuditionObject;
 
 import javax.swing.*;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 public class InGameRenderImage extends JPanel {
 
     private InGameController inGameController;
-    private Graphics g;
     private ArrayList<AuditionObject> audition = new ArrayList<AuditionObject>();
 
     private int x, y;
@@ -42,7 +42,7 @@ public class InGameRenderImage extends JPanel {
 
     public void audition(Graphics g){
 
-        if (inGameController.getAuditionController().getAudition_is_show()){
+        if (inGameController.getAuditionController().getAuditionModel().getAudition_is_show()){
             x = 100;
             y = 100;
 

@@ -13,10 +13,11 @@ import java.io.InputStream;
 public class InGameButtonJPanel extends JPanel {
 
     private JPanel in_game_main_button_panel, empty_panel_bottom;
-    private JPanel target_panel, text_button_panel;
+    private JPanel target_panel, skill_panel, text_button_panel;
     private JButton text_button;
     private JButton button_attack, button_skill, button_defense, button_bag;
     private JButton c_target_button, m1_target_button, m2_target_button, back_button;
+    private JButton skill1_button, skill2_button, skill3_button, skill_back_button;
 
     private Icon bg;
 
@@ -46,6 +47,8 @@ public class InGameButtonJPanel extends JPanel {
 
         text_button_panel = new JPanel();
 
+        skill_panel = new JPanel();
+
         bg = new ImageIcon(getClass().getResource("img/text_click.png"));
         text_button = new JButton("", bg);
 
@@ -58,6 +61,11 @@ public class InGameButtonJPanel extends JPanel {
         m1_target_button = new JButton();
         m2_target_button = new JButton();
         back_button = new JButton("Back");
+
+        skill1_button = new JButton();
+        skill2_button = new JButton();
+        skill3_button = new JButton();
+        skill_back_button = new JButton("Back");
 
         empty_panel_bottom = new JPanel();
 
@@ -141,6 +149,36 @@ public class InGameButtonJPanel extends JPanel {
         target_panel.add(c_target_button);
         target_panel.add(m2_target_button);
 
+        skill1_button.setBackground(button_select);
+        skill1_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        skill1_button.setForeground(Color.WHITE);
+        skill1_button.addMouseListener(inGameController);
+        skill1_button.addActionListener(inGameController);
+
+        skill2_button.setBackground(button_select);
+        skill2_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        skill2_button.setForeground(Color.WHITE);
+        skill2_button.addMouseListener(inGameController);
+        skill2_button.addActionListener(inGameController);
+
+        skill3_button.setBackground(button_select);
+        skill3_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        skill3_button.setForeground(Color.WHITE);
+        skill3_button.addMouseListener(inGameController);
+        skill3_button.addActionListener(inGameController);
+
+        skill_back_button.setBackground(button_select);
+        skill_back_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        skill_back_button.setForeground(Color.WHITE);
+        skill_back_button.addMouseListener(inGameController);
+        skill_back_button.addActionListener(inGameController);
+
+        skill_panel.setLayout(new GridLayout(2, 2));
+        skill_panel.add(skill_back_button);
+        skill_panel.add(skill1_button);
+        skill_panel.add(skill2_button);
+        skill_panel.add(skill3_button);
+
         text_button_panel.setLayout(new BorderLayout());
 
         text_button.setBackground(button_select);
@@ -157,6 +195,7 @@ public class InGameButtonJPanel extends JPanel {
 
         this.add("main_select", in_game_main_button_panel);
         this.add("target_select", target_panel);
+        this.add("skill_select", skill_panel);
         this.add("text_button", text_button_panel);
         this.add("empty", empty_panel_bottom);
         card_select.show(this, "main_select");
@@ -265,5 +304,37 @@ public class InGameButtonJPanel extends JPanel {
 
     public void setText_button_panel(JPanel text_button_panel) {
         this.text_button_panel = text_button_panel;
+    }
+
+    public JButton getSkill1_button() {
+        return skill1_button;
+    }
+
+    public void setSkill1_button(JButton skill1_button) {
+        this.skill1_button = skill1_button;
+    }
+
+    public JButton getSkill2_button() {
+        return skill2_button;
+    }
+
+    public void setSkill2_button(JButton skill2_button) {
+        this.skill2_button = skill2_button;
+    }
+
+    public JButton getSkill3_button() {
+        return skill3_button;
+    }
+
+    public void setSkill3_button(JButton skill3_button) {
+        this.skill3_button = skill3_button;
+    }
+
+    public JButton getSkill_back_button() {
+        return skill_back_button;
+    }
+
+    public void setSkill_back_button(JButton skill_back_button) {
+        this.skill_back_button = skill_back_button;
     }
 }
