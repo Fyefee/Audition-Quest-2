@@ -8,8 +8,8 @@ public class AuditionModel {
     private int[] random;
     private ArrayList<Character> speed;
     private ArrayList<Model.AuditionObject> audition;
-    private int turn = 1;
-    private boolean is_show = false, time_run = false, is_random = false, can_type = false;
+    private int turn = 1, overflow_count, audition_first_index, audition_final_index;
+    private boolean is_show = false, time_run = false, is_random = false, can_type = false, is_arrow_overflow = false;
     private double attack_percent, damage;
     private Character who_attack;
     private int max_time, now_time;
@@ -17,6 +17,28 @@ public class AuditionModel {
 
     public AuditionModel(){
         speed = new ArrayList<Character>();
+    }
+
+    public void checkAuditionOverflow(){
+        if (audition.size() > 10){
+            is_arrow_overflow = true;
+            overflow_count = (int) Math.ceil((double) audition.size() / 10) - 1;
+            audition_first_index = 0;
+            audition_final_index = 10;
+        }
+    }
+
+    public void checkState(){
+        overflow_count -= 1;
+        if (overflow_count == 0){
+            is_arrow_overflow = false;
+
+        } else {
+            audition_final_index += 10;
+            x = 100;
+            y = 100;
+        }
+        audition_first_index += 10;
     }
 
     public int getX() {
@@ -177,5 +199,37 @@ public class AuditionModel {
 
     public void setAudition_is_timerun(Boolean audition_is_timerun) {
         this.audition_is_timerun = audition_is_timerun;
+    }
+
+    public boolean isIs_arrow_overflow() {
+        return is_arrow_overflow;
+    }
+
+    public void setIs_arrow_overflow(boolean is_arrow_overflow) {
+        this.is_arrow_overflow = is_arrow_overflow;
+    }
+
+    public int getOverflow_count() {
+        return overflow_count;
+    }
+
+    public void setOverflow_count(int overflow_count) {
+        this.overflow_count = overflow_count;
+    }
+
+    public int getAudition_final_index() {
+        return audition_final_index;
+    }
+
+    public void setAudition_final_index(int audition_final_index) {
+        this.audition_final_index = audition_final_index;
+    }
+
+    public int getAudition_first_index() {
+        return audition_first_index;
+    }
+
+    public void setAudition_first_index(int audition_first_index) {
+        this.audition_first_index = audition_first_index;
     }
 }

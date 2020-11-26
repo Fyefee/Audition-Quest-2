@@ -24,7 +24,6 @@ public class InGameButtonJPanel extends JPanel {
     private CardLayout card_select;
 
     public Font font, sizedFont;
-    private Font customFont;
 
     private Border border_white = new LineBorder(Color.WHITE, 4, true);
     private Border border_red = new LineBorder(new Color(255, 72, 59), 4, true);

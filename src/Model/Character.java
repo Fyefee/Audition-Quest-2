@@ -58,8 +58,8 @@ public class Character implements PlayerSkill{
 
     public void normalAttack(){
         returnStats();
-        arrow_count = 5;
-        audition_time = 500;
+        arrow_count = 25;
+        audition_time = 650;
         this.setAttack_text("used attack to ");
     }
 

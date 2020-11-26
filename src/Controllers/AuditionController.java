@@ -41,6 +41,9 @@ public class AuditionController {
                 default: break;
             }
             auditionModel.setX(auditionModel.getX() + 100);
+            if (auditionModel.getX() > 1000){
+                auditionModel.setX(100);
+            }
         }
         auditionModel.setState(0);
     }
@@ -52,6 +55,7 @@ public class AuditionController {
             auditionModel.setAudition_is_show(false);
             timeBar.setSize_x(0);
             auditionModel.setAttack_percent(auditionModel.getAttack_percent() - ((double) (auditionModel.getArrow_count() - auditionModel.getState())) * 0.2);
+            System.out.println("Audition : You Fail " + (auditionModel.getArrow_count() - auditionModel.getState()) + " times.");
             attack(auditionModel.getSpeed().get(auditionModel.getTurn()-1));
         }
         else if (now_time-100 < 0){
@@ -68,7 +72,7 @@ public class AuditionController {
         auditionModel.setMax_time(max_time);
         auditionModel.setArrow_count(arrow_count);
         random();
-        auditionModel.setAttack_percent(1);
+        auditionModel.checkAuditionOverflow();        auditionModel.setAttack_percent(1);
         auditionModel.setAudition_is_timerun(true);
         auditionModel.setAudition_is_show(true);
         inGameController.getInGameRenderImage().setAudition(auditionModel.getAudition());
@@ -81,8 +85,12 @@ public class AuditionController {
             } else {
                 auditionModel.getAudition().set(auditionModel.getState(), new Wrong(auditionModel.getAudition().get(auditionModel.getState()).getPosition_x(), 100));
                 auditionModel.setAttack_percent(auditionModel.getAttack_percent() - 0.2);
+                System.out.println("Audition : Fail!!");
             }
             auditionModel.setState(auditionModel.getState() + 1);
+            if (auditionModel.getState() % 10 == 0){
+                auditionModel.checkState();
+            }
             if (auditionModel.getState() == auditionModel.getArrow_count()){
                 auditionModel.setAudition_is_show(false);
                 auditionModel.setAudition_is_timerun(false);

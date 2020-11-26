@@ -7,6 +7,7 @@ import Model.AuditionObject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class InGameRenderImage extends JPanel {
@@ -14,15 +15,23 @@ public class InGameRenderImage extends JPanel {
     private InGameController inGameController;
     private ArrayList<AuditionObject> audition = new ArrayList<AuditionObject>();
 
-    private int x, y;
-
+    public Font font, sizedFont;
 
     public InGameRenderImage(InGameController run){
         inGameController = run;
 
+        try {
+
+            InputStream is = InGameJPanel.class.getResourceAsStream("Font/Retron2000.ttf");
+            font = Font.createFont(Font.TRUETYPE_FONT, is);
+            sizedFont = font.deriveFont(45f);
+
+        } catch (Exception e){}
+
     }
 
     public void paintComponent(Graphics g) {
+        g.setFont(sizedFont);
         g.drawImage(inGameController.bg.bg, 0, 0, this);
         audition(g);
         if (inGameController.getC1().isAlive()) {
@@ -43,8 +52,6 @@ public class InGameRenderImage extends JPanel {
     public void audition(Graphics g){
 
         if (inGameController.getAuditionController().getAuditionModel().getAudition_is_show()){
-            x = 100;
-            y = 100;
 
             g.setColor(new Color(120,120,120));
             g.fillRect(100, 100, 1000, 100);
@@ -52,9 +59,22 @@ public class InGameRenderImage extends JPanel {
             g.setColor(new Color(0,255,0));
             g.fillRect(inGameController.getAuditionController().getTimeBar().getPosition_x(), inGameController.getAuditionController().getTimeBar().getPosition_y(), inGameController.getAuditionController().getTimeBar().getSize_x(), inGameController.getAuditionController().getTimeBar().getSize_y());
 
-            for (int i = 0; i < audition.size(); i++){
-                g.drawImage(audition.get(i).getImage(), audition.get(i).getPosition_x(), audition.get(i).getPosition_y(), audition.get(i).getSize_x(), audition.get(i).getSize_y(), this);
+            if (inGameController.getAuditionController().getAuditionModel().isIs_arrow_overflow()){
+
+                g.setColor(new Color(120,120,120));
+                g.fillRect(1100, 150, 50, 50);
+                g.setColor(new Color(0,255,0));
+                g.drawString(Integer.toString(inGameController.getAuditionController().getAuditionModel().getOverflow_count()), 1110, 192);
+
+                for (int i = inGameController.getAuditionController().getAuditionModel().getAudition_first_index(); i < inGameController.getAuditionController().getAuditionModel().getAudition_final_index(); i++){
+                    g.drawImage(audition.get(i).getImage(), audition.get(i).getPosition_x(), audition.get(i).getPosition_y(), audition.get(i).getSize_x(), audition.get(i).getSize_y(), this);
+                }
+            } else {
+                for (int i = inGameController.getAuditionController().getAuditionModel().getAudition_first_index(); i < inGameController.getAuditionController().getAuditionModel().getArrow_count(); i++){
+                    g.drawImage(audition.get(i).getImage(), audition.get(i).getPosition_x(), audition.get(i).getPosition_y(), audition.get(i).getSize_x(), audition.get(i).getSize_y(), this);
+                }
             }
+
         }
 
     }
