@@ -1,9 +1,12 @@
 package Controllers;
 
-import Model.Character;
+import Model.Background.Background;
+import Model.Character.Character;
+import Model.Character.Monster.Slime;
+import Model.Character.Player.Archer;
+import Model.Character.Player.Knight;
 import View.InGameButtonJPanel;
 import View.InGameJPanel;
-import Model.*;
 import View.InGameRenderImage;
 
 import java.awt.*;
@@ -76,7 +79,7 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         inGameJPanel.getM1_panel().setBorder(null);
         inGameJPanel.getM2_panel().setBorder(null);
 
-        Collections.sort(auditionController.getAuditionModel().getSpeed(), Comparator.comparing(Model.Character::getSpeed).reversed());
+        Collections.sort(auditionController.getAuditionModel().getSpeed(), Comparator.comparing(Character::getSpeed).reversed());
 
         rand = (int) (Math.random() * 2) + 1;
         if (rand == 1) {
@@ -100,18 +103,18 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "text_button");
     }
 
-    public void setAttackText(Model.Character c, Model.Character target1) {
+    public void setAttackText(Character c, Character target1) {
         c.setAttack_target(new ArrayList<Character>());
         c.getAttack_target().add(target1);
     }
 
-    public void setAttackText(Model.Character c, Model.Character target1, Model.Character target2) {
+    public void setAttackText(Character c, Character target1, Character target2) {
         c.setAttack_target(new ArrayList<Character>());
         c.getAttack_target().add(target1);
         c.getAttack_target().add(target2);
     }
 
-    public void setAttackText(Model.Character c, Model.Character target1, Model.Character target2, Model.Character target3) {
+    public void setAttackText(Character c, Character target1, Character target2, Character target3) {
         c.setAttack_target(new ArrayList<Character>());
         c.getAttack_target().add(target1);
         c.getAttack_target().add(target2);

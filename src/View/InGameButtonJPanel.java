@@ -74,7 +74,7 @@ public class InGameButtonJPanel extends JPanel {
 
     private void setComponents(){
 
-        ToolTipManager.sharedInstance().setInitialDelay(250);
+        ToolTipManager.sharedInstance().setInitialDelay(100);
 
         try {
 

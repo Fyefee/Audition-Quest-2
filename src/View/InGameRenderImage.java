@@ -1,9 +1,7 @@
 package View;
 
 import Controllers.InGameController;
-import Model.ArrowUp;
-import Model.AuditionModel;
-import Model.AuditionObject;
+import Model.Audition.AuditionObject;
 
 import javax.swing.*;
 import java.awt.*;

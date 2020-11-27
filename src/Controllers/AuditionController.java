@@ -1,12 +1,9 @@
 package Controllers;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
-import Model.*;
-import Model.Character;
+import Model.Audition.*;
+import Model.Character.Character;
 
 public class AuditionController {
 
