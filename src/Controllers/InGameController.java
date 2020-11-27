@@ -180,9 +180,6 @@ public class InGameController implements Runnable, MouseListener, ActionListener
             MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "MENU");
         }
 
-        c1.decreaseMp();
-        c2.decreaseMp();
-
         c1.setAttack_target(null);
         c2.setAttack_target(null);
 
@@ -195,25 +192,85 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
     public void setTextToSkillButton(Character c){
         inGameButtonJPanel.getSkill1_button().setText("<html><font face='Retron2000'><center>" + c.getSkill1_name() + "</html>");
+        inGameButtonJPanel.getSkill1_button().setToolTipText("<html><font face='Retron2000'><center><p style='text-align: left'>" + c.getSkill1_description() + "</p></html>");
+
         inGameButtonJPanel.getSkill2_button().setText("<html><font face='Retron2000'><center>" + c.getSkill2_name() + "</html>");
+        inGameButtonJPanel.getSkill2_button().setToolTipText("<html><font face='Retron2000'><center><p style='text-align: left'>" + c.getSkill2_description() + "</p></html>");
+
         inGameButtonJPanel.getSkill3_button().setText("<html><font face='Retron2000'><center>" + c.getSkill3_name() + "</html>");
+        inGameButtonJPanel.getSkill3_button().setToolTipText("<html><font face='Retron2000'><center><p style='text-align: left'>" + c.getSkill3_description() + "</p></html>");
+    }
+
+    public void toSelectTarget(){
+        inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "target_select");
+        if (attack_state == 1) {
+            inGameButtonJPanel.getC_target_button().setText(c2.getName());
+        } else if (attack_state == 2) {
+            inGameButtonJPanel.getC_target_button().setText(c1.getName());
+        }
+        inGameButtonJPanel.getM1_target_button().setText(m1.getName());
+        inGameButtonJPanel.getM2_target_button().setText(m2.getName());
+        inGameJPanel.getP1_panel().setBorder(null);
+        inGameJPanel.getP2_panel().setBorder(null);
+    }
+
+    public void setDefense(){
+        if (attack_state == 1 && c1.getNot_attack_type() == 0) {
+            if (c2.isAlive()) {
+                attack_state = 2;
+                inGameJPanel.getP1_panel().setBorder(null);
+                inGameJPanel.getP2_panel().setBorder(inGameJPanel.getBorder_white());
+                inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "main_select");
+            }
+            else {
+                end_select();
+                inGameJPanel.getP1_panel().setBorder(null);
+            }
+
+        } else if (attack_state == 2 && c2.getNot_attack_type() == 0) {
+            end_select();
+        }
+    }
+
+    public void checkDefenseOrAttack(){
+        if (target_count == 0) {
+            setDefense();
+        } else {
+            toSelectTarget();
+        }
+    }
+
+    public void checkMp(){
+        if (attack_state == 1) {
+            if (c1.getMp() - c1.getMp_used() < 0) {
+                System.out.println("Not enough MP");
+            }
+            else {
+                c1.decreaseMp();
+                inGameJPanel.getP1_mp().setText("MP : " + c1.getMp() + "/" + c1.getMax_mp());
+                checkDefenseOrAttack();
+            }
+        } else if (attack_state == 2) {
+            if (c2.getMp() - c2.getMp_used() < 0) {
+                System.out.println("Not enough MP");
+            }
+            else {
+                c2.decreaseMp();
+                inGameJPanel.getP2_mp().setText("MP : " + c2.getMp() + "/" + c2.getMax_mp());
+                checkDefenseOrAttack();
+            }
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(inGameButtonJPanel.getButton_attack())) {//กดเริ่มเกมใหม่
-            inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "target_select");
+            toSelectTarget();
             if (attack_state == 1) {
-                inGameButtonJPanel.getC_target_button().setText(c2.getName());
                 c1.normalAttack();
             } else if (attack_state == 2) {
-                inGameButtonJPanel.getC_target_button().setText(c1.getName());
                 c2.normalAttack();
             }
-            inGameButtonJPanel.getM1_target_button().setText(m1.getName());
-            inGameButtonJPanel.getM2_target_button().setText(m2.getName());
-            inGameJPanel.getP1_panel().setBorder(null);
-            inGameJPanel.getP2_panel().setBorder(null);
             target_count = 1;
         } else if (e.getSource().equals(inGameButtonJPanel.getButton_skill())) {
             inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "skill_select");
@@ -225,13 +282,37 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         } else if (e.getSource().equals(inGameButtonJPanel.getButton_defense())) {
             if (attack_state == 1) {
                 c1.defense();
-                attack_state = 2;
-                inGameJPanel.getP1_panel().setBorder(null);
-                inGameJPanel.getP2_panel().setBorder(inGameJPanel.getBorder_white());
             } else if (attack_state == 2) {
                 c2.defense();
-                end_select();
             }
+            setDefense();
+        } else if (e.getSource().equals(inGameButtonJPanel.getSkill1_button())){
+            if (attack_state == 1) {
+                c1.skill1();
+                target_count = c1.getTarget_count();
+            } else if (attack_state == 2) {
+                c2.skill1();
+                target_count = c2.getTarget_count();
+            }
+            checkMp();
+        } else if (e.getSource().equals(inGameButtonJPanel.getSkill2_button())){
+            if (attack_state == 1) {
+                c1.skill2();
+                target_count = c1.getTarget_count();
+            } else if (attack_state == 2) {
+                c2.skill2();
+                target_count = c2.getTarget_count();
+            }
+            checkMp();
+        } else if (e.getSource().equals(inGameButtonJPanel.getSkill3_button())){
+            if (attack_state == 1) {
+                c1.skill3();
+                target_count = c1.getTarget_count();
+            } else if (attack_state == 2) {
+                c2.skill3();
+                target_count = c2.getTarget_count();
+            }
+            checkMp();
         } else if (e.getSource().equals(inGameButtonJPanel.getBack_button()) || e.getSource().equals(inGameButtonJPanel.getSkill_back_button())) {
             inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "main_select");
             if (attack_state == 1) {

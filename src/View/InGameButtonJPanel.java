@@ -74,6 +74,8 @@ public class InGameButtonJPanel extends JPanel {
 
     private void setComponents(){
 
+        ToolTipManager.sharedInstance().setInitialDelay(250);
+
         try {
 
             InputStream is = InGameJPanel.class.getResourceAsStream("Font/Retron2000.ttf");

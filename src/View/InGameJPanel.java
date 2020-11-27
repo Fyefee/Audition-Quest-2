@@ -321,4 +321,36 @@ public class InGameJPanel extends JPanel {
     public void setM2_hp(JLabel m2_hp) {
         this.m2_hp = m2_hp;
     }
+
+    public JLabel getP1_mp() {
+        return p1_mp;
+    }
+
+    public void setP1_mp(JLabel p1_mp) {
+        this.p1_mp = p1_mp;
+    }
+
+    public JLabel getP2_mp() {
+        return p2_mp;
+    }
+
+    public void setP2_mp(JLabel p2_mp) {
+        this.p2_mp = p2_mp;
+    }
+
+    public JLabel getP1_speed() {
+        return p1_speed;
+    }
+
+    public void setP1_speed(JLabel p1_speed) {
+        this.p1_speed = p1_speed;
+    }
+
+    public JLabel getP2_speed() {
+        return p2_speed;
+    }
+
+    public void setP2_speed(JLabel p2_speed) {
+        this.p2_speed = p2_speed;
+    }
 }

@@ -16,6 +16,7 @@ public class Character implements PlayerSkill{
     protected int atk, base_atk;
     protected int def, base_def;
     protected double attack_percent, defence_percent;
+    protected boolean ignore_def = false;
     private Image pic;
     private int x, y, size_x, size_y;
     private boolean alive = true;
@@ -58,8 +59,8 @@ public class Character implements PlayerSkill{
 
     public void normalAttack(){
         returnStats();
-        arrow_count = 25;
-        audition_time = 650;
+        arrow_count = 8;
+        audition_time = 500;
         this.setAttack_text("used attack to ");
     }
 
@@ -78,6 +79,7 @@ public class Character implements PlayerSkill{
         def = base_def;
         attack_percent = 1;
         defence_percent = 1;
+        ignore_def = false;
     }
 
     public void decreaseMp(){
@@ -362,6 +364,14 @@ public class Character implements PlayerSkill{
 
     public void setAudition_time(int audition_time) {
         this.audition_time = audition_time;
+    }
+
+    public boolean isIgnore_def() {
+        return ignore_def;
+    }
+
+    public void setIgnore_def(boolean ignore_def) {
+        this.ignore_def = ignore_def;
     }
 }
 

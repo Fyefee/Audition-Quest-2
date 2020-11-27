@@ -119,14 +119,18 @@ public class AuditionController {
                 } else if (c.getAttack_target().get(0) == inGameController.getM2() && inGameController.getM2().isAlive()) {
                     start_audition(c.getArrow_count(), c.getAudition_time());
                 } else {
-                    for (int i = 0; i <= (auditionModel.getSpeed().size() - auditionModel.getTurn()); i++) {
-                        auditionModel.setTurn(auditionModel.getTurn() + 1);
-                        if (auditionModel.getSpeed().get(auditionModel.getTurn() - 1).isAlive())
-                            break;
-                    }
-                    inGameController.setText_Button();
-                    inGameController.setText_showattack(true);
-                    inGameController.getInGameButtonJPanel().getCard_select().show(inGameController.getInGameButtonJPanel(), "text_button");
+                    skipTurn();
+                }
+            }
+            else if (c.getAttack_target().size() == 2){
+                if (c.getAttack_target().get(0) == inGameController.getC1() && inGameController.getC1().isAlive()) {
+                    start_audition(c.getArrow_count(), c.getAudition_time());
+                } else if (c.getAttack_target().get(0) == inGameController.getC2() && inGameController.getC2().isAlive()) {
+                    start_audition(c.getArrow_count(), c.getAudition_time());
+                } else if ((c.getAttack_target().get(0) == inGameController.getM1() || c.getAttack_target().get(0) == inGameController.getM2()) && (inGameController.getM1().isAlive() || inGameController.getM2().isAlive())){
+                    start_audition(c.getArrow_count(), c.getAudition_time());
+                } else {
+                    skipTurn();
                 }
             }
         }
@@ -140,12 +144,31 @@ public class AuditionController {
         }
     }
 
+    public void skipTurn(){
+        for (int i = 0; i <= (auditionModel.getSpeed().size() - auditionModel.getTurn()); i++) {
+            auditionModel.setTurn(auditionModel.getTurn() + 1);
+            if (auditionModel.getSpeed().get(auditionModel.getTurn() - 1).isAlive())
+                break;
+        }
+        inGameController.setText_Button();
+        inGameController.setText_showattack(true);
+        inGameController.getInGameButtonJPanel().getCard_select().show(inGameController.getInGameButtonJPanel(), "text_button");
+    }
+
     public void attack(Character who_attack){
         try {
             String text = "";
             for (int i = 0; i < who_attack.getAttack_target().size(); i++) {
-                auditionModel.setDamage((int) (((double) who_attack.getAtk() * auditionModel.getAttack_percent() * who_attack.getAttack_percent()  - who_attack.getAttack_target().get(i).getDef())) * who_attack.getAttack_target().get(i).getDefence_percent());
-                text = who_attack.getName() + " Attack " + who_attack.getAttack_target().get(i).getName() + " " + (int) auditionModel.getDamage() + " Damage.";
+                if (who_attack.isIgnore_def()){
+                    auditionModel.setDamage((int) ((double) who_attack.getAtk() * auditionModel.getAttack_percent() * who_attack.getAttack_percent()));
+                } else {
+                    auditionModel.setDamage((int) (((double) who_attack.getAtk() * auditionModel.getAttack_percent() * who_attack.getAttack_percent()  - who_attack.getAttack_target().get(i).getDef())) * who_attack.getAttack_target().get(i).getDefence_percent());
+                }
+
+                if ((int) auditionModel.getDamage() <= 0)
+                    text = who_attack.getName() + " Attack " + who_attack.getAttack_target().get(i).getName() + " 0 Damage.";
+                else
+                    text = who_attack.getName() + " Attack " + who_attack.getAttack_target().get(i).getName() + " " + (int) auditionModel.getDamage() + " Damage.";
                 System.out.println(text);
 
                 if (auditionModel.getDamage() > 0) {
@@ -159,6 +182,7 @@ public class AuditionController {
                 }
 
             }
+
             inGameController.getInGameJPanel().getP1_hp().setText("HP : " + inGameController.getC1().getHp() + "/" + inGameController.getC1().getMax_hp());
             inGameController.getInGameJPanel().getP2_hp().setText("HP : " + inGameController.getC2().getHp() + "/" + inGameController.getC2().getMax_hp());
             inGameController.getInGameJPanel().getM1_hp().setText("HP : " + inGameController.getM1().getHp() + "/" + inGameController.getM1().getMax_hp());
