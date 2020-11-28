@@ -200,6 +200,27 @@ public class InGameJPanel extends JPanel {
 
     }
 
+    public void refreshLabel(){
+
+        p1_hp.setText("HP : " + igc.getC1().getHp() + "/" + igc.getC1().getMax_hp());
+        p1_mp.setText("MP : " + igc.getC1().getMp() + "/" + igc.getC1().getMax_mp());
+        p1_speed.setText("Speed : " + igc.getC1().getSpeed());
+
+        p2_hp.setText("HP : " + igc.getC2().getHp() + "/" + igc.getC2().getMax_hp());
+        p2_mp.setText("MP : " + igc.getC2().getMp() + "/" + igc.getC2().getMax_mp());
+        p2_speed.setText("Speed : " + igc.getC2().getSpeed());
+
+        m1_name.setText(igc.getM1().getName());
+        m2_name.setText(igc.getM2().getName());
+
+        m1_hp.setText("HP : " + igc.getM1().getHp() + "/" + igc.getM1().getMax_hp());
+        m1_speed.setText("Speed : " + igc.getM1().getSpeed());
+
+        m2_hp.setText("HP : " + igc.getM2().getHp() + "/" + igc.getM2().getMax_hp());
+        m2_speed.setText("Speed : " + igc.getM2().getSpeed());
+
+    }
+
     public JPanel getTop_panel() {
         return top_panel;
     }

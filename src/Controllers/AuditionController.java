@@ -180,10 +180,7 @@ public class AuditionController {
 
             }
 
-            inGameController.getInGameJPanel().getP1_hp().setText("HP : " + inGameController.getC1().getHp() + "/" + inGameController.getC1().getMax_hp());
-            inGameController.getInGameJPanel().getP2_hp().setText("HP : " + inGameController.getC2().getHp() + "/" + inGameController.getC2().getMax_hp());
-            inGameController.getInGameJPanel().getM1_hp().setText("HP : " + inGameController.getM1().getHp() + "/" + inGameController.getM1().getMax_hp());
-            inGameController.getInGameJPanel().getM2_hp().setText("HP : " + inGameController.getM2().getHp() + "/" + inGameController.getM2().getMax_hp());
+            inGameController.getInGameJPanel().refreshLabel();
 
             inGameController.getInGameButtonJPanel().getCard_select().show(inGameController.getInGameButtonJPanel(), "text_button");
             inGameController.setText_Button(text);

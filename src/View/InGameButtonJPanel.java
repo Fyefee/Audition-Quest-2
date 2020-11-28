@@ -2,6 +2,7 @@ package View;
 
 import Controllers.InGameController;
 import Controllers.MenuController;
+import Model.Character.Character;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -241,6 +242,48 @@ public class InGameButtonJPanel extends JPanel {
         this.add("empty", empty_panel_bottom);
         card_select.show(this, "main_select");
 
+    }
+
+    public void setTextToSkillButton(Character c){
+
+        skill1_button.setText("<html><font face='Retron2000'><center>" + c.getSkill1_name() + "</html>");
+        skill1_button.setToolTipText("<html><font face='Retron2000'><center><p style='text-align: left'>" + c.getSkill1_description() + "</p></html>");
+
+        skill2_button.setText("<html><font face='Retron2000'><center>" + c.getSkill2_name() + "</html>");
+        skill2_button.setToolTipText("<html><font face='Retron2000'><center><p style='text-align: left'>" + c.getSkill2_description() + "</p></html>");
+
+        skill3_button.setText("<html><font face='Retron2000'><center>" + c.getSkill3_name() + "</html>");
+        skill3_button.setToolTipText("<html><font face='Retron2000'><center><p style='text-align: left'>" + c.getSkill3_description() + "</p></html>");
+
+    }
+
+    public void setTextToItemButton(Character c){
+        setItemButtonToNull();
+        if (c.getBag().get(0) != null) {
+            item1_button.setText("<html><font face='Retron2000'><center>" + c.getBag().get(0).getName() + "</html>");
+            item1_button.setToolTipText("<html><font face='Retron2000'><center><p style='text-align: left'>" + c.getBag().get(0).getDescription() + "</p></html>");
+        }
+
+        if (c.getBag().get(1) != null) {
+            item2_button.setText("<html><font face='Retron2000'><center>" + c.getBag().get(1).getName() + "</html>");
+            item2_button.setToolTipText("<html><font face='Retron2000'><center><p style='text-align: left'>" + c.getBag().get(1).getDescription() + "</p></html>");
+        }
+
+        if (c.getBag().get(2) != null) {
+            item3_button.setText("<html><font face='Retron2000'><center>" + c.getBag().get(2).getName() + "</html>");
+            item3_button.setToolTipText("<html><font face='Retron2000'><center><p style='text-align: left'>" + c.getBag().get(2).getDescription() + "</p></html>");
+        }
+    }
+
+    public void setItemButtonToNull(){
+        item1_button.setText(null);
+        item1_button.setToolTipText(null);
+
+        item2_button.setText(null);
+        item2_button.setToolTipText(null);
+
+        item3_button.setText(null);
+        item3_button.setToolTipText(null);
     }
 
     public CardLayout getCard_select() {
