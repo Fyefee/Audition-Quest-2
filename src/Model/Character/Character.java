@@ -1,5 +1,8 @@
 package Model.Character;
 
+import Model.Item.Healing.HealthPotionS;
+import Model.Item.ItemModel;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -22,6 +25,7 @@ public class Character implements PlayerSkill {
     private boolean alive = true;
     private int rand;
     private ArrayList<Character> attack_target;
+    private ArrayList<ItemModel> bag;
 
     public Character(String name, int hp, int mp, int speed, int atk, int def, int size_x, int size_y, String type) {
 
@@ -51,6 +55,17 @@ public class Character implements PlayerSkill {
         defence_percent = 1;
         target_count = 1;
 
+        bag = new ArrayList<ItemModel>();
+        for (int i = 0; i < 3; i++) {
+            bag.add(null);
+        }
+
+        bag.set(1, new HealthPotionS());
+
+        if (type.equals("Player")) {
+            this.hp -= 100;
+        }
+
     }
 
     public void skill1(){}
@@ -59,8 +74,8 @@ public class Character implements PlayerSkill {
 
     public void normalAttack(){
         returnStats();
-        arrow_count = 30;
-        audition_time = 800;
+        arrow_count = 8;
+        audition_time = 600;
         this.setAttack_text("used attack to ");
     }
 
@@ -372,6 +387,14 @@ public class Character implements PlayerSkill {
 
     public void setIgnore_def(boolean ignore_def) {
         this.ignore_def = ignore_def;
+    }
+
+    public ArrayList<ItemModel> getBag() {
+        return bag;
+    }
+
+    public void setBag(ArrayList<ItemModel> bag) {
+        this.bag = bag;
     }
 }
 
