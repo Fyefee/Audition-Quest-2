@@ -27,9 +27,9 @@ public class MainJFrame extends JFrame{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        frame.pack();
         frame.setVisible(true);
         frame.add(all_card_panel);
+        frame.pack();
         frame.validate();
 
     }
