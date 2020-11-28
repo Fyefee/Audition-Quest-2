@@ -11,7 +11,7 @@ public class HealthPotionS  extends ItemModel implements ItemUse {
     public HealthPotionS(){
         name = "Health Potion S";
         description = "Heal 50 HP to 1 target";
-        target_count = 2;
+        target_count = 1;
         target_type = 1;
     }
 
