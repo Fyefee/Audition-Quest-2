@@ -13,11 +13,12 @@ import java.io.InputStream;
 public class InGameButtonJPanel extends JPanel {
 
     private JPanel in_game_main_button_panel, empty_panel_bottom;
-    private JPanel target_panel, skill_panel, text_button_panel;
+    private JPanel target_panel, skill_panel, bag_panel,  text_button_panel;
     private JButton text_button;
     private JButton button_attack, button_skill, button_defense, button_bag;
     private JButton c_target_button, m1_target_button, m2_target_button, back_button;
     private JButton skill1_button, skill2_button, skill3_button, skill_back_button;
+    private JButton item1_button, item2_button, item3_button, item_back_button;
 
     private Icon bg;
 
@@ -27,6 +28,7 @@ public class InGameButtonJPanel extends JPanel {
 
     private Border border_white = new LineBorder(Color.WHITE, 4, true);
     private Border border_red = new LineBorder(new Color(255, 72, 59), 4, true);
+    private Border border_green = new LineBorder(new Color(0, 255, 0), 4, true);
 
     private Color button_select = new Color(120, 125, 129);
 
@@ -48,6 +50,8 @@ public class InGameButtonJPanel extends JPanel {
 
         skill_panel = new JPanel();
 
+        bag_panel = new JPanel();
+
         bg = new ImageIcon(getClass().getResource("img/text_click.png"));
         text_button = new JButton("", bg);
 
@@ -65,6 +69,11 @@ public class InGameButtonJPanel extends JPanel {
         skill2_button = new JButton();
         skill3_button = new JButton();
         skill_back_button = new JButton("Back");
+
+        item1_button = new JButton();
+        item2_button = new JButton();
+        item3_button = new JButton();
+        item_back_button = new JButton("Back");
 
         empty_panel_bottom = new JPanel();
 
@@ -180,6 +189,36 @@ public class InGameButtonJPanel extends JPanel {
         skill_panel.add(skill2_button);
         skill_panel.add(skill3_button);
 
+        item1_button.setBackground(button_select);
+        item1_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        item1_button.setForeground(Color.WHITE);
+        item1_button.addMouseListener(inGameController);
+        item1_button.addActionListener(inGameController);
+
+        item2_button.setBackground(button_select);
+        item2_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        item2_button.setForeground(Color.WHITE);
+        item2_button.addMouseListener(inGameController);
+        item2_button.addActionListener(inGameController);
+
+        item3_button.setBackground(button_select);
+        item3_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        item3_button.setForeground(Color.WHITE);
+        item3_button.addMouseListener(inGameController);
+        item3_button.addActionListener(inGameController);
+
+        item_back_button.setBackground(button_select);
+        item_back_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        item_back_button.setForeground(Color.WHITE);
+        item_back_button.addMouseListener(inGameController);
+        item_back_button.addActionListener(inGameController);
+
+        bag_panel.setLayout(new GridLayout(2, 2));
+        bag_panel.add(item_back_button);
+        bag_panel.add(item1_button);
+        bag_panel.add(item2_button);
+        bag_panel.add(item3_button);
+
         text_button_panel.setLayout(new BorderLayout());
 
         text_button.setBackground(button_select);
@@ -197,6 +236,7 @@ public class InGameButtonJPanel extends JPanel {
         this.add("main_select", in_game_main_button_panel);
         this.add("target_select", target_panel);
         this.add("skill_select", skill_panel);
+        this.add("item_select", bag_panel);
         this.add("text_button", text_button_panel);
         this.add("empty", empty_panel_bottom);
         card_select.show(this, "main_select");
@@ -299,6 +339,14 @@ public class InGameButtonJPanel extends JPanel {
         this.border_red = border_red;
     }
 
+    public Border getBorder_green() {
+        return border_green;
+    }
+
+    public void setBorder_green(Border border_green) {
+        this.border_green = border_green;
+    }
+
     public JPanel getText_button_panel() {
         return text_button_panel;
     }
@@ -337,5 +385,37 @@ public class InGameButtonJPanel extends JPanel {
 
     public void setSkill_back_button(JButton skill_back_button) {
         this.skill_back_button = skill_back_button;
+    }
+
+    public JButton getItem1_button() {
+        return item1_button;
+    }
+
+    public void setItem1_button(JButton item1_button) {
+        this.item1_button = item1_button;
+    }
+
+    public JButton getItem2_button() {
+        return item2_button;
+    }
+
+    public void setItem2_button(JButton item2_button) {
+        this.item2_button = item2_button;
+    }
+
+    public JButton getItem3_button() {
+        return item3_button;
+    }
+
+    public void setItem3_button(JButton item3_button) {
+        this.item3_button = item3_button;
+    }
+
+    public JButton getItem_back_button() {
+        return item_back_button;
+    }
+
+    public void setItem_back_button(JButton item_back_button) {
+        this.item_back_button = item_back_button;
     }
 }

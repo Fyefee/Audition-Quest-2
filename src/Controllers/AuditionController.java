@@ -57,7 +57,7 @@ public class AuditionController {
         }
         else if (now_time-100 < 0){
             timeBar.setSize_x(1000);
-            auditionModel.setCan_type(true);
+            auditionModel.setCan_type(false);
         }
         else{
             auditionModel.setCan_type(true);

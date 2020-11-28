@@ -9,7 +9,7 @@ public class Knight extends Character implements PlayerSkill {
     
     
     public Knight() {
-        super("Knight", 250, 80, 60, 60, 25, 140, 180, "Player");
+        super("Knight", 200, 80, 60, 60, 25, 140, 180, "Player");
         super.setX(300); 
         super.setY(320);
         super.setPic(new ImageIcon(getClass().getResource("img/human_idle.gif")).getImage());
