@@ -1,14 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model.Item.ItemAtk;
 
-/**
- *
- * @author ASUS
- */
-public class Smoke {
-    
+import Model.Character.Character;
+import Model.Item.ItemModel;
+import Model.Item.ItemUse;
+import java.util.ArrayList;
+public class Smoke extends ItemModel implements ItemUse{
+    public Smoke(){
+        name = "Smoke";
+        description = "Attack + 40 and Heal HP 20";
+        target_count = 1;
+        target_type = 1;
+    }
+
+    @Override
+    public void useItem(ArrayList<Character> target) {
+        for (Character c : target) {
+            c.setAtk(c.getAtk() + 70);
+            if (c.getHp() + 20 >= c.getMax_hp()) {
+                c.setHp(c.getMax_hp());
+            } else {
+                c.setHp(c.getHp() + 20);
+            }
+        }
+    }
 }

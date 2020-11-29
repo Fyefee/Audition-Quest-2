@@ -1,14 +1,16 @@
-package Model.Item.Boots;
+package Model.Item.Healing;
 
 import Model.Character.Character;
 import Model.Item.ItemModel;
 import Model.Item.ItemUse;
+
 import java.util.ArrayList;
 
-public class PhaseBoot extends ItemModel implements ItemUse {
-    public PhaseBoot(){
-        name = "Phase Boot";
-        description = "Speed + 35 and Attack + 50";
+public class HighPotion extends ItemModel implements ItemUse {
+
+    public HighPotion() {
+        name = "High Potion";
+        description = "Heal Max HP to 1 target";
         target_count = 1;
         target_type = 1;
     }
@@ -16,8 +18,7 @@ public class PhaseBoot extends ItemModel implements ItemUse {
     @Override
     public void useItem(ArrayList<Character> target) {
         for (Character c : target) {
-            c.setSpeed(c.getSpeed() + 35);
-            c.setAtk(c.getAtk() + 50);
+            c.setHp(c.getMax_hp());
         }
     }
 }
