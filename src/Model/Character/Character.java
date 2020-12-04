@@ -6,7 +6,7 @@ import Model.Item.ItemModel;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Character implements PlayerSkill {
+public class Character {
 
     private String name, attack_text = "", target = "", type = "";
     protected String skill1_name, skill2_name, skill3_name;
@@ -62,10 +62,6 @@ public class Character implements PlayerSkill {
 
         bag.set(1, new HealthPotionS());
 
-        if (type.equals("Player")) {
-            this.hp -= 100;
-        }
-
     }
 
     public void skill1(){}
@@ -74,7 +70,8 @@ public class Character implements PlayerSkill {
 
     public void normalAttack(){
         returnStats();
-        arrow_count = 8;
+        target_count = 1;
+        arrow_count = 5;
         audition_time = 600;
         this.setAttack_text("used attack to ");
     }
@@ -95,6 +92,7 @@ public class Character implements PlayerSkill {
         attack_percent = 1;
         defence_percent = 1;
         ignore_def = false;
+        attack_target = null;
     }
 
     public void decreaseMp(){

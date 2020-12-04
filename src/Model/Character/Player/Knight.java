@@ -7,7 +7,6 @@ import javax.swing.*;
 
 public class Knight extends Character implements PlayerSkill {
     
-    
     public Knight() {
         super("Knight", 200, 80, 60, 60, 25, 140, 180, "Player");
         super.setX(300); 

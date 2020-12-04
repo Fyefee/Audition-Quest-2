@@ -1,79 +1,122 @@
-package item;
+package View;
 
 import java.awt.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.ArrayList;
 
-public class ItemGUI implements ActionListener {
+public class ItemGUI extends JFrame{
 
-    private JFrame fr;
-    private JPanel panel;
-    private JButton item1, item2, item3;
+    private JPanel panel, all_panel;
+    private JButton item1_button, item2_button, item3_button;
     private JLabel head, space1, space2;
-    private ArrayList<String> itemstat = new ArrayList();
-    private int indexItem1, indexItem2, indexItem3;
+    public Image bg;
 
     public ItemGUI() {
-        itemstat.add("Atk + 2");
-        itemstat.add("Def + 2");
-        itemstat.add("Speed + 50");
-        itemstat.add("Hp + 100");
-        indexItem1 = (int) ((Math.random() * (3 - 0)) + 0);
-        indexItem2 = (int) ((Math.random() * (3 - 0)) + 0);
-        indexItem3 = (int) ((Math.random() * (3 - 0)) + 0);
-        fr = new JFrame();
-        panel = new JPanel();
-        item1 = new JButton("Item 1");
-        item2 = new JButton("Item 2");
-        item3 = new JButton("Item 3");
-        head = new JLabel();
-        space1 = new JLabel(" ");
-        space2 = new JLabel(" ");
-        head.setPreferredSize(new Dimension(100, 40));
-        item1.setPreferredSize(new Dimension(170, 300));
-        item2.setPreferredSize(new Dimension(170, 300));
-        item3.setPreferredSize(new Dimension(170, 300));
-        item1.addActionListener(this);
-        item2.addActionListener(this);
-        item3.addActionListener(this);
-        panel.setLayout(new FlowLayout());
-        panel.add(item1);
-        panel.add(space1);
-        panel.add(item2);
-        panel.add(space2);
-        panel.add(item3);
-        fr.setLayout(new BorderLayout());
-        fr.add(head, BorderLayout.NORTH);
-        fr.add(panel);
-        fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fr.setSize(650, 450);
-        fr.setVisible(true);
+        createComponents();
+        setComponents();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        if (ae.getSource().equals(item1)) {
-            item2.setVisible(false);
-            item3.setVisible(false);
-            panel.remove(item2);
-            panel.remove(item3);
-            JOptionPane.showMessageDialog(fr, itemstat.get(indexItem1));
-            fr.dispose();
-        } else if (ae.getSource().equals(item2)) {
-            item1.setVisible(false);
-            item3.setVisible(false);
-            panel.remove(item1);
-            panel.remove(item3);
-            JOptionPane.showMessageDialog(fr, itemstat.get(indexItem2));
-            fr.dispose();
-        } else if (ae.getSource().equals(item3)) {
-            item1.setVisible(false);
-            item2.setVisible(false);
-            panel.remove(item1);
-            panel.remove(item2);
-            JOptionPane.showMessageDialog(fr, itemstat.get(indexItem3));
-            fr.dispose();
-        }
+    public void createComponents(){
+
+        all_panel = new JPanel() {
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(bg, 0, 0, null);
+            };
+        };
+
+        panel = new JPanel();
+
+        head = new JLabel("Choose Your Item");
+        space1 = new JLabel(" ");
+        space2 = new JLabel(" ");
+
+        item1_button = new JButton();
+        item2_button = new JButton();
+        item3_button = new JButton();
+
+        bg = new ImageIcon(getClass().getResource("img/bg_item_room.png")).getImage();
     }
+
+    public void setComponents(){
+
+        head.setPreferredSize(new Dimension(100, 40));
+
+        item1_button.setPreferredSize(new Dimension(170, 300));
+        item1_button.setFocusable(false);
+        item1_button.setFocusPainted(false);
+        item1_button.setBorderPainted(false);
+        item1_button.setContentAreaFilled(false);
+        item1_button.setRolloverEnabled(false);
+        item1_button.setBorder(null);
+
+        item2_button.setPreferredSize(new Dimension(170, 300));
+        item2_button.setFocusable(false);
+        item2_button.setBorderPainted(false);
+        item2_button.setContentAreaFilled(false);
+        item2_button.setRolloverEnabled(false);
+        item2_button.setFocusPainted(false);
+
+        item3_button.setPreferredSize(new Dimension(170, 300));
+        item3_button.setFocusable(false);
+        item3_button.setBorderPainted(false);
+        item3_button.setContentAreaFilled(false);
+        item3_button.setRolloverEnabled(false);
+        item3_button.setFocusPainted(false);
+
+        try {
+            item1_button.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("img/card.png"))));
+            item2_button.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("img/card.png"))));
+            item3_button.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("img/card.png"))));
+        } catch (Exception ex) {
+            System.out.println(ex+ "KUY");
+        }
+
+        panel.setLayout(new FlowLayout());
+        panel.add(item1_button);
+        panel.add(space1);
+        panel.add(item2_button);
+        panel.add(space2);
+        panel.add(item3_button);
+        panel.setBackground(new Color(0,0,0,0));
+
+        //this.add(head);
+        all_panel.add(head, BorderLayout.NORTH);
+        all_panel.add(panel, BorderLayout.CENTER);
+        this.add(all_panel);
+        this.setSize(650, 450);
+        this.setResizable(false);
+        //this.setVisible(true);
+
+    }
+
+    public JButton getItem1_button() {
+        return item1_button;
+    }
+
+    public void setItem1_button(JButton item1_button) {
+        this.item1_button = item1_button;
+    }
+
+    public JButton getItem2_button() {
+        return item2_button;
+    }
+
+    public void setItem2_button(JButton item2_button) {
+        this.item2_button = item2_button;
+    }
+
+    public JButton getItem3_button() {
+        return item3_button;
+    }
+
+    public void setItem3_button(JButton item3_button) {
+        this.item3_button = item3_button;
+    }
+
+
 }

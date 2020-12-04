@@ -1,7 +1,6 @@
 package View;
 
 import Controllers.InGameController;
-import Controllers.MenuController;
 import Model.Character.Character;
 
 import javax.imageio.ImageIO;
@@ -14,12 +13,14 @@ import java.io.InputStream;
 public class InGameButtonJPanel extends JPanel {
 
     private JPanel in_game_main_button_panel, empty_panel_bottom;
-    private JPanel target_panel, skill_panel, bag_panel,  text_button_panel;
+    private JPanel target_panel, skill_panel, bag_panel,  text_button_panel, yes_no_panel, yes_no_button_panel, yes_no_text_panel;
     private JButton text_button;
     private JButton button_attack, button_skill, button_defense, button_bag;
     private JButton c_target_button, m1_target_button, m2_target_button, back_button;
     private JButton skill1_button, skill2_button, skill3_button, skill_back_button;
     private JButton item1_button, item2_button, item3_button, item_back_button;
+    private JButton button_yes, button_no;
+    private JLabel item_get_label;
 
     private Icon bg;
 
@@ -53,6 +54,12 @@ public class InGameButtonJPanel extends JPanel {
 
         bag_panel = new JPanel();
 
+        yes_no_panel = new JPanel();
+        yes_no_button_panel = new JPanel();
+        yes_no_text_panel = new JPanel();
+
+        item_get_label = new JLabel("Do you want to keep this item ?");
+
         bg = new ImageIcon(getClass().getResource("img/text_click.png"));
         text_button = new JButton("", bg);
 
@@ -75,6 +82,9 @@ public class InGameButtonJPanel extends JPanel {
         item2_button = new JButton();
         item3_button = new JButton();
         item_back_button = new JButton("Back");
+
+        button_yes = new JButton("Yes");
+        button_no = new JButton("No");
 
         empty_panel_bottom = new JPanel();
 
@@ -220,6 +230,33 @@ public class InGameButtonJPanel extends JPanel {
         bag_panel.add(item2_button);
         bag_panel.add(item3_button);
 
+        item_get_label.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        item_get_label.setForeground(Color.WHITE);
+
+        yes_no_text_panel.setLayout(new GridBagLayout());
+        yes_no_text_panel.setBackground(button_select);
+        yes_no_text_panel.add(item_get_label);
+
+        button_yes.setBackground(button_select);
+        button_yes.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        button_yes.setForeground(Color.WHITE);
+        button_yes.addMouseListener(inGameController);
+        button_yes.addActionListener(inGameController);
+
+        button_no.setBackground(button_select);
+        button_no.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        button_no.setForeground(Color.WHITE);
+        button_no.addMouseListener(inGameController);
+        button_no.addActionListener(inGameController);
+
+        yes_no_button_panel.setLayout(new GridLayout(1, 2));
+        yes_no_button_panel.add(button_yes);
+        yes_no_button_panel.add(button_no);
+
+        yes_no_panel.setLayout(new GridLayout(2, 1));
+        yes_no_panel.add(yes_no_text_panel);
+        yes_no_panel.add(yes_no_button_panel);
+
         text_button_panel.setLayout(new BorderLayout());
 
         text_button.setBackground(button_select);
@@ -240,6 +277,7 @@ public class InGameButtonJPanel extends JPanel {
         this.add("item_select", bag_panel);
         this.add("text_button", text_button_panel);
         this.add("empty", empty_panel_bottom);
+        this.add("yes_no", yes_no_panel);
         card_select.show(this, "main_select");
 
     }
@@ -460,5 +498,29 @@ public class InGameButtonJPanel extends JPanel {
 
     public void setItem_back_button(JButton item_back_button) {
         this.item_back_button = item_back_button;
+    }
+
+    public JButton getButton_yes() {
+        return button_yes;
+    }
+
+    public void setButton_yes(JButton button_yes) {
+        this.button_yes = button_yes;
+    }
+
+    public JButton getButton_no() {
+        return button_no;
+    }
+
+    public void setButton_no(JButton button_no) {
+        this.button_no = button_no;
+    }
+
+    public JLabel getItem_get_label() {
+        return item_get_label;
+    }
+
+    public void setItem_get_label(JLabel item_get_label) {
+        this.item_get_label = item_get_label;
     }
 }

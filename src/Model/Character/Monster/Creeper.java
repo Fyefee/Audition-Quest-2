@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model.Character.Monster;
 
 import Model.Character.Character;
@@ -10,16 +5,16 @@ import Model.Character.MonsterSkill;
 
 import javax.swing.*;
 
-public class Slime extends Character implements MonsterSkill {
-    
-    public Slime(int position) {
-        super("Slime", 10, 300, 10, 30, 20, 120, 120, "Monster");
+public class Creeper extends Character implements MonsterSkill {
+
+    public Creeper(int position) {
+        super("Creeper", 10, 300, 10, 30, 20, 160, 160, "Monster");
         switch (position){
-            case 1: super.setX(760); super.setY(375); break;
-            case 2: super.setX(925); super.setY(375); break;
+            case 1: super.setX(760); super.setY(340); break;
+            case 2: super.setX(925); super.setY(340); break;
             default: break;
         }
-        super.setPic(new ImageIcon(getClass().getResource("img/slime/slime_idle.gif")).getImage());
+        super.setPic(new ImageIcon(getClass().getResource("img/creeper/eye_idle.gif")).getImage());
         skill1_name = "Bump";
         skill2_name = "Defense Mode";
     }
@@ -39,5 +34,4 @@ public class Slime extends Character implements MonsterSkill {
         target_count = 0;
         this.setAttack_text("used Defense Mode");
     }
-    
 }

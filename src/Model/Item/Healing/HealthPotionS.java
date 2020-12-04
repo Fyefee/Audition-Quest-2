@@ -6,13 +6,15 @@ import Model.Item.ItemUse;
 
 import java.util.ArrayList;
 
-public class HealthPotionS  extends ItemModel implements ItemUse {
+public class HealthPotionS extends ItemModel implements ItemUse {
 
     public HealthPotionS(){
         name = "Health Potion S";
         description = "Heal 50 HP to 1 target";
         target_count = 1;
         target_type = 1;
+        text_x = 525;
+        text_y = 330;
     }
 
     @Override
