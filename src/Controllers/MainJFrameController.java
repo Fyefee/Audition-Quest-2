@@ -1,12 +1,14 @@
 package Controllers;
 
 import View.MainJFrame;
+import View.MeleeCharacterSelectPanel;
 
 public class MainJFrameController {
 
     private static MainJFrame mainJFrame;
     private static MenuController menuController;
     private static InGameController inGameController;
+    private static SelectCharacterController selectCharacterController;
 
     private Thread th;
 
@@ -24,6 +26,8 @@ public class MainJFrameController {
 
         inGameController = new InGameController();
 
+        selectCharacterController = new SelectCharacterController();
+
         th = new Thread(inGameController);
         th.start();
     }
@@ -31,6 +35,9 @@ public class MainJFrameController {
     public void setComponentstoView(){
         mainJFrame.getAll_card_panel().add(menuController.getMenuJPanel(), "MENU");
         mainJFrame.getAll_card_panel().add(inGameController.getInGameJPanel(), "GAME");
+        mainJFrame.getAll_card_panel().add(inGameController.getStageJPanel(), "STAGE");
+        mainJFrame.getAll_card_panel().add(selectCharacterController.getMeleeCharacterSelectPanel(), "SELECT_MELEE");
+
     }
 
     public static MainJFrame getMainJFrame() {

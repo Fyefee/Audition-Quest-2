@@ -198,6 +198,10 @@ public class AuditionController {
                             inGameModel.setMonster2_drop(true);
                         }
                     }
+
+                    if (!inGameModel.getM1().isAlive() && !inGameModel.getM2().isAlive()){
+                        inGameModel.setAll_monster_dead(true);
+                    }
                 }
 
             }

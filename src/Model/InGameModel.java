@@ -2,11 +2,11 @@ package Model;
 
 import Model.Background.Background;
 import Model.Character.Character;
-import Model.Character.Monster.Creeper;
-import Model.Character.Monster.Slime;
-import Model.Character.Player.Archer;
-import Model.Character.Player.Knight;
+import Model.Character.Monster.*;
+import Model.Character.Player.*;
 import Model.Item.ItemModel;
+
+import java.util.ArrayList;
 
 public class InGameModel {
 
@@ -14,6 +14,9 @@ public class InGameModel {
 
     private long start = System.nanoTime(), now;
     private int nano = 1000000000, msp1 = 10000000;
+
+    private String difficulty;
+    private int stage;
 
     private Character c1;
     private Character c2;
@@ -28,17 +31,87 @@ public class InGameModel {
     private boolean text_showattack;
     private int rand;
 
-    private boolean isMonster1_drop, isMonster2_drop, show_item;
-    private int drop_count = 0;
+    private boolean isMonster1_drop, isMonster2_drop, show_item, replace_item;
+    private int drop_count = 0, replace_item_index;
     private ItemModel item_drop;
+    private Character who_get_item;
+
+    private ArrayList<Character> monster_pool1, monster_pool2;
+    private ArrayList<Character> monster_in_stage;
 
     private boolean all_monster_dead;
 
     public InGameModel(){
-        c1 = new Knight();
-        c2 = new Archer();
-        m1 = new Slime(1);
-        m2 = new Slime(2);
+        c1 = new Druid();
+        c2 = new Wizard();
+        m1 = new Golem(1);
+        m2 = new Golem(2);
+
+        monster_in_stage = new ArrayList<Character>();
+        monster_in_stage.add(m1);
+        monster_in_stage.add(m2);
+    }
+
+    public void setStageEasy(){
+
+        difficulty = "Easy";
+
+        monster_pool1 = new ArrayList<Character>();
+        monster_pool1.add(new Slime(1));
+        monster_pool1.add(new Creeper(1));
+
+        monster_pool2 = new ArrayList<Character>();
+        monster_pool2.add(new Slime(2));
+        monster_pool2.add(new Creeper(2));
+
+    }
+
+    public void addMonsterToPool(){
+
+        if (difficulty.equals("Easy")){
+            if (stage == 3) {
+                monster_pool1.add(new FireFang(1));
+                monster_pool2.add(new FireFang(2));
+            } else if (stage == 6) {
+                monster_pool1.add(new MechaFang(1));
+                monster_pool2.add(new MechaFang(2));
+
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+            } else if (stage == 10) {
+                monster_pool2 = new ArrayList<Character>();
+                monster_pool2.add(new Golem(2));
+            }
+        }
+
+        System.out.println(monster_pool2);
+
+    }
+
+    public void randomMonster(){
+        int rand = (int) (Math.random() * monster_pool1.size());
+
+        m1 = monster_pool1.get(rand);
+        resetMonsterInPosition(rand, 1, monster_pool1);
+
+        rand = (int) (Math.random() * monster_pool2.size());
+        m2 = monster_pool2.get(rand);
+        resetMonsterInPosition(rand, 2, monster_pool2);
+
+    }
+
+    public void resetMonsterInPosition(int rand, int index, ArrayList<Character> pool){
+        if (pool.get(rand).getName().equals("Slime")) {
+            pool.set(rand, new Slime(index));
+        } else if  (pool.get(rand).getName().equals("Creeper")) {
+            pool.set(rand, new Creeper(index));
+        } else if  (pool.get(rand).getName().equals("Fire Fang")) {
+            pool.set(rand, new FireFang(index));
+        } else if  (pool.get(rand).getName().equals("Mecha Fang")) {
+            pool.set(rand, new MechaFang(index));
+        } else if  (pool.get(rand).getName().equals("Golem")) {
+            pool.set(rand, new Golem(index));
+        }
     }
 
     public Boolean getIs_press() {
@@ -223,5 +296,45 @@ public class InGameModel {
 
     public void setItem_drop(ItemModel item_drop) {
         this.item_drop = item_drop;
+    }
+
+    public Character getWho_get_item() {
+        return who_get_item;
+    }
+
+    public void setWho_get_item(Character who_get_item) {
+        this.who_get_item = who_get_item;
+    }
+
+    public boolean isReplace_item() {
+        return replace_item;
+    }
+
+    public void setReplace_item(boolean replace_item) {
+        this.replace_item = replace_item;
+    }
+
+    public int getReplace_item_index() {
+        return replace_item_index;
+    }
+
+    public void setReplace_item_index(int replace_item_index) {
+        this.replace_item_index = replace_item_index;
+    }
+
+    public int getStage() {
+        return stage;
+    }
+
+    public void setStage(int stage) {
+        this.stage = stage;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 }

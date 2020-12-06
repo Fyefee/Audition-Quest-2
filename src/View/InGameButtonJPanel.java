@@ -13,13 +13,16 @@ import java.io.InputStream;
 public class InGameButtonJPanel extends JPanel {
 
     private JPanel in_game_main_button_panel, empty_panel_bottom;
-    private JPanel target_panel, skill_panel, bag_panel,  text_button_panel, yes_no_panel, yes_no_button_panel, yes_no_text_panel;
+    private JPanel target_panel, skill_panel, bag_panel,  text_button_panel;
+    private JPanel yes_no_panel, yes_no_button_panel, yes_no_text_panel;
+    private JPanel item_target_panel, item_target_yes_no_panel;
     private JButton text_button;
     private JButton button_attack, button_skill, button_defense, button_bag;
     private JButton c_target_button, m1_target_button, m2_target_button, back_button;
     private JButton skill1_button, skill2_button, skill3_button, skill_back_button;
     private JButton item1_button, item2_button, item3_button, item_back_button;
     private JButton button_yes, button_no;
+    private JButton item_target_c1_button, item_target_c2_button, item_target_back_button;
     private JLabel item_get_label;
 
     private Icon bg;
@@ -58,6 +61,9 @@ public class InGameButtonJPanel extends JPanel {
         yes_no_button_panel = new JPanel();
         yes_no_text_panel = new JPanel();
 
+        item_target_panel = new JPanel();
+        item_target_yes_no_panel = new JPanel();
+
         item_get_label = new JLabel("Do you want to keep this item ?");
 
         bg = new ImageIcon(getClass().getResource("img/text_click.png"));
@@ -85,6 +91,10 @@ public class InGameButtonJPanel extends JPanel {
 
         button_yes = new JButton("Yes");
         button_no = new JButton("No");
+
+        item_target_c1_button = new JButton();
+        item_target_c2_button = new JButton();
+        item_target_back_button = new JButton("Back");
 
         empty_panel_bottom = new JPanel();
 
@@ -140,29 +150,34 @@ public class InGameButtonJPanel extends JPanel {
         in_game_main_button_panel.add(button_defense);
         in_game_main_button_panel.add(button_bag);
 
-        c_target_button.setBackground(button_select);
-        c_target_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
-        c_target_button.setForeground(Color.WHITE);
-        c_target_button.addMouseListener(inGameController);
-        c_target_button.addActionListener(inGameController);
+//        c_target_button.setBackground(button_select);
+//        c_target_button.setFont(sizedFont.deriveFont(Font.BOLD, 25));
+//        c_target_button.setForeground(Color.WHITE);
+//        c_target_button.addMouseListener(inGameController);
+//        c_target_button.addActionListener(inGameController);
+//
+//        m1_target_button.setBackground(button_select);
+//        m1_target_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
+//        m1_target_button.setForeground(Color.WHITE);
+//        m1_target_button.addMouseListener(inGameController);
+//        m1_target_button.addActionListener(inGameController);
+//
+//        m2_target_button.setBackground(button_select);
+//        m2_target_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
+//        m2_target_button.setForeground(Color.WHITE);
+//        m2_target_button.addMouseListener(inGameController);
+//        m2_target_button.addActionListener(inGameController);
+//
+//        back_button.setBackground(button_select);
+//        back_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
+//        back_button.setForeground(Color.WHITE);
+//        back_button.addMouseListener(inGameController);
+//        back_button.addActionListener(inGameController);
 
-        m1_target_button.setBackground(button_select);
-        m1_target_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
-        m1_target_button.setForeground(Color.WHITE);
-        m1_target_button.addMouseListener(inGameController);
-        m1_target_button.addActionListener(inGameController);
-
-        m2_target_button.setBackground(button_select);
-        m2_target_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
-        m2_target_button.setForeground(Color.WHITE);
-        m2_target_button.addMouseListener(inGameController);
-        m2_target_button.addActionListener(inGameController);
-
-        back_button.setBackground(button_select);
-        back_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
-        back_button.setForeground(Color.WHITE);
-        back_button.addMouseListener(inGameController);
-        back_button.addActionListener(inGameController);
+        setButton(c_target_button, 25);
+        setButton(m1_target_button, 25);
+        setButton(m2_target_button, 25);
+        setButton(back_button, 25);
 
         target_panel.setLayout(new GridLayout(2, 2));
         target_panel.add(back_button);
@@ -170,29 +185,34 @@ public class InGameButtonJPanel extends JPanel {
         target_panel.add(c_target_button);
         target_panel.add(m2_target_button);
 
-        skill1_button.setBackground(button_select);
-        skill1_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
-        skill1_button.setForeground(Color.WHITE);
-        skill1_button.addMouseListener(inGameController);
-        skill1_button.addActionListener(inGameController);
+//        skill1_button.setBackground(button_select);
+//        skill1_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+//        skill1_button.setForeground(Color.WHITE);
+//        skill1_button.addMouseListener(inGameController);
+//        skill1_button.addActionListener(inGameController);
+//
+//        skill2_button.setBackground(button_select);
+//        skill2_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+//        skill2_button.setForeground(Color.WHITE);
+//        skill2_button.addMouseListener(inGameController);
+//        skill2_button.addActionListener(inGameController);
+//
+//        skill3_button.setBackground(button_select);
+//        skill3_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+//        skill3_button.setForeground(Color.WHITE);
+//        skill3_button.addMouseListener(inGameController);
+//        skill3_button.addActionListener(inGameController);
+//
+//        skill_back_button.setBackground(button_select);
+//        skill_back_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+//        skill_back_button.setForeground(Color.WHITE);
+//        skill_back_button.addMouseListener(inGameController);
+//        skill_back_button.addActionListener(inGameController);
 
-        skill2_button.setBackground(button_select);
-        skill2_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
-        skill2_button.setForeground(Color.WHITE);
-        skill2_button.addMouseListener(inGameController);
-        skill2_button.addActionListener(inGameController);
-
-        skill3_button.setBackground(button_select);
-        skill3_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
-        skill3_button.setForeground(Color.WHITE);
-        skill3_button.addMouseListener(inGameController);
-        skill3_button.addActionListener(inGameController);
-
-        skill_back_button.setBackground(button_select);
-        skill_back_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
-        skill_back_button.setForeground(Color.WHITE);
-        skill_back_button.addMouseListener(inGameController);
-        skill_back_button.addActionListener(inGameController);
+        setButton(skill1_button, 22);
+        setButton(skill2_button, 22);
+        setButton(skill3_button, 22);
+        setButton(skill_back_button, 22);
 
         skill_panel.setLayout(new GridLayout(2, 2));
         skill_panel.add(skill_back_button);
@@ -200,29 +220,34 @@ public class InGameButtonJPanel extends JPanel {
         skill_panel.add(skill2_button);
         skill_panel.add(skill3_button);
 
-        item1_button.setBackground(button_select);
-        item1_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
-        item1_button.setForeground(Color.WHITE);
-        item1_button.addMouseListener(inGameController);
-        item1_button.addActionListener(inGameController);
+//        item1_button.setBackground(button_select);
+//        item1_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+//        item1_button.setForeground(Color.WHITE);
+//        item1_button.addMouseListener(inGameController);
+//        item1_button.addActionListener(inGameController);
+//
+//        item2_button.setBackground(button_select);
+//        item2_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+//        item2_button.setForeground(Color.WHITE);
+//        item2_button.addMouseListener(inGameController);
+//        item2_button.addActionListener(inGameController);
+//
+//        item3_button.setBackground(button_select);
+//        item3_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+//        item3_button.setForeground(Color.WHITE);
+//        item3_button.addMouseListener(inGameController);
+//        item3_button.addActionListener(inGameController);
+//
+//        item_back_button.setBackground(button_select);
+//        item_back_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+//        item_back_button.setForeground(Color.WHITE);
+//        item_back_button.addMouseListener(inGameController);
+//        item_back_button.addActionListener(inGameController);
 
-        item2_button.setBackground(button_select);
-        item2_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
-        item2_button.setForeground(Color.WHITE);
-        item2_button.addMouseListener(inGameController);
-        item2_button.addActionListener(inGameController);
-
-        item3_button.setBackground(button_select);
-        item3_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
-        item3_button.setForeground(Color.WHITE);
-        item3_button.addMouseListener(inGameController);
-        item3_button.addActionListener(inGameController);
-
-        item_back_button.setBackground(button_select);
-        item_back_button.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
-        item_back_button.setForeground(Color.WHITE);
-        item_back_button.addMouseListener(inGameController);
-        item_back_button.addActionListener(inGameController);
+        setButton(item1_button, 22);
+        setButton(item2_button, 22);
+        setButton(item3_button, 22);
+        setButton(item_back_button, 22);
 
         bag_panel.setLayout(new GridLayout(2, 2));
         bag_panel.add(item_back_button);
@@ -230,24 +255,27 @@ public class InGameButtonJPanel extends JPanel {
         bag_panel.add(item2_button);
         bag_panel.add(item3_button);
 
-        item_get_label.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+        item_get_label.setFont(sizedFont.deriveFont(Font.BOLD, 20f));
         item_get_label.setForeground(Color.WHITE);
 
         yes_no_text_panel.setLayout(new GridBagLayout());
         yes_no_text_panel.setBackground(button_select);
         yes_no_text_panel.add(item_get_label);
 
-        button_yes.setBackground(button_select);
-        button_yes.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
-        button_yes.setForeground(Color.WHITE);
-        button_yes.addMouseListener(inGameController);
-        button_yes.addActionListener(inGameController);
+//        button_yes.setBackground(button_select);
+//        button_yes.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+//        button_yes.setForeground(Color.WHITE);
+//        button_yes.addMouseListener(inGameController);
+//        button_yes.addActionListener(inGameController);
+//
+//        button_no.setBackground(button_select);
+//        button_no.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
+//        button_no.setForeground(Color.WHITE);
+//        button_no.addMouseListener(inGameController);
+//        button_no.addActionListener(inGameController);
 
-        button_no.setBackground(button_select);
-        button_no.setFont(sizedFont.deriveFont(Font.BOLD, 22f));
-        button_no.setForeground(Color.WHITE);
-        button_no.addMouseListener(inGameController);
-        button_no.addActionListener(inGameController);
+        setButton(button_yes, 22);
+        setButton(button_no, 22);
 
         yes_no_button_panel.setLayout(new GridLayout(1, 2));
         yes_no_button_panel.add(button_yes);
@@ -257,13 +285,26 @@ public class InGameButtonJPanel extends JPanel {
         yes_no_panel.add(yes_no_text_panel);
         yes_no_panel.add(yes_no_button_panel);
 
+        setButton(item_target_back_button, 25);
+        setButton(item_target_c1_button, 25);
+        setButton(item_target_c2_button, 25);
+
+        item_target_yes_no_panel.setLayout(new GridLayout(1, 2));
+        item_target_yes_no_panel.add(item_target_c1_button);
+        item_target_yes_no_panel.add(item_target_c2_button);
+
+        item_target_panel.setLayout(new GridLayout(2, 1));
+        item_target_panel.add(item_target_back_button);
+        item_target_panel.add(item_target_yes_no_panel);
+
         text_button_panel.setLayout(new BorderLayout());
 
-        text_button.setBackground(button_select);
-        text_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
-        text_button.setForeground(Color.WHITE);
-        text_button.addMouseListener(inGameController);
-        text_button.addActionListener(inGameController);
+//        text_button.setBackground(button_select);
+//        text_button.setFont(sizedFont.deriveFont(Font.BOLD, 25f));
+//        text_button.setForeground(Color.WHITE);
+//        text_button.addMouseListener(inGameController);
+//        text_button.addActionListener(inGameController);
+        setButton(text_button, 25);
         text_button.setHorizontalTextPosition(JButton.CENTER);
         text_button.setVerticalTextPosition(JButton.CENTER);
 
@@ -278,6 +319,7 @@ public class InGameButtonJPanel extends JPanel {
         this.add("text_button", text_button_panel);
         this.add("empty", empty_panel_bottom);
         this.add("yes_no", yes_no_panel);
+        this.add("item_target", item_target_panel);
         card_select.show(this, "main_select");
 
     }
@@ -322,6 +364,14 @@ public class InGameButtonJPanel extends JPanel {
 
         item3_button.setText(null);
         item3_button.setToolTipText(null);
+    }
+
+    public void setButton(JButton b, int size){
+        b.setBackground(button_select);
+        b.setFont(sizedFont.deriveFont(Font.BOLD, size));
+        b.setForeground(Color.WHITE);
+        b.addMouseListener(inGameController);
+        b.addActionListener(inGameController);
     }
 
     public CardLayout getCard_select() {
@@ -522,5 +572,29 @@ public class InGameButtonJPanel extends JPanel {
 
     public void setItem_get_label(JLabel item_get_label) {
         this.item_get_label = item_get_label;
+    }
+
+    public JButton getItem_target_c1_button() {
+        return item_target_c1_button;
+    }
+
+    public void setItem_target_c1_button(JButton item_target_c1_button) {
+        this.item_target_c1_button = item_target_c1_button;
+    }
+
+    public JButton getItem_target_c2_button() {
+        return item_target_c2_button;
+    }
+
+    public void setItem_target_c2_button(JButton item_target_c2_button) {
+        this.item_target_c2_button = item_target_c2_button;
+    }
+
+    public JButton getItem_target_back_button() {
+        return item_target_back_button;
+    }
+
+    public void setItem_target_back_button(JButton item_target_back_button) {
+        this.item_target_back_button = item_target_back_button;
     }
 }
