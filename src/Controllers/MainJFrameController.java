@@ -42,6 +42,7 @@ public class MainJFrameController {
         mainJFrame.getAll_card_panel().add(inGameController.getStageJPanel(), "STAGE");
         mainJFrame.getAll_card_panel().add(selectDifficultyController.getSelectDifficultyPanel(), "SELECT_DIFFICULTY");
         mainJFrame.getAll_card_panel().add(selectCharacterController.getMeleeCharacterSelectPanel(), "SELECT_MELEE");
+        mainJFrame.getAll_card_panel().add(selectCharacterController.getRangeCharacterSelectPanel(), "SELECT_RANGE");
 
     }
 

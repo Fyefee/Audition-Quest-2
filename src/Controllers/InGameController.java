@@ -35,7 +35,6 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         this.auditionController = new AuditionController(this);
 
         this.itemModel = new ItemModel();
-        this.itemModel.addItemsToArrayEasy();
 
         inGameJPanel.getTop_panel().add(inGameRenderImage);
         inGameJPanel.getBottom_panel().add(inGameButtonJPanel);
@@ -47,6 +46,16 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
         stageJPanel.getNext_stage_button().addActionListener(this);
 
+    }
+
+    public void addItem(){
+        if (inGameModel.getDifficulty().equals("Easy")){
+            this.itemModel.addItemsToArrayEasy();
+        } else if (inGameModel.getDifficulty().equals("Medium")){
+            this.itemModel.addItemsToArrayMedium();
+        } else if (inGameModel.getDifficulty().equals("Hard")){
+            this.itemModel.addItemsToArrayHard();
+        }
     }
 
     public InGameJPanel getInGameJPanel() {
@@ -719,6 +728,7 @@ public class InGameController implements Runnable, MouseListener, ActionListener
             inGameModel.addMonsterToPool();
             inGameModel.randomMonster();
             inGameJPanel.refreshLabel(inGameModel);
+
             inGameModel.setAttack_state(1);
             auditionController.getAuditionModel().setTurn(1);
             inGameModel.setAll_monster_dead(false);

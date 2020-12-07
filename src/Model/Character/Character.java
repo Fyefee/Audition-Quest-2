@@ -60,8 +60,6 @@ public class Character {
             bag.add(null);
         }
 
-        bag.set(1, new HealthPotionS());
-
     }
 
     public void skill1(){}

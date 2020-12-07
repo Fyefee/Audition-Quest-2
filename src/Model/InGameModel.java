@@ -22,6 +22,7 @@ public class InGameModel {
     private Character c2;
     private Character m1;
     private Character m2;
+    private int changeY;
 
     private Background bg = new Background();
 
@@ -42,8 +43,8 @@ public class InGameModel {
     private boolean all_monster_dead;
 
     public InGameModel(){
-        c1 = new Druid();
-        c2 = new Cyborg();
+        c1 = new Knight();
+        c2 = new Archer();
         m1 = new Golem(1);
         m2 = new Golem(2);
 
@@ -52,10 +53,45 @@ public class InGameModel {
         monster_in_stage.add(m2);
     }
 
-    public void setStageEasy(){
+    public void selectCharacter(int melee, int range){
 
-        //difficulty = "Easy";
-        difficulty = "";
+        if (melee == 1){
+            c1 = new Knight();
+        } else if (melee == 2){
+            c1 = new Duelist();
+        } else if (melee == 3){
+            c1 = new Berserker();
+        } else if (melee == 4){
+            c1 = new Druid();
+        }
+
+        if (range == 1){
+            c2 = new Archer();
+        } else if (range == 2){
+            c2 = new Wizard();
+        } else if (range == 3){
+            c2 = new Elementalist();
+        } else if (range == 4){
+            c2 = new Cyborg();
+        }
+
+    }
+
+    public void setStage(){
+        if (difficulty.equals("Easy")){
+            setStageEasy();
+            changeY = 20;
+            bg = new Background(1);
+        } else if (difficulty.equals("Medium")){
+            setStageEasy();
+            bg = new Background(2);
+        } else if (difficulty.equals("Hard")){
+            setStageEasy();
+            bg = new Background(3);
+        }
+    }
+
+    public void setStageEasy(){
 
         monster_pool1 = new ArrayList<Character>();
         monster_pool1.add(new Slime(1));
@@ -84,8 +120,6 @@ public class InGameModel {
                 monster_pool2.add(new Golem(2));
             }
         }
-
-        System.out.println(monster_pool2);
 
     }
 
@@ -337,5 +371,13 @@ public class InGameModel {
 
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public int getChangeY() {
+        return changeY;
+    }
+
+    public void setChangeY(int changeY) {
+        this.changeY = changeY;
     }
 }

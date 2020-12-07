@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class GuardianAngel extends ItemModel implements ItemUse {
     public GuardianAngel(){
         name = "Guardian Angel";
-        description = "Def + 80";
+        description = "Def + 20";
         target_count = 1;
         target_type = 1;
     }
@@ -14,7 +14,7 @@ public class GuardianAngel extends ItemModel implements ItemUse {
     @Override
     public void useItem(ArrayList<Character> target) {
         for (Character c : target) {
-            c.setDef(c.getDef() + 80);
+            c.setDef(c.getDef() + 20);
         }
     }
 }
