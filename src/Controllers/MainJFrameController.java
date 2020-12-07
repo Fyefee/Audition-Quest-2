@@ -2,6 +2,7 @@ package Controllers;
 
 import View.MainJFrame;
 import View.MeleeCharacterSelectPanel;
+import View.SelectDifficultyPanel;
 
 public class MainJFrameController {
 
@@ -9,6 +10,7 @@ public class MainJFrameController {
     private static MenuController menuController;
     private static InGameController inGameController;
     private static SelectCharacterController selectCharacterController;
+    private static SelectDifficultyController selectDifficultyController;
 
     private Thread th;
 
@@ -28,6 +30,8 @@ public class MainJFrameController {
 
         selectCharacterController = new SelectCharacterController();
 
+        selectDifficultyController = new SelectDifficultyController();
+
         th = new Thread(inGameController);
         th.start();
     }
@@ -36,6 +40,7 @@ public class MainJFrameController {
         mainJFrame.getAll_card_panel().add(menuController.getMenuJPanel(), "MENU");
         mainJFrame.getAll_card_panel().add(inGameController.getInGameJPanel(), "GAME");
         mainJFrame.getAll_card_panel().add(inGameController.getStageJPanel(), "STAGE");
+        mainJFrame.getAll_card_panel().add(selectDifficultyController.getSelectDifficultyPanel(), "SELECT_DIFFICULTY");
         mainJFrame.getAll_card_panel().add(selectCharacterController.getMeleeCharacterSelectPanel(), "SELECT_MELEE");
 
     }

@@ -74,6 +74,10 @@ public class SelectCharacterController implements ActionListener, MouseListener 
             meleeCharacterSelectPanel.getKnight_button().setBorder(null);
             meleeCharacterSelectPanel.getDuelist_button().setBorder(null);
             meleeCharacterSelectPanel.getBerserker_button().setBorder(null);
+        } else if (e.getSource().equals(meleeCharacterSelectPanel.getBack_button())){
+            MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "SELECT_DIFFICULTY");
+        } else if (e.getSource().equals(meleeCharacterSelectPanel.getBack_button())){
+            MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "SELECT_DIFFICULTY");
         }
     }
 
@@ -102,6 +106,14 @@ public class SelectCharacterController implements ActionListener, MouseListener 
             meleeCharacterSelectPanel.getBerserker_button().setBorder(BorderFactory.createLineBorder(Color.WHITE, 4));
         } else if (e.getSource().equals(meleeCharacterSelectPanel.getDruid_button()) && selectCharacterModel.getCharacter_select_melee() != 4){
             meleeCharacterSelectPanel.getDruid_button().setBorder(BorderFactory.createLineBorder(Color.WHITE, 4));
+        } else if (e.getSource().equals(meleeCharacterSelectPanel.getNext_button())){
+            meleeCharacterSelectPanel.getNext_button().setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(Color.CYAN, 5),
+                    BorderFactory.createEmptyBorder(5, 5, 10, 10)));
+        } else if (e.getSource().equals(meleeCharacterSelectPanel.getBack_button())){
+            meleeCharacterSelectPanel.getBack_button().setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(Color.CYAN, 5),
+                    BorderFactory.createEmptyBorder(5, 5, 10, 10)));
         }
     }
 
@@ -115,6 +127,14 @@ public class SelectCharacterController implements ActionListener, MouseListener 
             meleeCharacterSelectPanel.getBerserker_button().setBorder(null);
         } else if (e.getSource().equals(meleeCharacterSelectPanel.getDruid_button()) && selectCharacterModel.getCharacter_select_melee() != 4){
             meleeCharacterSelectPanel.getDruid_button().setBorder(null);
+        } else if (e.getSource().equals(meleeCharacterSelectPanel.getNext_button())){
+            meleeCharacterSelectPanel.getNext_button().setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createEmptyBorder(5, 5, 5, 5),
+                    BorderFactory.createEmptyBorder(5, 5, 10, 10)));;
+        } else if (e.getSource().equals(meleeCharacterSelectPanel.getBack_button())){
+            meleeCharacterSelectPanel.getBack_button().setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createEmptyBorder(5, 5, 5, 5),
+                    BorderFactory.createEmptyBorder(5, 5, 10, 10)));;
         }
     }
 

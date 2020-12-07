@@ -43,7 +43,7 @@ public class InGameModel {
 
     public InGameModel(){
         c1 = new Druid();
-        c2 = new Wizard();
+        c2 = new Cyborg();
         m1 = new Golem(1);
         m2 = new Golem(2);
 
@@ -54,7 +54,8 @@ public class InGameModel {
 
     public void setStageEasy(){
 
-        difficulty = "Easy";
+        //difficulty = "Easy";
+        difficulty = "";
 
         monster_pool1 = new ArrayList<Character>();
         monster_pool1.add(new Slime(1));

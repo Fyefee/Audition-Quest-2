@@ -140,13 +140,15 @@ public class MeleeCharacterSelectPanel extends JPanel {
     }
 
     public void setButtonNextBack(JButton b){
-        b.setFont(sizedFont.deriveFont(Font.BOLD, 35f));
+        b.setFont(sizedFont.deriveFont(Font.BOLD, 30f));
         b.setContentAreaFilled(false);
         b.setForeground(Color.WHITE);
         b.setFocusPainted(false);
         b.setFocusable(false);
-        b.setBorderPainted(false);
         b.setRolloverEnabled(false);
+        b.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(5, 5, 5, 5),
+                BorderFactory.createEmptyBorder(5, 5, 10, 10)));
     }
 
     public void setButtonCharacter(JButton b){
