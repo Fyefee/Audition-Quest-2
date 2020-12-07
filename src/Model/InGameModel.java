@@ -45,8 +45,8 @@ public class InGameModel {
     public InGameModel(){
         c1 = new Knight();
         c2 = new Archer();
-        m1 = new Golem(1);
-        m2 = new Golem(2);
+        m1 = new DarkLord(1);
+        m2 = new DarkLord(2);
 
         monster_in_stage = new ArrayList<Character>();
         monster_in_stage.add(m1);
@@ -83,10 +83,10 @@ public class InGameModel {
             changeY = 20;
             bg = new Background(1);
         } else if (difficulty.equals("Medium")){
-            setStageEasy();
+            setStageMedium();
             bg = new Background(2);
         } else if (difficulty.equals("Hard")){
-            setStageEasy();
+            setStageHard();
             bg = new Background(3);
         }
     }
@@ -100,6 +100,36 @@ public class InGameModel {
         monster_pool2 = new ArrayList<Character>();
         monster_pool2.add(new Slime(2));
         monster_pool2.add(new Creeper(2));
+
+    }
+
+    public void setStageMedium(){
+
+        monster_pool1 = new ArrayList<Character>();
+        monster_pool1.add(new Creeper(1));
+        monster_pool1.add(new FireFang(1));
+        monster_pool1.add(new MechaFang(1));
+
+        monster_pool2 = new ArrayList<Character>();
+        monster_pool2.add(new Creeper(2));
+        monster_pool2.add(new FireFang(2));
+        monster_pool2.add(new MechaFang(2));
+
+    }
+
+    public void setStageHard(){
+
+        monster_pool1 = new ArrayList<Character>();
+        monster_pool1.add(new MechaFang(1));
+        monster_pool1.add(new BabyDragon(1));
+        monster_pool1.add(new Piggy(1));
+        monster_pool1.add(new Golem(1));
+
+        monster_pool2 = new ArrayList<Character>();
+        monster_pool2.add(new MechaFang(2));
+        monster_pool2.add(new BabyDragon(2));
+        monster_pool2.add(new Piggy(2));
+        monster_pool2.add(new Golem(2));
 
     }
 
@@ -118,6 +148,62 @@ public class InGameModel {
             } else if (stage == 10) {
                 monster_pool2 = new ArrayList<Character>();
                 monster_pool2.add(new Golem(2));
+            }
+        }
+
+        if (difficulty.equals("Medium")){
+            if (stage == 3) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new BabyDragon(1));
+                monster_pool2.add(new BabyDragon(2));
+            } else if (stage == 7) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new Piggy(1));
+                monster_pool2.add(new Piggy(2));
+            } else if (stage == 11) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new Golem(1));
+                monster_pool2.add(new Golem(2));
+            } else if (stage == 15) {
+                monster_pool2 = new ArrayList<Character>();
+                monster_pool2.add(new FireDragon(2));
+            }
+        }
+
+        if (difficulty.equals("Hard")){
+            if (stage == 4) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new Murloc(1));
+                monster_pool2.add(new Murloc(2));
+            } else if (stage == 8) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new Unknown(1));
+                monster_pool2.add(new Unknown(2));
+            } else if (stage == 12) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new Warlord(1));
+                monster_pool2.add(new Warlord(2));
+            } else if (stage == 16) {
+                monster_pool1.add(new FireDragon(1));
+                monster_pool2.add(new FireDragon(2));
+            } else if (stage == 20) {
+                monster_pool1 = new ArrayList<Character>();
+                monster_pool1.add(new FireDragon(1));
+
+                monster_pool2 = new ArrayList<Character>();
+                monster_pool2.add(new DarkLord(2));
             }
         }
 

@@ -6,7 +6,7 @@ import View.MenuJPanel;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class MenuController implements ActionListener, MouseListener {
+public class MenuController implements MouseListener {
 
     private MenuJPanel menuJPanel;
 
@@ -20,25 +20,19 @@ public class MenuController implements ActionListener, MouseListener {
     }
 
     private void setComponents(){
-        menuJPanel.getMenu_button_play().addActionListener(this);
-    }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(menuJPanel.getMenu_button_play())){
-//            MainJFrameController.getInGameController().getInGameModel().setStageEasy();
-//            MainJFrameController.getInGameController().getInGameModel().setStage(1);
-//            MainJFrameController.getInGameController().getStageJPanel().getStage_label().setText("Stage " + String.valueOf(MainJFrameController.getInGameController().getInGameModel().getStage()));
-//            MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "STAGE");
-            MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "SELECT_DIFFICULTY");
-            //MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "SELECT_MELEE");
-            //MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "SELECT_RANGE");
-        }
+        menuJPanel.getPlay_button().addMouseListener(this);
+        menuJPanel.getExit_button().addMouseListener(this);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        if (e.getSource().equals(menuJPanel.getPlay_button())){
+            MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "SELECT_DIFFICULTY");
+            //MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "GAME");
+        } else if (e.getSource().equals(menuJPanel.getExit_button())){
+            System.exit(0);
+        }
     }
 
     @Override
@@ -53,11 +47,19 @@ public class MenuController implements ActionListener, MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        if (e.getSource().equals(menuJPanel.getPlay_button())){
+            menuJPanel.getPlay_button().setIcon(menuJPanel.getPlay_button_active_pic());
+        } else if (e.getSource().equals(menuJPanel.getExit_button())){
+            menuJPanel.getExit_button().setIcon(menuJPanel.getExit_button_active_pic());
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        if (e.getSource().equals(menuJPanel.getPlay_button())){
+            menuJPanel.getPlay_button().setIcon(menuJPanel.getPlay_button_pic());
+        } else if (e.getSource().equals(menuJPanel.getExit_button())){
+            menuJPanel.getExit_button().setIcon(menuJPanel.getExit_button_pic());
+        }
     }
 }

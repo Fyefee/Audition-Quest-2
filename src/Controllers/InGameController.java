@@ -438,6 +438,10 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
         if (inGameModel.getDifficulty().equals("Easy") && inGameModel.getStage() == 10){
             stageJPanel.getStage_label().setText("You clear easy Difficulty!!");
+        } else if (inGameModel.getDifficulty().equals("Medium") && inGameModel.getStage() == 15){
+            stageJPanel.getStage_label().setText("You clear medium Difficulty!!");
+        } else if (inGameModel.getDifficulty().equals("Hard") && inGameModel.getStage() == 20){
+            stageJPanel.getStage_label().setText("You clear hard Difficulty!!");
         } else {
             stageJPanel.getStage_label().setText("Stage " + String.valueOf(inGameModel.getStage()));
         }

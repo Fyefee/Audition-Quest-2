@@ -2,13 +2,14 @@ package Model.Character.Player;
 
 import Model.Character.Character;
 import Model.Character.PlayerSkill;
+import Model.Item.Mana.ManaPotionXL;
 
 import javax.swing.*;
 
 public class Berserker extends Character implements PlayerSkill {
 
     public Berserker() {
-        super("Berserker", 200, 80, 60, 60, 25, 430, 430, "Player");
+        super("Berserker", 180, 90, 60, 60, 25, 430, 430, "Player");
         super.setX(180);
         super.setY(110);
         super.setPic(new ImageIcon(getClass().getResource("img/Berserker/Berserker.gif")).getImage());

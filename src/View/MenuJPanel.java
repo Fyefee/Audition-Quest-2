@@ -10,7 +10,6 @@ public class MenuJPanel extends JPanel{
     public Image bg;
 
     private JPanel menu_button_panel, logo_panel, play_button_panel, exit_button_panel;
-    private JButton menu_button_play;
     private JLabel logo_label, play_button, exit_button;
     private ImageIcon logo, play_button_pic, play_button_active_pic, exit_button_pic, exit_button_active_pic;
     private MenuController mc;
@@ -33,8 +32,6 @@ public class MenuJPanel extends JPanel{
         logo_panel = new JPanel();
         play_button_panel = new JPanel();
         exit_button_panel = new JPanel();
-
-        menu_button_play = new JButton("Start");
 
         logo_label = new JLabel();
 
@@ -68,6 +65,7 @@ public class MenuJPanel extends JPanel{
         menu_button_panel.setOpaque(false);
 
         play_button_panel.setLayout(new FlowLayout());
+        play_button_panel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
         play_button_panel.setOpaque(false);
         play_button_panel.add(play_button);
 
@@ -99,19 +97,59 @@ public class MenuJPanel extends JPanel{
         this.logo_panel = logo_panel;
     }
 
-    public JButton getMenu_button_play() {
-        return menu_button_play;
-    }
-
-    public void setMenu_button_play(JButton menu_button_play) {
-        this.menu_button_play = menu_button_play;
-    }
-
     public MenuController getMc() {
         return mc;
     }
 
     public void setMc(MenuController mc) {
         this.mc = mc;
+    }
+
+    public JLabel getPlay_button() {
+        return play_button;
+    }
+
+    public void setPlay_button(JLabel play_button) {
+        this.play_button = play_button;
+    }
+
+    public JLabel getExit_button() {
+        return exit_button;
+    }
+
+    public void setExit_button(JLabel exit_button) {
+        this.exit_button = exit_button;
+    }
+
+    public ImageIcon getPlay_button_pic() {
+        return play_button_pic;
+    }
+
+    public void setPlay_button_pic(ImageIcon play_button_pic) {
+        this.play_button_pic = play_button_pic;
+    }
+
+    public ImageIcon getPlay_button_active_pic() {
+        return play_button_active_pic;
+    }
+
+    public void setPlay_button_active_pic(ImageIcon play_button_active_pic) {
+        this.play_button_active_pic = play_button_active_pic;
+    }
+
+    public ImageIcon getExit_button_pic() {
+        return exit_button_pic;
+    }
+
+    public void setExit_button_pic(ImageIcon exit_button_pic) {
+        this.exit_button_pic = exit_button_pic;
+    }
+
+    public ImageIcon getExit_button_active_pic() {
+        return exit_button_active_pic;
+    }
+
+    public void setExit_button_active_pic(ImageIcon exit_button_active_pic) {
+        this.exit_button_active_pic = exit_button_active_pic;
     }
 }
