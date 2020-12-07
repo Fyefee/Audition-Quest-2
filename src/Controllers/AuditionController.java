@@ -4,22 +4,20 @@ import java.util.ArrayList;
 
 import Model.Audition.*;
 import Model.Character.Character;
+import Model.InGameModel;
 
 public class AuditionController {
 
     private AuditionModel auditionModel;
 
     private InGameController inGameController;
+    private InGameModel inGameModel;
     private TimeBar timeBar;
 
     public AuditionController(InGameController inGameController){
         this.inGameController = inGameController;
+        this.inGameModel = inGameController.getInGameModel();
         auditionModel = new AuditionModel();
-
-        auditionModel.getSpeed().add(inGameController.getC1());
-        auditionModel.getSpeed().add(inGameController.getC2());
-        auditionModel.getSpeed().add(inGameController.getM1());
-        auditionModel.getSpeed().add(inGameController.getM2());
 
         timeBar = new TimeBar();
     }
@@ -43,6 +41,7 @@ public class AuditionController {
             }
         }
         auditionModel.setState(0);
+        auditionModel.setAudition_first_index(0);
     }
 
     public void resize_bar(int now_time){
@@ -102,29 +101,29 @@ public class AuditionController {
                 if (c.getNot_attack_type() == 0){
                     auditionModel.setTurn(auditionModel.getTurn() + 1);
                     inGameController.setText_Button();
-                    inGameController.setText_showattack(true);
+                    inGameModel.setText_showattack(true);
                     inGameController.getInGameButtonJPanel().getCard_select().show(inGameController.getInGameButtonJPanel(), "text_button");
                 }
             }
             else if (c.getAttack_target().size() == 1) {
-                if (c.getAttack_target().get(0) == inGameController.getC1() && inGameController.getC1().isAlive()) {
+                if (c.getAttack_target().get(0) == inGameModel.getC1() && inGameModel.getC1().isAlive()) {
                     start_audition(c.getArrow_count(), c.getAudition_time());
-                } else if (c.getAttack_target().get(0) == inGameController.getC2() && inGameController.getC2().isAlive()) {
+                } else if (c.getAttack_target().get(0) == inGameModel.getC2() && inGameModel.getC2().isAlive()) {
                     start_audition(c.getArrow_count(), c.getAudition_time());
-                } else if (c.getAttack_target().get(0) == inGameController.getM1() && inGameController.getM1().isAlive()) {
+                } else if (c.getAttack_target().get(0) == inGameModel.getM1() && inGameModel.getM1().isAlive()) {
                     start_audition(c.getArrow_count(), c.getAudition_time());
-                } else if (c.getAttack_target().get(0) == inGameController.getM2() && inGameController.getM2().isAlive()) {
+                } else if (c.getAttack_target().get(0) == inGameModel.getM2() && inGameModel.getM2().isAlive()) {
                     start_audition(c.getArrow_count(), c.getAudition_time());
                 } else {
                     skipTurn();
                 }
             }
             else if (c.getAttack_target().size() == 2){
-                if (c.getAttack_target().get(0) == inGameController.getC1() && inGameController.getC1().isAlive()) {
+                if (c.getAttack_target().get(0) == inGameModel.getC1() && inGameModel.getC1().isAlive()) {
                     start_audition(c.getArrow_count(), c.getAudition_time());
-                } else if (c.getAttack_target().get(0) == inGameController.getC2() && inGameController.getC2().isAlive()) {
+                } else if (c.getAttack_target().get(0) == inGameModel.getC2() && inGameModel.getC2().isAlive()) {
                     start_audition(c.getArrow_count(), c.getAudition_time());
-                } else if ((c.getAttack_target().get(0) == inGameController.getM1() || c.getAttack_target().get(0) == inGameController.getM2()) && (inGameController.getM1().isAlive() || inGameController.getM2().isAlive())){
+                } else if ((c.getAttack_target().get(0) == inGameModel.getM1() || c.getAttack_target().get(0) == inGameModel.getM2()) && (inGameModel.getM1().isAlive() || inGameModel.getM2().isAlive())){
                     start_audition(c.getArrow_count(), c.getAudition_time());
                 } else {
                     skipTurn();
@@ -134,10 +133,16 @@ public class AuditionController {
         else {
             auditionModel.setAttack_percent(1);
             auditionModel.setWho_attack(c);
-            if (c.getAttack_target().get(0) == inGameController.getC1())
+            if (c.getAttack_target() == null){
+                if (c.getNot_attack_type() == 0){
+                    auditionModel.setTurn(auditionModel.getTurn() + 1);
+                    inGameController.setText_Button();
+                    inGameModel.setText_showattack(true);
+                    inGameController.getInGameButtonJPanel().getCard_select().show(inGameController.getInGameButtonJPanel(), "text_button");
+                }
+            } else {
                 attack(c);
-            else if (c.getAttack_target().get(0) == inGameController.getC2())
-                attack(c);
+            }
         }
     }
 
@@ -148,7 +153,7 @@ public class AuditionController {
                 break;
         }
         inGameController.setText_Button();
-        inGameController.setText_showattack(true);
+        inGameModel.setText_showattack(true);
         inGameController.getInGameButtonJPanel().getCard_select().show(inGameController.getInGameButtonJPanel(), "text_button");
     }
 
@@ -175,17 +180,38 @@ public class AuditionController {
                 if (who_attack.getAttack_target().get(i).getHp() <= 0) {
                     who_attack.getAttack_target().get(i).setHp(0);
                     who_attack.getAttack_target().get(i).setAlive(false);
+
+                    if (auditionModel.getSpeed().indexOf(who_attack.getAttack_target().get(i)) < auditionModel.getTurn()){
+                        auditionModel.setTurn(auditionModel.getTurn() - 1);
+                    }
+
                     auditionModel.getSpeed().remove(who_attack.getAttack_target().get(i));
+                    System.out.println(auditionModel.getSpeed());
+
+
+
+                    int rand = (int) (Math.random() * 100) + 1;
+                    if (rand > 15){
+                        if (who_attack.getAttack_target().get(i) == inGameModel.getM1()){
+                            inGameModel.setMonster1_drop(true);
+                        } else if (who_attack.getAttack_target().get(i) == inGameModel.getM2()){
+                            inGameModel.setMonster2_drop(true);
+                        }
+                    }
+
+                    if (!inGameModel.getM1().isAlive() && !inGameModel.getM2().isAlive()){
+                        inGameModel.setAll_monster_dead(true);
+                    }
                 }
 
             }
 
-            inGameController.getInGameJPanel().refreshLabel();
+            inGameController.getInGameJPanel().refreshLabelWOSpeed(inGameModel);
 
             inGameController.getInGameButtonJPanel().getCard_select().show(inGameController.getInGameButtonJPanel(), "text_button");
             inGameController.setText_Button(text);
             auditionModel.setTurn(auditionModel.getTurn() + 1);
-            inGameController.setIs_start(false);
+            inGameModel.setIs_start(false);
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -7,12 +7,11 @@ import javax.swing.*;
 
 public class Knight extends Character implements PlayerSkill {
     
-    
     public Knight() {
-        super("Knight", 200, 80, 60, 60, 25, 140, 180, "Player");
-        super.setX(300); 
-        super.setY(320);
-        super.setPic(new ImageIcon(getClass().getResource("img/human_idle.gif")).getImage());
+        super("Knight", 200, 50, 60, 60, 25, 340, 340, "Player");
+        super.setX(230);
+        super.setY(200);
+        super.setPic(new ImageIcon(getClass().getResource("img/knight/knight.gif")).getImage());
         skill1_name = "Unbreakable";
         skill1_description = "Increase def 10 and decrease damage taken 50%<br>Use 15 mp";
         skill2_name = "Shield Bash";

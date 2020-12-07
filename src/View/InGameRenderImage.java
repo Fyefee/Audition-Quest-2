@@ -2,6 +2,7 @@ package View;
 
 import Controllers.InGameController;
 import Model.Audition.AuditionObject;
+import Model.InGameModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,45 +12,64 @@ import java.util.ArrayList;
 public class InGameRenderImage extends JPanel {
 
     private InGameController inGameController;
+    private InGameModel inGameModel;
     private ArrayList<AuditionObject> audition = new ArrayList<AuditionObject>();
+    private Image sack, empty_card;
 
-    public Font font, sizedFont;
+    public Font font, sizedFont, sizedFont2;
 
     public InGameRenderImage(InGameController run){
         inGameController = run;
+        inGameModel = inGameController.getInGameModel();
 
         try {
 
             InputStream is = InGameJPanel.class.getResourceAsStream("Font/Retron2000.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, is);
             sizedFont = font.deriveFont(45f);
+            sizedFont2  = font.deriveFont(25f);
+
+            sack = new ImageIcon(getClass().getResource("img/sack.png")).getImage();
+            empty_card = new ImageIcon(getClass().getResource("img/empty_card.png")).getImage();
 
         } catch (Exception e){}
 
     }
 
     public void paintComponent(Graphics g) {
-        g.setFont(sizedFont);
-        g.drawImage(inGameController.bg.bg, 0, 0, this);
+        g.setFont(sizedFont2);
+        g.drawImage(inGameModel.getBg().bg, 0, 0, this);
         audition(g);
-        if (inGameController.getC1().isAlive()) {
-            g.drawImage(inGameController.getC1().getPic(), inGameController.getC1().getX(), inGameController.getC1().getY(), inGameController.getC1().getSize_x(), inGameController.getC1().getSize_y(), this);
+        if (inGameModel.getC1().isAlive()) {
+            g.drawImage(inGameModel.getC1().getPic(), inGameModel.getC1().getX(), inGameModel.getC1().getY(), inGameModel.getC1().getSize_x(), inGameModel.getC1().getSize_y(), this);
         }
-        if (inGameController.getC2().isAlive()) {
-            g.drawImage(inGameController.getC2().getPic(), inGameController.getC2().getX(), inGameController.getC2().getY(), inGameController.getC2().getSize_x(), inGameController.getC2().getSize_y(), this);
+        if (inGameModel.getC2().isAlive()) {
+            g.drawImage(inGameModel.getC2().getPic(), inGameModel.getC2().getX(), inGameModel.getC2().getY(), inGameModel.getC2().getSize_x(), inGameModel.getC2().getSize_y(), this);
         }
-        if (inGameController.getM1().isAlive()) {
-            g.drawImage(inGameController.getM1().getPic(), inGameController.getM1().getX(), inGameController.getM1().getY(), inGameController.getM1().getSize_x(), inGameController.getM1().getSize_y(), this);
+        if (inGameModel.getM1().isAlive()) {
+            g.drawImage(inGameModel.getM1().getPic(), inGameModel.getM1().getX(), inGameModel.getM1().getY(), inGameModel.getM1().getSize_x(), inGameModel.getM1().getSize_y(), this);
+        } else if (!inGameModel.getM1().isAlive() && inGameModel.isMonster1_drop()){
+            g.drawImage(sack, 790, 410, 60, 60, this);
         }
-        if (inGameController.getM2().isAlive()) {
-            g.drawImage(inGameController.getM2().getPic(), inGameController.getM2().getX(), inGameController.getM2().getY(), inGameController.getM2().getSize_x(), inGameController.getM2().getSize_y(), this);
+        if (inGameModel.getM2().isAlive()) {
+            g.drawImage(inGameModel.getM2().getPic(), inGameModel.getM2().getX(), inGameModel.getM2().getY(), inGameModel.getM2().getSize_x(), inGameModel.getM2().getSize_y(), this);
+        } else if (!inGameModel.getM2().isAlive() && inGameModel.isMonster2_drop()){
+            g.drawImage(sack, 960, 410, 60, 60, this);
         }
+
+        if (inGameModel.isShow_item()){
+            g.drawImage(empty_card, 500, 30, 260, 470, this);
+            g.setColor(new Color(255,255,255));
+            g.drawString(inGameModel.getItem_drop().getName(), inGameModel.getItem_drop().getText_x(), inGameModel.getItem_drop().getText_y());
+        }
+
         g.dispose();
     }
 
     public void audition(Graphics g){
 
         if (inGameController.getAuditionController().getAuditionModel().getAudition_is_show()){
+            g.setFont(sizedFont);
 
             g.setColor(new Color(120,120,120));
             g.fillRect(100, 100, 1000, 100);

@@ -9,6 +9,8 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.InputStream;
 import Controllers.*;
+import Model.InGameModel;
+
 public class InGameJPanel extends JPanel {
 
     private JPanel top_panel, bottom_panel;
@@ -31,6 +33,7 @@ public class InGameJPanel extends JPanel {
     private Color button_select = new Color(120, 125, 129);
 
     private InGameController igc;
+    private InGameModel inGameModel;
 
     private InGameButtonJPanel inGameButtonJPanel;
 
@@ -53,33 +56,32 @@ public class InGameJPanel extends JPanel {
 
         p1_panel = new JPanel();
         p2_panel = new JPanel();
-
-        p1_name = new JLabel(igc.getC1().getName(), SwingConstants.CENTER);
-        p2_name = new JLabel(igc.getC2().getName(), SwingConstants.CENTER);
+        p1_name = new JLabel(igc.getInGameModel().getC1().getName(), SwingConstants.CENTER);
+        p2_name = new JLabel(igc.getInGameModel().getC2().getName(), SwingConstants.CENTER);
 
         p1_stat_panel = new JPanel();
-        p1_hp = new JLabel("HP : " + igc.getC1().getHp() + "/" + igc.getC1().getMax_hp(), SwingConstants.CENTER);
-        p1_mp = new JLabel("MP : " + igc.getC1().getMp() + "/" + igc.getC1().getMax_mp(), SwingConstants.CENTER);
-        p1_speed = new JLabel("Speed : " + igc.getC1().getSpeed(), SwingConstants.CENTER);
+        p1_hp = new JLabel("HP : " + igc.getInGameModel().getC1().getHp() + "/" + igc.getInGameModel().getC1().getMax_hp(), SwingConstants.CENTER);
+        p1_mp = new JLabel("MP : " + igc.getInGameModel().getC1().getMp() + "/" + igc.getInGameModel().getC1().getMax_mp(), SwingConstants.CENTER);
+        p1_speed = new JLabel("Speed : " + igc.getInGameModel().getC1().getSpeed(), SwingConstants.CENTER);
 
         p2_stat_panel = new JPanel();
-        p2_hp = new JLabel("HP : " + igc.getC2().getHp() + "/" + igc.getC2().getMax_hp(), SwingConstants.CENTER);
-        p2_mp = new JLabel("MP : " + igc.getC2().getMp() + "/" + igc.getC2().getMax_mp(), SwingConstants.CENTER);
-        p2_speed = new JLabel("Speed : " + igc.getC2().getSpeed(), SwingConstants.CENTER);
+        p2_hp = new JLabel("HP : " + igc.getInGameModel().getC2().getHp() + "/" + igc.getInGameModel().getC2().getMax_hp(), SwingConstants.CENTER);
+        p2_mp = new JLabel("MP : " + igc.getInGameModel().getC2().getMp() + "/" + igc.getInGameModel().getC2().getMax_mp(), SwingConstants.CENTER);
+        p2_speed = new JLabel("Speed : " + igc.getInGameModel().getC2().getSpeed(), SwingConstants.CENTER);
 
         m1_panel = new JPanel();
         m2_panel = new JPanel();
 
-        m1_name = new JLabel(igc.getM1().getName(), SwingConstants.CENTER);
-        m2_name = new JLabel(igc.getM2().getName(), SwingConstants.CENTER);
+        m1_name = new JLabel(igc.getInGameModel().getM1().getName(), SwingConstants.CENTER);
+        m2_name = new JLabel(igc.getInGameModel().getM2().getName(), SwingConstants.CENTER);
 
         m1_stat_panel = new JPanel();
-        m1_hp = new JLabel("HP : " + igc.getM1().getHp() + "/" + igc.getM1().getMax_hp(), SwingConstants.CENTER);
-        m1_speed = new JLabel("Speed : " + igc.getM1().getSpeed(), SwingConstants.CENTER);
+        m1_hp = new JLabel("HP : " + igc.getInGameModel().getM1().getHp() + "/" + igc.getInGameModel().getM1().getMax_hp(), SwingConstants.CENTER);
+        m1_speed = new JLabel("Speed : " + igc.getInGameModel().getM1().getSpeed(), SwingConstants.CENTER);
 
         m2_stat_panel = new JPanel();
-        m2_hp = new JLabel("HP : " + igc.getM2().getHp() + "/" + igc.getM2().getMax_hp(), SwingConstants.CENTER);
-        m2_speed = new JLabel("Speed : " + igc.getM2().getSpeed(), SwingConstants.CENTER);
+        m2_hp = new JLabel("HP : " + igc.getInGameModel().getM2().getHp() + "/" + igc.getInGameModel().getM2().getMax_hp(), SwingConstants.CENTER);
+        m2_speed = new JLabel("Speed : " + igc.getInGameModel().getM2().getSpeed(), SwingConstants.CENTER);
 
     }
 
@@ -200,24 +202,39 @@ public class InGameJPanel extends JPanel {
 
     }
 
-    public void refreshLabel(){
+    public void refreshLabelWOSpeed(InGameModel inGameModel){
+        p1_hp.setText("HP : " + inGameModel.getC1().getHp() + "/" + inGameModel.getC1().getMax_hp());
+        p1_mp.setText("MP : " + inGameModel.getC1().getMp() + "/" + inGameModel.getC1().getMax_mp());
 
-        p1_hp.setText("HP : " + igc.getC1().getHp() + "/" + igc.getC1().getMax_hp());
-        p1_mp.setText("MP : " + igc.getC1().getMp() + "/" + igc.getC1().getMax_mp());
-        p1_speed.setText("Speed : " + igc.getC1().getSpeed());
+        p2_hp.setText("HP : " + inGameModel.getC2().getHp() + "/" + inGameModel.getC2().getMax_hp());
+        p2_mp.setText("MP : " + inGameModel.getC2().getMp() + "/" + inGameModel.getC2().getMax_mp());
 
-        p2_hp.setText("HP : " + igc.getC2().getHp() + "/" + igc.getC2().getMax_hp());
-        p2_mp.setText("MP : " + igc.getC2().getMp() + "/" + igc.getC2().getMax_mp());
-        p2_speed.setText("Speed : " + igc.getC2().getSpeed());
+        m1_name.setText(inGameModel.getM1().getName());
+        m2_name.setText(inGameModel.getM2().getName());
 
-        m1_name.setText(igc.getM1().getName());
-        m2_name.setText(igc.getM2().getName());
+        m1_hp.setText("HP : " + inGameModel.getM1().getHp() + "/" + inGameModel.getM1().getMax_hp());
 
-        m1_hp.setText("HP : " + igc.getM1().getHp() + "/" + igc.getM1().getMax_hp());
-        m1_speed.setText("Speed : " + igc.getM1().getSpeed());
+        m2_hp.setText("HP : " + inGameModel.getM2().getHp() + "/" + inGameModel.getM2().getMax_hp());
+    }
 
-        m2_hp.setText("HP : " + igc.getM2().getHp() + "/" + igc.getM2().getMax_hp());
-        m2_speed.setText("Speed : " + igc.getM2().getSpeed());
+    public void refreshLabel(InGameModel inGameModel){
+
+        p1_hp.setText("HP : " + inGameModel.getC1().getHp() + "/" + inGameModel.getC1().getMax_hp());
+        p1_mp.setText("MP : " + inGameModel.getC1().getMp() + "/" + inGameModel.getC1().getMax_mp());
+        p1_speed.setText("Speed : " + inGameModel.getC1().getSpeed());
+
+        p2_hp.setText("HP : " + inGameModel.getC2().getHp() + "/" + inGameModel.getC2().getMax_hp());
+        p2_mp.setText("MP : " + inGameModel.getC2().getMp() + "/" + inGameModel.getC2().getMax_mp());
+        p2_speed.setText("Speed : " + inGameModel.getC2().getSpeed());
+
+        m1_name.setText(inGameModel.getM1().getName());
+        m2_name.setText(inGameModel.getM2().getName());
+
+        m1_hp.setText("HP : " + inGameModel.getM1().getHp() + "/" + inGameModel.getM1().getMax_hp());
+        m1_speed.setText("Speed : " + inGameModel.getM1().getSpeed());
+
+        m2_hp.setText("HP : " + inGameModel.getM2().getHp() + "/" + inGameModel.getM2().getMax_hp());
+        m2_speed.setText("Speed : " + inGameModel.getM2().getSpeed());
 
     }
 
