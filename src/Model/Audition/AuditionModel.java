@@ -22,6 +22,7 @@ public class AuditionModel {
     }
 
     public void checkAuditionOverflow(){
+        audition_final_index = audition.size();
         if (audition.size() > 10){
             is_arrow_overflow = true;
             overflow_count = (int) Math.ceil((double) audition.size() / 10) - 1;

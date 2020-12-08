@@ -10,6 +10,8 @@ public class Smoke extends ItemModel implements ItemUse{
         description = "Attack + 10 and Heal HP 20";
         target_count = 1;
         target_type = 1;
+        text_x = 555;
+        text_y = 330;
     }
 
     @Override

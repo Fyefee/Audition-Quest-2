@@ -413,7 +413,6 @@ public class InGameController implements Runnable, MouseListener, ActionListener
     }
 
     public void useItem(Character who_use, Character target){
-        System.out.println(inGameModel);
         who_use.getBag().get(inGameModel.getItem_index()).useItem(checkItemTarget(target));
         who_use.getBag().set(inGameModel.getItem_index(), null);
         inGameJPanel.refreshLabel(inGameModel);
@@ -450,7 +449,7 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(inGameButtonJPanel.getButton_attack())) {//กดเริ่มเกมใหม่
+        if (e.getSource().equals(inGameButtonJPanel.getButton_attack())) {
             inGameModel.setTarget_type(0);
             toSelectTarget();
             if (inGameModel.getAttack_state() == 1) {

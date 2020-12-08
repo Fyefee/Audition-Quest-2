@@ -31,7 +31,7 @@ public class Piggy extends Character implements MonsterSkill {
         speed += 20;
         attack_percent = 0.85;
         target_count = 1;
-        this.setAttack_text("used Quick Attack to");
+        this.setAttack_text("used Quick Attack to ");
     }
 
 }

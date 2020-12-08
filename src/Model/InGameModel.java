@@ -232,7 +232,22 @@ public class InGameModel {
             pool.set(rand, new MechaFang(index));
         } else if  (pool.get(rand).getName().equals("Golem")) {
             pool.set(rand, new Golem(index));
+        } else if  (pool.get(rand).getName().equals("Baby Dragon")) {
+            pool.set(rand, new BabyDragon(index));
+        } else if  (pool.get(rand).getName().equals("Dark Lord")) {
+            pool.set(rand, new DarkLord(index));
+        } else if  (pool.get(rand).getName().equals("Fire Dragon")) {
+            pool.set(rand, new FireDragon(index));
+        } else if  (pool.get(rand).getName().equals("Murloc")) {
+            pool.set(rand, new Murloc(index));
+        } else if  (pool.get(rand).getName().equals("Piggy")) {
+            pool.set(rand, new Piggy(index));
+        } else if  (pool.get(rand).getName().equals("Unknown")) {
+            pool.set(rand, new Unknown(index));
+        } else if  (pool.get(rand).getName().equals("Warlord")) {
+            pool.set(rand, new Warlord(index));
         }
+
     }
 
     public Boolean getIs_press() {

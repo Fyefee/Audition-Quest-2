@@ -45,10 +45,8 @@ public class ItemModel implements ItemUse{
 
     public void addItemsToArrayMedium(){
         itemModels = new ArrayList<ItemModel>();
-        itemModels.add(new HealthPotionS());
         itemModels.add(new HealthPotionM());
         itemModels.add(new HealthPotionL());
-        itemModels.add(new ManaPotionS());
         itemModels.add(new ManaPotionM());
         itemModels.add(new ManaPotionL());
         itemModels.add(new Dagger());
@@ -57,12 +55,8 @@ public class ItemModel implements ItemUse{
 
     public void addItemsToArrayHard(){
         itemModels = new ArrayList<ItemModel>();
-        itemModels.add(new HealthPotionS());
-        itemModels.add(new HealthPotionM());
         itemModels.add(new HealthPotionL());
         itemModels.add(new HealthPotionXL());
-        itemModels.add(new ManaPotionS());
-        itemModels.add(new ManaPotionM());
         itemModels.add(new ManaPotionL());
         itemModels.add(new ManaPotionXL());
         itemModels.add(new Dagger());

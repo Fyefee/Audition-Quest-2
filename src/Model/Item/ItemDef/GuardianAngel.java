@@ -9,6 +9,8 @@ public class GuardianAngel extends ItemModel implements ItemUse {
         description = "Def + 20";
         target_count = 1;
         target_type = 1;
+        text_x = 525;
+        text_y = 330;
     }
 
     @Override
