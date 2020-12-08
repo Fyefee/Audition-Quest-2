@@ -10,6 +10,8 @@ public class ManaPotionM extends ItemModel implements ItemUse{
         description = "Heal mana 60 MP to 1 target";
         target_count = 1;
         target_type = 1;
+        text_x = 525;
+        text_y = 330;
     }
 
     @Override

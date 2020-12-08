@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Knight extends Character implements PlayerSkill {
     
     public Knight() {
-        super("Knight", 200, 50, 60, 60, 25, 340, 340, "Player");
+        super("Knight", 260, 60, 55, 60, 35, 340, 340, "Player");
         super.setX(230);
         super.setY(200);
         super.setPic(new ImageIcon(getClass().getResource("img/knight/knight.gif")).getImage());

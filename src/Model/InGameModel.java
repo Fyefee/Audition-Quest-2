@@ -22,6 +22,7 @@ public class InGameModel {
     private Character c2;
     private Character m1;
     private Character m2;
+    private int changeY;
 
     private Background bg = new Background();
 
@@ -42,20 +43,55 @@ public class InGameModel {
     private boolean all_monster_dead;
 
     public InGameModel(){
-        c1 = new Druid();
-        c2 = new Cyborg();
-        m1 = new Golem(1);
-        m2 = new Golem(2);
+        c1 = new Knight();
+        c2 = new Archer();
+        m1 = new DarkLord(1);
+        m2 = new DarkLord(2);
 
         monster_in_stage = new ArrayList<Character>();
         monster_in_stage.add(m1);
         monster_in_stage.add(m2);
     }
 
-    public void setStageEasy(){
+    public void selectCharacter(int melee, int range){
 
-        //difficulty = "Easy";
-        difficulty = "";
+        if (melee == 1){
+            c1 = new Knight();
+        } else if (melee == 2){
+            c1 = new Duelist();
+        } else if (melee == 3){
+            c1 = new Berserker();
+        } else if (melee == 4){
+            c1 = new Druid();
+        }
+
+        if (range == 1){
+            c2 = new Archer();
+        } else if (range == 2){
+            c2 = new Wizard();
+        } else if (range == 3){
+            c2 = new Elementalist();
+        } else if (range == 4){
+            c2 = new Cyborg();
+        }
+
+    }
+
+    public void setStage(){
+        if (difficulty.equals("Easy")){
+            setStageEasy();
+            changeY = 20;
+            bg = new Background(1);
+        } else if (difficulty.equals("Medium")){
+            setStageMedium();
+            bg = new Background(2);
+        } else if (difficulty.equals("Hard")){
+            setStageHard();
+            bg = new Background(3);
+        }
+    }
+
+    public void setStageEasy(){
 
         monster_pool1 = new ArrayList<Character>();
         monster_pool1.add(new Slime(1));
@@ -64,6 +100,36 @@ public class InGameModel {
         monster_pool2 = new ArrayList<Character>();
         monster_pool2.add(new Slime(2));
         monster_pool2.add(new Creeper(2));
+
+    }
+
+    public void setStageMedium(){
+
+        monster_pool1 = new ArrayList<Character>();
+        monster_pool1.add(new Creeper(1));
+        monster_pool1.add(new FireFang(1));
+        monster_pool1.add(new MechaFang(1));
+
+        monster_pool2 = new ArrayList<Character>();
+        monster_pool2.add(new Creeper(2));
+        monster_pool2.add(new FireFang(2));
+        monster_pool2.add(new MechaFang(2));
+
+    }
+
+    public void setStageHard(){
+
+        monster_pool1 = new ArrayList<Character>();
+        monster_pool1.add(new MechaFang(1));
+        monster_pool1.add(new BabyDragon(1));
+        monster_pool1.add(new Piggy(1));
+        monster_pool1.add(new Golem(1));
+
+        monster_pool2 = new ArrayList<Character>();
+        monster_pool2.add(new MechaFang(2));
+        monster_pool2.add(new BabyDragon(2));
+        monster_pool2.add(new Piggy(2));
+        monster_pool2.add(new Golem(2));
 
     }
 
@@ -85,7 +151,61 @@ public class InGameModel {
             }
         }
 
-        System.out.println(monster_pool2);
+        if (difficulty.equals("Medium")){
+            if (stage == 3) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new BabyDragon(1));
+                monster_pool2.add(new BabyDragon(2));
+            } else if (stage == 7) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new Piggy(1));
+                monster_pool2.add(new Piggy(2));
+            } else if (stage == 11) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new Golem(1));
+                monster_pool2.add(new Golem(2));
+            } else if (stage == 15) {
+                monster_pool2 = new ArrayList<Character>();
+                monster_pool2.add(new FireDragon(2));
+            }
+        }
+
+        if (difficulty.equals("Hard")){
+            if (stage == 4) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new Murloc(1));
+                monster_pool2.add(new Murloc(2));
+            } else if (stage == 8) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new Unknown(1));
+                monster_pool2.add(new Unknown(2));
+            } else if (stage == 12) {
+                monster_pool1.remove(0);
+                monster_pool2.remove(0);
+
+                monster_pool1.add(new Warlord(1));
+                monster_pool2.add(new Warlord(2));
+            } else if (stage == 16) {
+                monster_pool1.add(new FireDragon(1));
+                monster_pool2.add(new FireDragon(2));
+            } else if (stage == 20) {
+                monster_pool1 = new ArrayList<Character>();
+                monster_pool1.add(new FireDragon(1));
+
+                monster_pool2 = new ArrayList<Character>();
+                monster_pool2.add(new DarkLord(2));
+            }
+        }
 
     }
 
@@ -112,7 +232,22 @@ public class InGameModel {
             pool.set(rand, new MechaFang(index));
         } else if  (pool.get(rand).getName().equals("Golem")) {
             pool.set(rand, new Golem(index));
+        } else if  (pool.get(rand).getName().equals("Baby Dragon")) {
+            pool.set(rand, new BabyDragon(index));
+        } else if  (pool.get(rand).getName().equals("Dark Lord")) {
+            pool.set(rand, new DarkLord(index));
+        } else if  (pool.get(rand).getName().equals("Fire Dragon")) {
+            pool.set(rand, new FireDragon(index));
+        } else if  (pool.get(rand).getName().equals("Murloc")) {
+            pool.set(rand, new Murloc(index));
+        } else if  (pool.get(rand).getName().equals("Piggy")) {
+            pool.set(rand, new Piggy(index));
+        } else if  (pool.get(rand).getName().equals("Unknown")) {
+            pool.set(rand, new Unknown(index));
+        } else if  (pool.get(rand).getName().equals("Warlord")) {
+            pool.set(rand, new Warlord(index));
         }
+
     }
 
     public Boolean getIs_press() {
@@ -337,5 +472,13 @@ public class InGameModel {
 
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public int getChangeY() {
+        return changeY;
+    }
+
+    public void setChangeY(int changeY) {
+        this.changeY = changeY;
     }
 }

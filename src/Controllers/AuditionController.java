@@ -191,7 +191,7 @@ public class AuditionController {
 
 
                     int rand = (int) (Math.random() * 100) + 1;
-                    if (rand > 15){
+                    if (rand > 20){
                         if (who_attack.getAttack_target().get(i) == inGameModel.getM1()){
                             inGameModel.setMonster1_drop(true);
                         } else if (who_attack.getAttack_target().get(i) == inGameModel.getM2()){

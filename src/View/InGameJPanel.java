@@ -203,6 +203,7 @@ public class InGameJPanel extends JPanel {
     }
 
     public void refreshLabelWOSpeed(InGameModel inGameModel){
+
         p1_hp.setText("HP : " + inGameModel.getC1().getHp() + "/" + inGameModel.getC1().getMax_hp());
         p1_mp.setText("MP : " + inGameModel.getC1().getMp() + "/" + inGameModel.getC1().getMax_mp());
 
@@ -219,10 +220,12 @@ public class InGameJPanel extends JPanel {
 
     public void refreshLabel(InGameModel inGameModel){
 
+        p1_name.setText(inGameModel.getC1().getName());
         p1_hp.setText("HP : " + inGameModel.getC1().getHp() + "/" + inGameModel.getC1().getMax_hp());
         p1_mp.setText("MP : " + inGameModel.getC1().getMp() + "/" + inGameModel.getC1().getMax_mp());
         p1_speed.setText("Speed : " + inGameModel.getC1().getSpeed());
 
+        p2_name.setText(inGameModel.getC2().getName());
         p2_hp.setText("HP : " + inGameModel.getC2().getHp() + "/" + inGameModel.getC2().getMax_hp());
         p2_mp.setText("MP : " + inGameModel.getC2().getMp() + "/" + inGameModel.getC2().getMax_mp());
         p2_speed.setText("Speed : " + inGameModel.getC2().getSpeed());

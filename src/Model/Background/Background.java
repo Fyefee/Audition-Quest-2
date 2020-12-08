@@ -14,6 +14,20 @@ import java.awt.*;
  */
 public class Background{
     
-    public Image bg = new ImageIcon(getClass().getResource("img/Background/bg_scale_2.gif")).getImage();
+    public Image bg;
+
+    public Background(){
+        bg = new ImageIcon(getClass().getResource("img/Background/bg_scale_2.gif")).getImage();
+    }
+
+    public Background(int difficulty){
+        if (difficulty == 1){
+            bg = new ImageIcon(getClass().getResource("img/easy_bg_scale.gif")).getImage();
+        } else if (difficulty == 2){
+            bg = new ImageIcon(getClass().getResource("img/medium_bg_scale.gif")).getImage();
+        } else if (difficulty == 3){
+            bg = new ImageIcon(getClass().getResource("img/hard_bg_scale.gif")).getImage();
+        }
+    }
     
 }

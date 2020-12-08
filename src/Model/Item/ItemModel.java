@@ -1,7 +1,18 @@
 package Model.Item;
 
 import Model.Character.Character;
+import Model.Item.Healing.HealthPotionL;
+import Model.Item.Healing.HealthPotionM;
 import Model.Item.Healing.HealthPotionS;
+import Model.Item.Healing.HealthPotionXL;
+import Model.Item.ItemAtk.Dagger;
+import Model.Item.ItemAtk.Smoke;
+import Model.Item.ItemDef.GuardianAngel;
+import Model.Item.ItemDef.ShieldBreaker;
+import Model.Item.Mana.ManaPotionL;
+import Model.Item.Mana.ManaPotionM;
+import Model.Item.Mana.ManaPotionS;
+import Model.Item.Mana.ManaPotionXL;
 
 import java.util.ArrayList;
 
@@ -25,7 +36,33 @@ public class ItemModel implements ItemUse{
     }
 
     public void addItemsToArrayEasy(){
+        itemModels = new ArrayList<ItemModel>();
         itemModels.add(new HealthPotionS());
+        itemModels.add(new HealthPotionM());
+        itemModels.add(new ManaPotionS());
+        itemModels.add(new ManaPotionM());
+    }
+
+    public void addItemsToArrayMedium(){
+        itemModels = new ArrayList<ItemModel>();
+        itemModels.add(new HealthPotionM());
+        itemModels.add(new HealthPotionL());
+        itemModels.add(new ManaPotionM());
+        itemModels.add(new ManaPotionL());
+        itemModels.add(new Dagger());
+        itemModels.add(new ShieldBreaker());
+    }
+
+    public void addItemsToArrayHard(){
+        itemModels = new ArrayList<ItemModel>();
+        itemModels.add(new HealthPotionL());
+        itemModels.add(new HealthPotionXL());
+        itemModels.add(new ManaPotionL());
+        itemModels.add(new ManaPotionXL());
+        itemModels.add(new Dagger());
+        itemModels.add(new Smoke());
+        itemModels.add(new ShieldBreaker());
+        itemModels.add(new GuardianAngel());
     }
 
     public void useItem(ArrayList<Character> target){}

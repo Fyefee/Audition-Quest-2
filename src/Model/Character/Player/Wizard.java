@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Wizard extends Character implements PlayerSkill {
 
     public Wizard() {
-        super("Wizard", 130, 100, 75, 65, 10, 275, 275, "Player");
+        super("Wizard", 165, 130, 75, 65, 15, 275, 275, "Player");
         super.setX(100);
         super.setY(260);
         super.setPic(new ImageIcon(getClass().getResource("img/Wizard/Wizard.gif")).getImage());
@@ -17,12 +17,12 @@ public class Wizard extends Character implements PlayerSkill {
         skill2_name = "Pyroblast";
         skill2_description = "Deals 200% damage to 1 enemy<br>Use 25 mp";
         skill3_name = "Arcane Explosion";
-        skill3_description = "Deals 130% damage to 2 enemy<br>Use 40 mp";
+        skill3_description = "Deals 150% damage to 2 enemy<br>*Ignore Def*<br>Use 40 mp";
     }
 
     public void skill1() {
         returnStats();
-        attack_percent = 1.3;
+        attack_percent = 1.5;
         mp_used = 15;
         arrow_count = 10;
         audition_time = 400;
@@ -41,11 +41,12 @@ public class Wizard extends Character implements PlayerSkill {
     }
     public void skill3() {
         returnStats();
-        attack_percent = 1.3;
+        attack_percent = 1.5;
         mp_used = 40;
         arrow_count = 25;
         audition_time = 700;
         target_count = 2;
+        ignore_def = true;
         this.setAttack_text("used Arcane Explosion to ");
     }
 

@@ -7,47 +7,78 @@ import java.awt.*;
 
 public class MenuJPanel extends JPanel{
 
-    private JPanel menu_panel, menu_button_panel, empty_panel_top;
-    private static JButton menu_button_play;
+    public Image bg;
+
+    private JPanel menu_button_panel, logo_panel, play_button_panel, exit_button_panel;
+    private JLabel logo_label, play_button, exit_button;
+    private ImageIcon logo, play_button_pic, play_button_active_pic, exit_button_pic, exit_button_active_pic;
     private MenuController mc;
 
-    public MenuJPanel(MenuController mc) {
-        this.mc = mc;
+    public MenuJPanel() {
         createComponents();
         setComponents();
     }
 
+    public void paintComponent(Graphics g){
+        super.repaint();
+        g.drawImage(bg, 0, 0, 1200, 720, this);
+    }
+
     private void createComponents(){
 
+        bg = new ImageIcon(getClass().getResource("img/bg.gif")).getImage();
+
         menu_button_panel = new JPanel();
+        logo_panel = new JPanel();
+        play_button_panel = new JPanel();
+        exit_button_panel = new JPanel();
 
-        menu_button_play = new JButton("Start");
+        logo_label = new JLabel();
 
-        empty_panel_top = new JPanel();
-        empty_panel_top.setPreferredSize(new Dimension(1200, 100));
+        play_button = new JLabel();
+        exit_button = new JLabel();
+
+        try {
+            logo = new ImageIcon(getClass().getResource("\\img\\logo.png"));
+            play_button_pic = new ImageIcon(getClass().getResource("\\img\\play_button.png"));
+            play_button_active_pic = new ImageIcon(getClass().getResource("\\img\\play_button_active.png"));
+            exit_button_pic = new ImageIcon(getClass().getResource("\\img\\exit_button.png"));
+            exit_button_active_pic = new ImageIcon(getClass().getResource("\\img\\exit_button_active.png"));
+        } catch (Exception e) {}
 
     }
 
     private void setComponents(){
 
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridLayout(2,1));
 
-        menu_button_panel.setLayout(new FlowLayout());
+        logo_label.setIcon(logo);
 
-        menu_button_play.addActionListener(this.mc);
-        menu_button_panel.add(menu_button_play);
+        logo_panel.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
+        logo_panel.setOpaque(false);
+        logo_panel.add(logo_label);
 
-        this.add(empty_panel_top, BorderLayout.NORTH);
-        this.add(menu_button_panel, BorderLayout.CENTER);
+        play_button.setIcon(play_button_pic);
+        exit_button.setIcon(exit_button_pic);
 
-    }
+        menu_button_panel.setLayout(new GridLayout(2,1));
+        menu_button_panel.setOpaque(false);
 
-    public JPanel getMenu_panel() {
-        return menu_panel;
-    }
+        play_button_panel.setLayout(new FlowLayout());
+        play_button_panel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
+        play_button_panel.setOpaque(false);
+        play_button_panel.add(play_button);
 
-    public void setMenu_panel(JPanel menu_panel) {
-        this.menu_panel = menu_panel;
+        exit_button_panel.setLayout(new FlowLayout());
+        exit_button_panel.setOpaque(false);
+        exit_button_panel.add(exit_button);
+
+        menu_button_panel.add(play_button_panel);
+        menu_button_panel.add(exit_button_panel);
+
+        this.add(logo_panel);
+        this.add(menu_button_panel);
+
     }
 
     public JPanel getMenu_button_panel() {
@@ -58,20 +89,12 @@ public class MenuJPanel extends JPanel{
         this.menu_button_panel = menu_button_panel;
     }
 
-    public JPanel getEmpty_panel_top() {
-        return empty_panel_top;
+    public JPanel getLogo_panel() {
+        return logo_panel;
     }
 
-    public void setEmpty_panel_top(JPanel empty_panel_top) {
-        this.empty_panel_top = empty_panel_top;
-    }
-
-    public JButton getMenu_button_play() {
-        return menu_button_play;
-    }
-
-    public void setMenu_button_play(JButton menu_button_play) {
-        this.menu_button_play = menu_button_play;
+    public void setLogo_panel(JPanel logo_panel) {
+        this.logo_panel = logo_panel;
     }
 
     public MenuController getMc() {
@@ -80,5 +103,53 @@ public class MenuJPanel extends JPanel{
 
     public void setMc(MenuController mc) {
         this.mc = mc;
+    }
+
+    public JLabel getPlay_button() {
+        return play_button;
+    }
+
+    public void setPlay_button(JLabel play_button) {
+        this.play_button = play_button;
+    }
+
+    public JLabel getExit_button() {
+        return exit_button;
+    }
+
+    public void setExit_button(JLabel exit_button) {
+        this.exit_button = exit_button;
+    }
+
+    public ImageIcon getPlay_button_pic() {
+        return play_button_pic;
+    }
+
+    public void setPlay_button_pic(ImageIcon play_button_pic) {
+        this.play_button_pic = play_button_pic;
+    }
+
+    public ImageIcon getPlay_button_active_pic() {
+        return play_button_active_pic;
+    }
+
+    public void setPlay_button_active_pic(ImageIcon play_button_active_pic) {
+        this.play_button_active_pic = play_button_active_pic;
+    }
+
+    public ImageIcon getExit_button_pic() {
+        return exit_button_pic;
+    }
+
+    public void setExit_button_pic(ImageIcon exit_button_pic) {
+        this.exit_button_pic = exit_button_pic;
+    }
+
+    public ImageIcon getExit_button_active_pic() {
+        return exit_button_active_pic;
+    }
+
+    public void setExit_button_active_pic(ImageIcon exit_button_active_pic) {
+        this.exit_button_active_pic = exit_button_active_pic;
     }
 }

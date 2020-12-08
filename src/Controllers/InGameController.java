@@ -35,7 +35,6 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         this.auditionController = new AuditionController(this);
 
         this.itemModel = new ItemModel();
-        this.itemModel.addItemsToArrayEasy();
 
         inGameJPanel.getTop_panel().add(inGameRenderImage);
         inGameJPanel.getBottom_panel().add(inGameButtonJPanel);
@@ -47,6 +46,16 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
         stageJPanel.getNext_stage_button().addActionListener(this);
 
+    }
+
+    public void addItem(){
+        if (inGameModel.getDifficulty().equals("Easy")){
+            this.itemModel.addItemsToArrayEasy();
+        } else if (inGameModel.getDifficulty().equals("Medium")){
+            this.itemModel.addItemsToArrayMedium();
+        } else if (inGameModel.getDifficulty().equals("Hard")){
+            this.itemModel.addItemsToArrayHard();
+        }
     }
 
     public InGameJPanel getInGameJPanel() {
@@ -404,7 +413,6 @@ public class InGameController implements Runnable, MouseListener, ActionListener
     }
 
     public void useItem(Character who_use, Character target){
-        System.out.println(inGameModel);
         who_use.getBag().get(inGameModel.getItem_index()).useItem(checkItemTarget(target));
         who_use.getBag().set(inGameModel.getItem_index(), null);
         inGameJPanel.refreshLabel(inGameModel);
@@ -429,6 +437,10 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
         if (inGameModel.getDifficulty().equals("Easy") && inGameModel.getStage() == 10){
             stageJPanel.getStage_label().setText("You clear easy Difficulty!!");
+        } else if (inGameModel.getDifficulty().equals("Medium") && inGameModel.getStage() == 15){
+            stageJPanel.getStage_label().setText("You clear medium Difficulty!!");
+        } else if (inGameModel.getDifficulty().equals("Hard") && inGameModel.getStage() == 20){
+            stageJPanel.getStage_label().setText("You clear hard Difficulty!!");
         } else {
             stageJPanel.getStage_label().setText("Stage " + String.valueOf(inGameModel.getStage()));
         }
@@ -437,7 +449,7 @@ public class InGameController implements Runnable, MouseListener, ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(inGameButtonJPanel.getButton_attack())) {//กดเริ่มเกมใหม่
+        if (e.getSource().equals(inGameButtonJPanel.getButton_attack())) {
             inGameModel.setTarget_type(0);
             toSelectTarget();
             if (inGameModel.getAttack_state() == 1) {
@@ -719,6 +731,7 @@ public class InGameController implements Runnable, MouseListener, ActionListener
             inGameModel.addMonsterToPool();
             inGameModel.randomMonster();
             inGameJPanel.refreshLabel(inGameModel);
+
             inGameModel.setAttack_state(1);
             auditionController.getAuditionModel().setTurn(1);
             inGameModel.setAll_monster_dead(false);

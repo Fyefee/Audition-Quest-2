@@ -41,20 +41,20 @@ public class InGameRenderImage extends JPanel {
         g.drawImage(inGameModel.getBg().bg, 0, 0, this);
         audition(g);
         if (inGameModel.getC1().isAlive()) {
-            g.drawImage(inGameModel.getC1().getPic(), inGameModel.getC1().getX(), inGameModel.getC1().getY(), inGameModel.getC1().getSize_x(), inGameModel.getC1().getSize_y(), this);
+            g.drawImage(inGameModel.getC1().getPic(), inGameModel.getC1().getX(), inGameModel.getC1().getY() + inGameModel.getChangeY(), inGameModel.getC1().getSize_x(), inGameModel.getC1().getSize_y(), this);
         }
         if (inGameModel.getC2().isAlive()) {
-            g.drawImage(inGameModel.getC2().getPic(), inGameModel.getC2().getX(), inGameModel.getC2().getY(), inGameModel.getC2().getSize_x(), inGameModel.getC2().getSize_y(), this);
+            g.drawImage(inGameModel.getC2().getPic(), inGameModel.getC2().getX(), inGameModel.getC2().getY() + inGameModel.getChangeY(), inGameModel.getC2().getSize_x(), inGameModel.getC2().getSize_y(), this);
         }
         if (inGameModel.getM1().isAlive()) {
-            g.drawImage(inGameModel.getM1().getPic(), inGameModel.getM1().getX(), inGameModel.getM1().getY(), inGameModel.getM1().getSize_x(), inGameModel.getM1().getSize_y(), this);
+            g.drawImage(inGameModel.getM1().getPic(), inGameModel.getM1().getX(), inGameModel.getM1().getY() + inGameModel.getChangeY(), inGameModel.getM1().getSize_x(), inGameModel.getM1().getSize_y(), this);
         } else if (!inGameModel.getM1().isAlive() && inGameModel.isMonster1_drop()){
-            g.drawImage(sack, 790, 410, 60, 60, this);
+            g.drawImage(sack, 790, 410 + inGameModel.getChangeY(), 60, 60, this);
         }
         if (inGameModel.getM2().isAlive()) {
-            g.drawImage(inGameModel.getM2().getPic(), inGameModel.getM2().getX(), inGameModel.getM2().getY(), inGameModel.getM2().getSize_x(), inGameModel.getM2().getSize_y(), this);
+            g.drawImage(inGameModel.getM2().getPic(), inGameModel.getM2().getX(), inGameModel.getM2().getY() + inGameModel.getChangeY(), inGameModel.getM2().getSize_x(), inGameModel.getM2().getSize_y(), this);
         } else if (!inGameModel.getM2().isAlive() && inGameModel.isMonster2_drop()){
-            g.drawImage(sack, 960, 410, 60, 60, this);
+            g.drawImage(sack, 960, 410 + inGameModel.getChangeY(), 60, 60, this);
         }
 
         if (inGameModel.isShow_item()){
