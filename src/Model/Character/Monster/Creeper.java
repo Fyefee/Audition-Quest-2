@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Creeper extends Character implements MonsterSkill {
 
     public Creeper(int position) {
-        super("Creeper", 60, 300, 30, 35, 20, 160, 160, "Monster");
+        super("Creeper", 60, 300, 30, 50, 20, 160, 160, "Monster");
         switch (position){
             case 1: super.setX(760); super.setY(340); break;
             case 2: super.setX(925); super.setY(340); break;

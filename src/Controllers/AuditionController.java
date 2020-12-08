@@ -51,7 +51,7 @@ public class AuditionController {
             auditionModel.setAudition_is_show(false);
             timeBar.setSize_x(0);
             auditionModel.setAttack_percent(auditionModel.getAttack_percent() - ((double) (auditionModel.getArrow_count() - auditionModel.getState())) * 0.2);
-            System.out.println("Audition : You Fail " + (auditionModel.getArrow_count() - auditionModel.getState()) + " times.");
+            //System.out.println("Audition : You Fail " + (auditionModel.getArrow_count() - auditionModel.getState()) + " times.");
             attack(auditionModel.getSpeed().get(auditionModel.getTurn()-1));
         }
         else if (now_time-100 < 0){
@@ -171,7 +171,6 @@ public class AuditionController {
                     text = who_attack.getName() + " Attack " + who_attack.getAttack_target().get(i).getName() + " 0 Damage.";
                 else
                     text = who_attack.getName() + " Attack " + who_attack.getAttack_target().get(i).getName() + " " + (int) auditionModel.getDamage() + " Damage.";
-                System.out.println(text);
 
                 if (auditionModel.getDamage() > 0) {
                     who_attack.getAttack_target().get(i).setHp(who_attack.getAttack_target().get(i).getHp() - (int) auditionModel.getDamage());
@@ -185,7 +184,6 @@ public class AuditionController {
                         auditionModel.setTurn(auditionModel.getTurn() - 1);
                     }
                     auditionModel.getSpeed().remove(who_attack.getAttack_target().get(i));
-                    System.out.println(auditionModel.getSpeed());
 
                     int rand = (int) (Math.random() * 100) + 1;
                     if (rand > 20){

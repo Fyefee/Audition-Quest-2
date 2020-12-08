@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Archer extends Character implements PlayerSkill {
 
     public Archer() {
-        super("Archer", 175, 80, 80, 75, 15, 200, 200, "Player");
+        super("Archer", 175, 80, 80, 750, 15, 200, 200, "Player");
         super.setX(100); 
         super.setY(300);
         super.setPic(new ImageIcon(getClass().getResource("img/Archer/archer2.gif")).getImage());

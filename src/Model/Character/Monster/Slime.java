@@ -13,7 +13,7 @@ import javax.swing.*;
 public class Slime extends Character implements MonsterSkill {
     
     public Slime(int position) {
-        super("Slime", 40, 300, 20, 30, 15, 120, 120, "Monster");
+        super("Slime", 40, 300, 20, 45, 15, 120, 120, "Monster");
         switch (position){
             case 1: super.setX(760); super.setY(375); break;
             case 2: super.setX(925); super.setY(375); break;

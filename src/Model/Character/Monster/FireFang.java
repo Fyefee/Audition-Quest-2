@@ -8,7 +8,7 @@ import javax.swing.*;
 public class FireFang extends Character implements MonsterSkill {
 
     public FireFang(int position) {
-        super("Fire Fang", 80, 300, 55, 40, 20, 400, 400, "Monster");
+        super("Fire Fang", 80, 300, 55, 50, 20, 400, 400, "Monster");
         switch (position){
             case 1: super.setX(630); super.setY(160); break;
             case 2: super.setX(815); super.setY(160); break;

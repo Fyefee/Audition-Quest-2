@@ -42,7 +42,7 @@ public class StageJPanel extends JPanel {
 
         } catch (Exception e){}
 
-        stage_label.setFont(sizedFont.deriveFont(Font.BOLD, 80));
+        stage_label.setFont(sizedFont.deriveFont(Font.BOLD, 70));
         stage_label.setForeground(new Color(255, 255, 255));
         stage_label.setHorizontalTextPosition(JButton.CENTER);
         stage_label.setVerticalTextPosition(JButton.BOTTOM);

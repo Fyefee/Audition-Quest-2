@@ -8,7 +8,7 @@ import javax.swing.*;
 public class MechaFang extends Character implements MonsterSkill {
 
     public MechaFang(int position) {
-        super("Mecha Fang", 90, 300, 60, 45, 30, 450, 450, "Monster");
+        super("Mecha Fang", 90, 300, 60, 55, 30, 450, 450, "Monster");
         switch (position){
             case 1: super.setX(610); super.setY(90); break;
             case 2: super.setX(795); super.setY(90); break;

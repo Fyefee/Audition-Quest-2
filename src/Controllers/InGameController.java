@@ -102,6 +102,10 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         auditionController.getAuditionModel().getSpeed().add(inGameModel.getM2());
         Collections.sort(auditionController.getAuditionModel().getSpeed(), Comparator.comparing(Character::getSpeed).reversed());
 
+        inGameModel.getC1().decreaseMp();
+        inGameModel.getC2().decreaseMp();
+        inGameJPanel.refreshLabelWOSpeed(inGameModel);
+
         setText_Button();
         inGameModel.setText_showattack(true);
         inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "text_button");
@@ -140,7 +144,6 @@ public class InGameController implements Runnable, MouseListener, ActionListener
         int target_count = c.getTarget_count();
         if (target_count == 1){
             rand = (int) (Math.random() * 2) + 1;
-            System.out.println(c.getName() + String.valueOf(rand));
             if (rand == 1){
                 if (inGameModel.getC1().isAlive()) {
                     c.setAttack_target(createArrayTarget(inGameModel.getC1()));
@@ -226,8 +229,6 @@ public class InGameController implements Runnable, MouseListener, ActionListener
             inGameJPanel.getP2_panel().setBorder(inGameJPanel.getBorder_white());
             inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "main_select");
             inGameModel.setText_showattack(false);
-        } else {
-            System.out.println("Test");
         }
 
         if (!inGameModel.getM1().isAlive() && !inGameModel.getM2().isAlive()){
@@ -322,7 +323,6 @@ public class InGameController implements Runnable, MouseListener, ActionListener
     public void toSelectTarget(){
         if (inGameModel.getTarget_type() == 0) {
             if (inGameModel.getAttack_state() == 1) {
-                inGameModel.getC1().decreaseMp();
                 inGameButtonJPanel.getC_target_button().setText(inGameModel.getC2().getName());
             } else if (inGameModel.getAttack_state() == 2) {
                 inGameModel.getC2().decreaseMp();
@@ -434,11 +434,11 @@ public class InGameController implements Runnable, MouseListener, ActionListener
     public void toNextStage(){
         inGameModel.setStage(inGameModel.getStage() + 1);
 
-        if (inGameModel.getDifficulty().equals("Easy") && inGameModel.getStage() == 10){
+        if (inGameModel.getDifficulty().equals("Easy") && inGameModel.getStage() > 10){
             stageJPanel.getStage_label().setText("You clear easy Difficulty!!");
-        } else if (inGameModel.getDifficulty().equals("Medium") && inGameModel.getStage() == 15){
+        } else if (inGameModel.getDifficulty().equals("Medium") && inGameModel.getStage() > 15){
             stageJPanel.getStage_label().setText("You clear medium Difficulty!!");
-        } else if (inGameModel.getDifficulty().equals("Hard") && inGameModel.getStage() == 20){
+        } else if (inGameModel.getDifficulty().equals("Hard") && inGameModel.getStage() > 20){
             stageJPanel.getStage_label().setText("You clear hard Difficulty!!");
         } else {
             stageJPanel.getStage_label().setText("Stage " + String.valueOf(inGameModel.getStage()));
@@ -739,8 +739,6 @@ public class InGameController implements Runnable, MouseListener, ActionListener
             inGameButtonJPanel.getCard_select().show(inGameButtonJPanel, "main_select");
             MainJFrameController.getMainJFrame().getC_frame().show(MainJFrameController.getMainJFrame().getAll_card_panel(), "GAME");
         }
-        System.out.println(auditionController.getAuditionModel().getTurn());
-        System.out.println(inGameModel.isText_showattack());
     }
 
     @Override
