@@ -75,7 +75,6 @@ public class InGameController implements Runnable, MouseListener, ActionListener
                     auditionController.resize_bar((int)((inGameModel.getNow()-inGameModel.getStart())/ inGameModel.getMsp1()));
                 }
                 inGameRenderImage.repaint();
-                //requestFocusInWindow();
                 inGameJPanel.requestFocusInWindow();
             }
         }

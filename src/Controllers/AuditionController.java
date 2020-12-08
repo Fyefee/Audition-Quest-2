@@ -184,11 +184,8 @@ public class AuditionController {
                     if (auditionModel.getSpeed().indexOf(who_attack.getAttack_target().get(i)) < auditionModel.getTurn()){
                         auditionModel.setTurn(auditionModel.getTurn() - 1);
                     }
-
                     auditionModel.getSpeed().remove(who_attack.getAttack_target().get(i));
                     System.out.println(auditionModel.getSpeed());
-
-
 
                     int rand = (int) (Math.random() * 100) + 1;
                     if (rand > 20){
@@ -203,11 +200,9 @@ public class AuditionController {
                         inGameModel.setAll_monster_dead(true);
                     }
                 }
-
             }
 
             inGameController.getInGameJPanel().refreshLabelWOSpeed(inGameModel);
-
             inGameController.getInGameButtonJPanel().getCard_select().show(inGameController.getInGameButtonJPanel(), "text_button");
             inGameController.setText_Button(text);
             auditionModel.setTurn(auditionModel.getTurn() + 1);
